@@ -1,16 +1,14 @@
 // Initialize form validation
-
 if (document.readyState !== 'loading') myInitCode()
 else document.addEventListener('DOMContentLoaded', myInitCode);
 
 // Main JavaScript for ExcelLearn Tuition Center
 function myInitCode(){
-    console.log("Do it !");
-    
+    console.log("myInitCode");
     // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
-    alert('DOMContentLoaded');
+    //alert('DOMContentLoaded');
     if (menuToggle) {
         alert('menuToggle');
         menuToggle.addEventListener('click', function() {
