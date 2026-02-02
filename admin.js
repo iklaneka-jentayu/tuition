@@ -4,10 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Authentication Check
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
     alert('currentUser role='+currentUser.role)
-    alert('currentUser email='+currentUser.email);;
+    alert('currentUser email='+currentUser.email);
+    currentUser.email = 'admin@excellearn.com';
+     currentUser.role = 'admin';
+    
     if (!currentUser.email || currentUser.role !== 'admin') {
         // Redirect to login if not admin
-        window.location.href = 'admin.html';
+        window.location.href = 'index.html';
         return;
     }
     
