@@ -1,5 +1,4 @@
 // Main JavaScript for ExcelLearn Tuition Center
-
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
