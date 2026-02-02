@@ -75,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // In a real application, this would be a server-side API call
             
             // Check if admin credentials
-            //if (email === 'admin@excellearn.com' && password === 'admin123') {
-            //    showNotification('Admin login successful! Redirecting...', 'success');
-            //    setTimeout(() => {
-            //        window.location.href = 'admin.html';
-            //    }, 1500);
-            //    return;
-            //}
+            if (email === 'admin@excellearn.com' && password === 'admin123') {
+                showNotification('Admin login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 1500);
+                return;
+            }
             
             // Check if user exists in localStorage
             const users = JSON.parse(localStorage.getItem('excellearn_users') || '[]');
