@@ -172,7 +172,7 @@ function myInitCode(){
         const phoneField = document.getElementById('phone');
         if (phoneField.value && !validatePhone(phoneField.value)) {
             isValid = false;
-            phoneField.style.borderColor = 'var(--danger-color)');
+            phoneField.style.borderColor = 'var(--danger-color)';
             showNotification('Please enter a valid phone number.', 'error');
         }
         
