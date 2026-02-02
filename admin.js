@@ -3,13 +3,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Authentication Check
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    
+    /*
     if (!currentUser.email || currentUser.role !== 'admin') {
         // Redirect to login if not admin
         window.location.href = 'login.html';
         return;
     }
-    
+    */
     // Set current date
     const currentDate = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
