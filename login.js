@@ -95,13 +95,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     name: user.name,
                     role: user.role
                 }));
-
-                const storedUser = localStorage.getItem('currentUser');
-                alert('storedUser.email='+storedUser.email+'storedUser.role='+storedUser.role);
                 
                 setTimeout(() => {
                     // Redirect to appropriate page based on role
-                    alert('user.role='+user.role+'user.email='+user.email);
                     if (user.role === 'admin') {
                         window.location.href = 'admin.html';
                     } else {
@@ -206,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Send user data to Google Sheets
     function sendUserToGoogleSheets(user) {
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwOBs2XIB1NryAYH9_QSexo6qmns0rcajp8RPyT2wleQDX7-Yj91QVj99uyIfc-ccQD/exec';
+        const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL_HERE';
         
         const payload = {
             action: 'create_user',
