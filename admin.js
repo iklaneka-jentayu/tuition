@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     alert('currentUser role='+currentUser.role)
     alert('currentUser email='+currentUser.email);
     currentUser.email = 'admin@excellearn.com';
-     currentUser.role = 'admin';
+    currentUser.role = 'admin';
     
     if (!currentUser.email || currentUser.role !== 'admin') {
         // Redirect to login if not admin
