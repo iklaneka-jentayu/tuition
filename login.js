@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (email === 'admin@excellearn.com' && password === 'admin123') {
                
                 showNotification('Admin login successful! Redirecting...', 'success');
-                window.location.href = 'admin.html';
-                //setTimeout(() => {
-                //    window.location.href = 'admin.html';
-                //}, 1500);
+                //window.location.href = 'admin.html';
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 20000);
                 return;
             }
             
