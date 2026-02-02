@@ -3,8 +3,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Authentication Check
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    //alert('currentUser role='+currentUser.role)
-    //alert('currentUser email='+currentUser.email);
+    alert('currentUser role='+currentUser.role)
+    alert('currentUser email='+currentUser.email);
     currentUser.email = 'admin@excellearn.com';
      currentUser.role = 'admin';
     
