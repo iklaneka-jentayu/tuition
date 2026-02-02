@@ -1,5 +1,5 @@
 // Main JavaScript for ExcelLearn Tuition Center
-//document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     
     // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
@@ -410,4 +410,4 @@
     
     // Initialize animations when page loads
     setTimeout(initScrollAnimations, 500);
-//});
+});
