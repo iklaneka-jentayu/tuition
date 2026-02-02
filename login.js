@@ -80,10 +80,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 showNotification('Admin login successful! Redirecting...', 'success');
                 //window.location.href = 'admin.html';
                 setTimeout(() => {
-                    window.location.href = 'admin.html';
+                   // window.location.href = 'admin.html';
+                    window.location.href = 'index.html'
                      alert('admin.htm..');
                 }, 1500);
-                alert('return..');
+                //alert('return..');
                 return;
             }
             
