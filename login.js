@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 //window.location.href = 'admin.html';
                 setTimeout(() => {
                     window.location.href = 'admin.html';
+                     alert('admin.htm..');
                 }, 1500);
                 alert('return..');
                 return;
