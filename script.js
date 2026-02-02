@@ -1,6 +1,17 @@
+// Initialize form validation
+if (document.readyState !== 'loading') {
+    console.log('document is already ready, just execute code here');
+    myInitCode();
+} else {
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('document was not ready, place code here');
+        myInitCode();
+    });
+}
+
 // Main JavaScript for ExcelLearn Tuition Center
-document.addEventListener('DOMContentLoaded', function() {
-    
+function myInitCode(){
+
     // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
@@ -410,4 +421,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize animations when page loads
     setTimeout(initScrollAnimations, 500);
-});
+};
