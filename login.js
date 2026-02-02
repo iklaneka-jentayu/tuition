@@ -76,11 +76,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Check if admin credentials
             if (email === 'admin@excellearn.com' && password === 'admin123') {
+               
                 showNotification('Admin login successful! Redirecting...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'admin.html';
-                }, 1500);
-                return;
+                window.location.href = 'admin.html';
+                //setTimeout(() => {
+                //    window.location.href = 'admin.html';
+                //}, 1500);
+                //return;
             }
             
             // Check if user exists in localStorage
