@@ -81,7 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 //window.location.href = 'admin.html';
                 setTimeout(() => {
                     window.location.href = 'admin.html';
-                }, 20000);
+                }, 1500);
+                alert('return..');
                 return;
             }
             
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Redirect to appropriate page based on role
                     if (user.role === 'admin') {
                         window.location.href = 'admin.html';
+                        alert('return..admin');
                     } else {
                         // For demo, redirect to home
                         window.location.href = 'index.html';
