@@ -3,10 +3,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Authentication Check
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    //alert('currentUser role='+currentUser.role)
-    //alert('currentUser email='+currentUser.email);
-    //currentUser.email = 'admin@excellearn.com';
-    //currentUser.role = 'admin';
     
     if (!currentUser.email || currentUser.role !== 'admin') {
         // Redirect to login if not admin
@@ -624,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function sendToGoogleSheets(action, data) {
         // Your Google Apps Script Web App URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwOBs2XIB1NryAYH9_QSexo6qmns0rcajp8RPyT2wleQDX7-Yj91QVj99uyIfc-ccQD/exec';
+        const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL_HERE';
         
         const payload = {
             action: action,
