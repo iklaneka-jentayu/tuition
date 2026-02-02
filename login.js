@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 //setTimeout(() => {
                 //    window.location.href = 'admin.html';
                 //}, 1500);
-                //return;
+                return;
             }
             
             // Check if user exists in localStorage
