@@ -95,6 +95,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     name: user.name,
                     role: user.role
                 }));
+
+                const storedUser = localStorage.getItem('currentUser');
+                alert('storedUser.email='+storedUser.email+'storedUser.role='+storedUser.role);
                 
                 setTimeout(() => {
                     // Redirect to appropriate page based on role
