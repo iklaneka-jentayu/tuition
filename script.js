@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.getElementById('navMenu');
     
     if (menuToggle) {
+        alert('menuToggle');
         menuToggle.addEventListener('click', function() {
             navMenu.classList.toggle('active');
             menuToggle.innerHTML = navMenu.classList.contains('active') 
