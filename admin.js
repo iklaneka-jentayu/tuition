@@ -3,10 +3,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Authentication Check
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    
+    alert('currentUser role='+currentUser.role)
+    alert('currentUser email='+currentUser.email);;
     if (!currentUser.email || currentUser.role !== 'admin') {
         // Redirect to login if not admin
-        window.location.href = 'login.html';
+        window.location.href = 'admin.html';
         return;
     }
     
