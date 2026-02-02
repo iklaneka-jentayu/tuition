@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!currentUser.email || currentUser.role !== 'admin') {
         // Redirect to login if not admin
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
         return;
     }
     
