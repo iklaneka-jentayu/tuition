@@ -76,15 +76,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Check if admin credentials
             if (email === 'admin@excellearn.com' && password === 'admin123') {
-               
                 showNotification('Admin login successful! Redirecting...', 'success');
-                //window.location.href = 'admin.html';
                 setTimeout(() => {
-                   // window.location.href = 'admin.html';
                     window.location.href = 'admin.html';
-                    // alert('admin.htm..');
                 }, 1500);
-                //alert('return..');
                 return;
             }
             
@@ -103,9 +98,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 setTimeout(() => {
                     // Redirect to appropriate page based on role
+                    alert('user.role='+user.role+'user.email='+user.email);
                     if (user.role === 'admin') {
                         window.location.href = 'admin.html';
-                        //alert('return..admin');
                     } else {
                         // For demo, redirect to home
                         window.location.href = 'index.html';
