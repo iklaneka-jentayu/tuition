@@ -362,7 +362,7 @@ function myInitCode(){
     
     // Update enrollment status in Google Sheets
     function updateEnrollmentStatus(email, status) {
-        const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL_HERE';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwOBs2XIB1NryAYH9_QSexo6qmns0rcajp8RPyT2wleQDX7-Yj91QVj99uyIfc-ccQD/exec';
         
         const payload = {
             action: 'update',
