@@ -35,7 +35,7 @@ body {
 
 /* Language Selector */
 .language-selector {
-    /*background-color: var(--dark-color);*/
+    background-color: var(--light-color);
     padding: 8px 0;
     text-align: right;
 }
