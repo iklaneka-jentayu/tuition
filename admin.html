@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-lang">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | ExcelLearn Tuition Center</title>
+    <title data-lang="admin.title">Admin Dashboard | ExcelLearn Tuition Center</title>
     <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <div class="container">
+            <select id="languageSwitch" class="language-switch">
+                <option value="en">English</option>
+                <option value="ms">Bahasa Malaysia</option>
+            </select>
+        </div>
+    </div>
+
     <!-- Admin Sidebar -->
     <div class="admin-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="logo">Excel<span>Learn</span> Admin</div>
+                <div class="logo">Excel<span>Learn</span> <span data-lang="admin.admin">Admin</span></div>
                 <div class="admin-profile">
                     <div class="profile-image">
                         <i class="fas fa-user-shield"></i>
                     </div>
                     <div class="profile-info">
-                        <h4>Admin User</h4>
-                        <p>Administrator</p>
+                        <h4 id="adminName">Admin User</h4>
+                        <p data-lang="admin.role">Administrator</p>
                     </div>
                 </div>
             </div>
@@ -30,56 +41,56 @@
                     <li class="active">
                         <a href="#dashboard">
                             <i class="fas fa-tachometer-alt"></i>
-                            <span>Dashboard</span>
+                            <span data-lang="admin.nav.dashboard">Dashboard</span>
                         </a>
                     </li>
                     <li>
                         <a href="#students">
                             <i class="fas fa-users"></i>
-                            <span>Students</span>
+                            <span data-lang="admin.nav.students">Students</span>
                         </a>
                     </li>
                     <li>
                         <a href="#enrollments">
                             <i class="fas fa-user-plus"></i>
-                            <span>Enrollments</span>
+                            <span data-lang="admin.nav.enrollments">Enrollments</span>
                             <span class="badge" id="pendingEnrollments">0</span>
                         </a>
                     </li>
                     <li>
                         <a href="#payments">
                             <i class="fas fa-credit-card"></i>
-                            <span>Payments</span>
+                            <span data-lang="admin.nav.payments">Payments</span>
                         </a>
                     </li>
                     <li>
                         <a href="#tutors">
                             <i class="fas fa-chalkboard-teacher"></i>
-                            <span>Tutors</span>
+                            <span data-lang="admin.nav.tutors">Tutors</span>
                         </a>
                     </li>
                     <li>
                         <a href="#subjects">
                             <i class="fas fa-book"></i>
-                            <span>Subjects</span>
+                            <span data-lang="admin.nav.subjects">Subjects</span>
                         </a>
                     </li>
                     <li>
                         <a href="#schedule">
                             <i class="fas fa-calendar-alt"></i>
-                            <span>Schedule</span>
+                            <span data-lang="admin.nav.schedule">Schedule</span>
                         </a>
                     </li>
                     <li>
                         <a href="#reports">
                             <i class="fas fa-chart-bar"></i>
-                            <span>Reports</span>
+                            <span data-lang="admin.nav.reports">Reports</span>
                         </a>
                     </li>
                     <li>
                         <a href="#settings">
                             <i class="fas fa-cog"></i>
-                            <span>Settings</span>
+                            <span data-lang="admin.nav.settings">Settings</span>
                         </a>
                     </li>
                 </ul>
@@ -88,11 +99,11 @@
             <div class="sidebar-footer">
                 <a href="index.html" class="btn-home">
                     <i class="fas fa-home"></i>
-                    <span>View Website</span>
+                    <span data-lang="admin.viewSite">View Website</span>
                 </a>
                 <button class="btn-logout" id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
+                    <span data-lang="admin.logout">Logout</span>
                 </button>
             </div>
         </aside>
@@ -101,14 +112,14 @@
         <main class="main-content">
             <header class="main-header">
                 <div class="header-left">
-                    <h1>Admin Dashboard</h1>
+                    <h1 data-lang="admin.dashboard">Admin Dashboard</h1>
                     <p id="currentDate">Loading date...</p>
                 </div>
                 
                 <div class="header-right">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search...">
+                        <input type="text" data-lang="admin.search" placeholder="Search...">
                     </div>
                     
                     <div class="header-actions">
@@ -119,7 +130,7 @@
                         
                         <button class="btn-add" id="addNewBtn">
                             <i class="fas fa-plus"></i>
-                            Add New
+                            <span data-lang="admin.addNew">Add New</span>
                         </button>
                     </div>
                 </div>
@@ -127,7 +138,7 @@
             
             <!-- Dashboard Stats -->
             <section class="dashboard-stats" id="dashboard">
-                <h2>Overview</h2>
+                <h2 data-lang="admin.overview">Overview</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -136,7 +147,7 @@
                         </div>
                         <div class="stat-info">
                             <h3 id="totalStudents">0</h3>
-                            <p>Total Students</p>
+                            <p data-lang="admin.stats.students">Total Students</p>
                         </div>
                         <div class="stat-trend up">
                             <i class="fas fa-arrow-up"></i>
@@ -150,7 +161,7 @@
                         </div>
                         <div class="stat-info">
                             <h3 id="activeEnrollments">0</h3>
-                            <p>Active Enrollments</p>
+                            <p data-lang="admin.stats.enrollments">Active Enrollments</p>
                         </div>
                         <div class="stat-trend up">
                             <i class="fas fa-arrow-up"></i>
@@ -164,7 +175,7 @@
                         </div>
                         <div class="stat-info">
                             <h3 id="totalRevenue">RM 0</h3>
-                            <p>Total Revenue</p>
+                            <p data-lang="admin.stats.revenue">Total Revenue</p>
                         </div>
                         <div class="stat-trend up">
                             <i class="fas fa-arrow-up"></i>
@@ -178,7 +189,7 @@
                         </div>
                         <div class="stat-info">
                             <h3 id="totalTutors">0</h3>
-                            <p>Active Tutors</p>
+                            <p data-lang="admin.stats.tutors">Active Tutors</p>
                         </div>
                         <div class="stat-trend down">
                             <i class="fas fa-arrow-down"></i>
@@ -191,19 +202,19 @@
             <!-- Data Table Section -->
             <section class="data-section" id="students">
                 <div class="section-header">
-                    <h2>Student Management</h2>
+                    <h2 data-lang="admin.students.title">Student Management</h2>
                     <div class="section-actions">
                         <button class="btn-export" id="exportBtn">
                             <i class="fas fa-download"></i>
-                            Export
+                            <span data-lang="admin.export">Export</span>
                         </button>
                         <button class="btn-filter" id="filterBtn">
                             <i class="fas fa-filter"></i>
-                            Filter
+                            <span data-lang="admin.filter">Filter</span>
                         </button>
                         <button class="btn-refresh" id="refreshBtn">
                             <i class="fas fa-sync-alt"></i>
-                            Refresh
+                            <span data-lang="admin.refresh">Refresh</span>
                         </button>
                     </div>
                 </div>
@@ -213,16 +224,16 @@
                         <thead>
                             <tr>
                                 <th><input type="checkbox" id="selectAll"></th>
-                                <th>ID</th>
-                                <th>Student Name</th>
-                                <th>Parent Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Grade</th>
-                                <th>Subjects</th>
-                                <th>Plan</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th data-lang="admin.table.id">ID</th>
+                                <th data-lang="admin.table.studentName">Student Name</th>
+                                <th data-lang="admin.table.parentName">Parent Name</th>
+                                <th data-lang="admin.table.email">Email</th>
+                                <th data-lang="admin.table.phone">Phone</th>
+                                <th data-lang="admin.table.grade">Grade</th>
+                                <th data-lang="admin.table.subjects">Subjects</th>
+                                <th data-lang="admin.table.plan">Plan</th>
+                                <th data-lang="admin.table.status">Status</th>
+                                <th data-lang="admin.table.actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="studentsTableBody">
@@ -233,7 +244,7 @@
                 
                 <div class="table-footer">
                     <div class="pagination-info">
-                        Showing <span id="startRow">1</span> to <span id="endRow">10</span> of <span id="totalRows">0</span> entries
+                        <span data-lang="admin.pagination.showing">Showing</span> <span id="startRow">1</span> <span data-lang="admin.pagination.to">to</span> <span id="endRow">10</span> <span data-lang="admin.pagination.of">of</span> <span id="totalRows">0</span> <span data-lang="admin.pagination.entries">entries</span>
                     </div>
                     <div class="pagination">
                         <button class="page-btn" id="prevPage">
@@ -250,21 +261,21 @@
             <!-- Enrollment Management -->
             <section class="data-section" id="enrollments">
                 <div class="section-header">
-                    <h2>Enrollment Management</h2>
+                    <h2 data-lang="admin.enrollments.title">Enrollment Management</h2>
                 </div>
                 
                 <div class="table-container">
                     <table id="enrollmentsTable">
                         <thead>
                             <tr>
-                                <th>Enrollment ID</th>
-                                <th>Date</th>
-                                <th>Student Name</th>
-                                <th>Plan</th>
-                                <th>Amount</th>
-                                <th>Payment Status</th>
-                                <th>Enrollment Status</th>
-                                <th>Actions</th>
+                                <th data-lang="admin.enrollments.id">Enrollment ID</th>
+                                <th data-lang="admin.enrollments.date">Date</th>
+                                <th data-lang="admin.enrollments.studentName">Student Name</th>
+                                <th data-lang="admin.enrollments.plan">Plan</th>
+                                <th data-lang="admin.enrollments.amount">Amount</th>
+                                <th data-lang="admin.enrollments.paymentStatus">Payment Status</th>
+                                <th data-lang="admin.enrollments.enrollmentStatus">Enrollment Status</th>
+                                <th data-lang="admin.enrollments.actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="enrollmentsTableBody">
@@ -277,10 +288,10 @@
             <!-- Payment Management -->
             <section class="data-section" id="payments">
                 <div class="section-header">
-                    <h2>Payment Management</h2>
+                    <h2 data-lang="admin.payments.title">Payment Management</h2>
                     <button class="btn-primary" id="processPaymentBtn">
                         <i class="fas fa-cogs"></i>
-                        Process Payments
+                        <span data-lang="admin.payments.process">Process Payments</span>
                     </button>
                 </div>
                 
@@ -288,15 +299,15 @@
                     <table id="paymentsTable">
                         <thead>
                             <tr>
-                                <th>Payment ID</th>
-                                <th>Date</th>
-                                <th>Student</th>
-                                <th>Description</th>
-                                <th>Amount</th>
-                                <th>Method</th>
-                                <th>Status</th>
-                                <th>Receipt</th>
-                                <th>Actions</th>
+                                <th data-lang="admin.payments.id">Payment ID</th>
+                                <th data-lang="admin.payments.date">Date</th>
+                                <th data-lang="admin.payments.student">Student</th>
+                                <th data-lang="admin.payments.description">Description</th>
+                                <th data-lang="admin.payments.amount">Amount</th>
+                                <th data-lang="admin.payments.method">Method</th>
+                                <th data-lang="admin.payments.status">Status</th>
+                                <th data-lang="admin.payments.receipt">Receipt</th>
+                                <th data-lang="admin.payments.actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="paymentsTableBody">
@@ -308,27 +319,27 @@
             
             <!-- Quick Actions Panel -->
             <section class="quick-actions">
-                <h2>Quick Actions</h2>
+                <h2 data-lang="admin.quickActions">Quick Actions</h2>
                 
                 <div class="actions-grid">
                     <button class="action-btn" id="sendBulkEmail">
                         <i class="fas fa-envelope"></i>
-                        <span>Send Bulk Email</span>
+                        <span data-lang="admin.actions.email">Send Bulk Email</span>
                     </button>
                     
                     <button class="action-btn" id="generateReport">
                         <i class="fas fa-file-pdf"></i>
-                        <span>Generate Report</span>
+                        <span data-lang="admin.actions.report">Generate Report</span>
                     </button>
                     
                     <button class="action-btn" id="backupData">
                         <i class="fas fa-database"></i>
-                        <span>Backup Data</span>
+                        <span data-lang="admin.actions.backup">Backup Data</span>
                     </button>
                     
                     <button class="action-btn" id="importData">
                         <i class="fas fa-file-import"></i>
-                        <span>Import Data</span>
+                        <span data-lang="admin.actions.import">Import Data</span>
                     </button>
                 </div>
             </section>
@@ -339,7 +350,7 @@
     <div class="modal" id="studentModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">Add New Student</h3>
+                <h3 id="modalTitle" data-lang="admin.modal.addStudent">Add New Student</h3>
                 <button class="modal-close" id="modalClose">&times;</button>
             </div>
             
@@ -349,80 +360,80 @@
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="modalStudentName">Student Name *</label>
+                            <label for="modalStudentName" data-lang="admin.modal.studentName">Student Name *</label>
                             <input type="text" id="modalStudentName" required>
                         </div>
                         <div class="form-group">
-                            <label for="modalParentName">Parent Name *</label>
+                            <label for="modalParentName" data-lang="admin.modal.parentName">Parent Name *</label>
                             <input type="text" id="modalParentName" required>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="modalEmail">Email *</label>
+                            <label for="modalEmail" data-lang="admin.modal.email">Email *</label>
                             <input type="email" id="modalEmail" required>
                         </div>
                         <div class="form-group">
-                            <label for="modalPhone">Phone *</label>
+                            <label for="modalPhone" data-lang="admin.modal.phone">Phone *</label>
                             <input type="tel" id="modalPhone" required>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="modalGrade">Grade *</label>
+                            <label for="modalGrade" data-lang="admin.modal.grade">Grade *</label>
                             <select id="modalGrade" required>
-                                <option value="">Select Grade</option>
-                                <option value="form1">Form 1</option>
-                                <option value="form2">Form 2</option>
-                                <option value="form3">Form 3</option>
-                                <option value="form4">Form 4</option>
-                                <option value="form5">Form 5</option>
+                                <option value="" data-lang="admin.modal.selectGrade">Select Grade</option>
+                                <option value="form1" data-lang="enroll.form.form1">Form 1</option>
+                                <option value="form2" data-lang="enroll.form.form2">Form 2</option>
+                                <option value="form3" data-lang="enroll.form.form3">Form 3</option>
+                                <option value="form4" data-lang="enroll.form.form4">Form 4</option>
+                                <option value="form5" data-lang="enroll.form.form5">Form 5</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="modalPlan">Plan *</label>
+                            <label for="modalPlan" data-lang="admin.modal.plan">Plan *</label>
                             <select id="modalPlan" required>
-                                <option value="">Select Plan</option>
-                                <option value="basic">Basic</option>
-                                <option value="standard">Standard</option>
-                                <option value="premium">Premium</option>
+                                <option value="" data-lang="admin.modal.selectPlan">Select Plan</option>
+                                <option value="basic" data-lang="pricing.plans.basic.name">Basic</option>
+                                <option value="standard" data-lang="pricing.plans.standard.name">Standard</option>
+                                <option value="premium" data-lang="pricing.plans.premium.name">Premium</option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="form-group full-width">
-                        <label for="modalSubjects">Subjects</label>
+                        <label for="modalSubjects" data-lang="admin.modal.subjects">Subjects</label>
                         <select id="modalSubjects" multiple>
-                            <option value="mathematics">Mathematics</option>
-                            <option value="science">Science</option>
-                            <option value="english">English</option>
-                            <option value="malay">Malay</option>
-                            <option value="history">History</option>
+                            <option value="mathematics" data-lang="enroll.form.math">Mathematics</option>
+                            <option value="science" data-lang="enroll.form.science">Science</option>
+                            <option value="english" data-lang="enroll.form.english">English</option>
+                            <option value="malay" data-lang="enroll.form.malay">Malay</option>
+                            <option value="history" data-lang="enroll.form.history">History</option>
                         </select>
                     </div>
                     
                     <div class="form-group full-width">
-                        <label for="modalStatus">Status</label>
+                        <label for="modalStatus" data-lang="admin.modal.status">Status</label>
                         <select id="modalStatus">
-                            <option value="active">Active</option>
-                            <option value="pending">Pending</option>
-                            <option value="inactive">Inactive</option>
-                            <option value="suspended">Suspended</option>
+                            <option value="active" data-lang="admin.status.active">Active</option>
+                            <option value="pending" data-lang="admin.status.pending">Pending</option>
+                            <option value="inactive" data-lang="admin.status.inactive">Inactive</option>
+                            <option value="suspended" data-lang="admin.status.suspended">Suspended</option>
                         </select>
                     </div>
                     
                     <div class="form-group full-width">
-                        <label for="modalNotes">Notes</label>
+                        <label for="modalNotes" data-lang="admin.modal.notes">Notes</label>
                         <textarea id="modalNotes" rows="3"></textarea>
                     </div>
                 </form>
             </div>
             
             <div class="modal-footer">
-                <button class="btn-secondary" id="modalCancel">Cancel</button>
-                <button class="btn-primary" id="modalSave">Save Changes</button>
+                <button class="btn-secondary" id="modalCancel" data-lang="admin.modal.cancel">Cancel</button>
+                <button class="btn-primary" id="modalSave" data-lang="admin.modal.save">Save Changes</button>
             </div>
         </div>
     </div>
@@ -432,15 +443,16 @@
         <div class="modal-content small">
             <div class="modal-body">
                 <i class="fas fa-exclamation-triangle warning-icon"></i>
-                <h4 id="confirmMessage">Are you sure you want to delete this item?</h4>
+                <h4 id="confirmMessage" data-lang="admin.confirm.delete">Are you sure you want to delete this item?</h4>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" id="confirmCancel">Cancel</button>
-                <button class="btn-danger" id="confirmDelete">Delete</button>
+                <button class="btn-secondary" id="confirmCancel" data-lang="admin.confirm.cancel">Cancel</button>
+                <button class="btn-danger" id="confirmDelete" data-lang="admin.confirm.delete">Delete</button>
             </div>
         </div>
     </div>
     
+    <script src="lang.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>
