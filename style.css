@@ -33,6 +33,64 @@ body {
     padding: 0 20px;
 }
 
+/* Language Selector */
+.language-selector {
+    background-color: var(--dark-color);
+    padding: 8px 0;
+    text-align: right;
+}
+
+.language-switch {
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.language-switch:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.language-switch option {
+    background-color: var(--dark-color);
+    color: white;
+}
+
+/* RTL Support */
+[dir="rtl"] .hero .container {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .contact .container {
+    direction: rtl;
+}
+
+[dir="rtl"] .nav-menu {
+    direction: rtl;
+}
+
+[dir="rtl"] .subject-card {
+    border-left: none;
+    border-right: 4px solid var(--primary-color);
+}
+
+/* Responsive Language Selector */
+@media (max-width: 768px) {
+    .language-selector {
+        text-align: center;
+    }
+    
+    .language-switch {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
 section {
     padding: 80px 0;
 }
