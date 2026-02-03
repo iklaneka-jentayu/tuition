@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Authentication Check
         const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
         
-        if (!currentUser.email || currentUser.role !== 'admin') {
+        if (!currentUser.email || currentUser.role !== 'admin123') {
             // Redirect to login if not admin
             window.location.href = 'login.html';
             return;
