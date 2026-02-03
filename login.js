@@ -1,6 +1,8 @@
 // Updated login.js with language support
+if (document.readyState !== 'loading') myInitCode()
+else document.addEventListener('DOMContentLoaded', myInitCode);
 
-document.addEventListener('DOMContentLoaded', function() {
+function myInitCode() {
     // Wait for language manager to initialize
     setTimeout(() => {
         // Toggle between login and signup forms
@@ -361,4 +363,4 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.appendChild(notification);
         }
     }, 100);
-});
+};
