@@ -161,12 +161,15 @@ function myInitCode() {
                     role: userType,
                     createdAt: new Date().toISOString()
                 };
-                
+                //razin check
                 users.push(newUser);
                 localStorage.setItem('excellearn_users', JSON.stringify(users));
-                
+                alert(`Users = `+ JSON.stringify(users))
+                console.log(`Users = `,JSON.stringify(users));
                 // Also send to Google Sheets for record keeping
                 sendUserToGoogleSheets(newUser);
+                console.log('sendUserToGoogleSheets');
+                
                 
                 showNotification(getTranslation('signup.success'), 'success');
                 
