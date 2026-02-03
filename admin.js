@@ -1,6 +1,10 @@
 // Updated admin.js with language support
+if (document.readyState !== 'loading') myInitCode()
+else document.addEventListener('DOMContentLoaded', myInitCode);
 
-document.addEventListener('DOMContentLoaded', function() {
+// Main JavaScript for ExcelLearn Tuition Center
+
+function myInitCode(){
     // Wait for language manager to initialize
     setTimeout(() => {
         // Authentication Check
@@ -887,4 +891,4 @@ document.addEventListener('DOMContentLoaded', function() {
         // Call to initialize sample data
         initializeSampleData();
     }, 100);
-});
+};
