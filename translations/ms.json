@@ -197,5 +197,12 @@
         },
         "rights": "Hak Cipta Terpelihara",
         "accredited": "Institusi Diakreditasi MQA"
+    },
+    "login": {
+        "back": "Laman Utama",
+        "welcome": "Selamat Datang",
+        "subtitle": "Subtitle",
+        "email": "Email",
+        "password": "Kata laluan"
     }
 }
