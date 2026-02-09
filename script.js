@@ -272,6 +272,7 @@ function myInitCode(){
         // Your Google Apps Script Web App URL
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwOBs2XIB1NryAYH9_QSexo6qmns0rcajp8RPyT2wleQDX7-Yj91QVj99uyIfc-ccQD/exec';
         // Prepare data for submission
+        //"Grade","Subjects","Plan","Status","Notes/Message",
         const payload = {
             action: 'create_student',
             data: {
