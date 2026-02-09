@@ -10,8 +10,9 @@ function myInitCode(){
         // Authentication Check
         const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
         
-        if (!currentUser.email || currentUser.role !== 'admin123') {
+        if (!currentUser.email || currentUser.role !== 'admin') {
             // Redirect to login if not admin
+            console.log('login.html');
             window.location.href = 'login.html';
             return;
         }
