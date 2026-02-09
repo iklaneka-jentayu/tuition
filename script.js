@@ -271,7 +271,6 @@ function myInitCode(){
     function sendToGoogleSheets(data) {
         // Your Google Apps Script Web App URL
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwOBs2XIB1NryAYH9_QSexo6qmns0rcajp8RPyT2wleQDX7-Yj91QVj99uyIfc-ccQD/exec';
-        
         // Prepare data for submission
         const payload = {
             action: 'create',
