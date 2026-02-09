@@ -288,7 +288,8 @@ function myInitCode(){
                 status: 'pending_payment'
             }
         };
-        
+
+        console.log('payload:',JSON.stringify(payload));
         // Send POST request
         fetch(scriptURL, {
             method: 'POST',
@@ -371,7 +372,7 @@ function myInitCode(){
                 paymentDate: new Date().toISOString()
             }
         };
-        
+        console.log('update_student:',JSON.stringify(update_student));
         fetch(scriptURL, {
             method: 'POST',
             mode: 'no-cors',
