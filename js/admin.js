@@ -7,7 +7,7 @@ let currentLogs = [];
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check if user is admin
-    checkAdminAuth();
+    // checkAdminAuth();
     
     // Load initial data
     loadDashboardData();
@@ -375,4 +375,5 @@ document.getElementById('memberForm')?.addEventListener('submit', async function
         console.error('Error saving member:', error);
         alert('Error saving member');
     }
+
 });
