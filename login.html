@@ -169,18 +169,21 @@
 <body>
     <section class="login-section">
         <div class="login-container">
+            <!-- Update login page with data-i18n attributes -->
             <div class="login-header">
                 <a href="index.html" class="logo">
                     <i class="fas fa-graduation-cap"></i>
-                    <span>EduSmart Tuition</span>
+                    <span data-i18n="nav.home">EduSmart Tuition</span>
                 </a>
-                <h1>Welcome Back!</h1>
-                <p>Login to access your dashboard</p>
+                <h1 data-i18n="login.title">Welcome Back!</h1>
+                <p data-i18n="login.subtitle">Login to access your dashboard</p>
             </div>
             
             <div class="login-tabs">
-                <button class="login-tab active" onclick="switchLoginTab('member')">Member Login</button>
-                <button class="login-tab" onclick="switchLoginTab('admin')">Admin Login</button>
+                <button class="login-tab active" onclick="switchLoginTab('member')" 
+                        data-i18n="login.member_login">Member Login</button>
+                <button class="login-tab" onclick="switchLoginTab('admin')" 
+                        data-i18n="login.admin_login">Admin Login</button>
             </div>
             
             <!-- Member Login Form -->
@@ -188,58 +191,47 @@
                 <form id="memberLoginForm">
                     <div class="input-group">
                         <i class="fas fa-envelope input-icon"></i>
-                        <input type="email" id="memberEmail" placeholder="Email Address" required>
+                        <input type="email" id="memberEmail" data-i18n-placeholder="login.email" 
+                               placeholder="Email Address" required>
                     </div>
                     
                     <div class="input-group">
                         <i class="fas fa-lock input-icon"></i>
-                        <input type="password" id="memberPassword" placeholder="Password" required>
+                        <input type="password" id="memberPassword" data-i18n-placeholder="login.password" 
+                               placeholder="Password" required>
                     </div>
                     
                     <div class="remember-forgot">
                         <label>
-                            <input type="checkbox"> Remember me
+                            <input type="checkbox"> <span data-i18n="login.remember">Remember me</span>
                         </label>
-                        <a href="#" style="color: var(--primary-color); text-decoration: none;">Forgot Password?</a>
+                        <a href="#" style="color: var(--primary-color); text-decoration: none;" 
+                           data-i18n="login.forgot">Forgot Password?</a>
                     </div>
                     
-                    <button type="submit" class="btn-login">
+                    <button type="submit" class="btn-login" data-i18n="login.member_button">
                         <i class="fas fa-sign-in-alt"></i> Login as Member
                     </button>
                 </form>
                 
                 <div class="register-link">
-                    <p>Don't have an account? <a href="enrollment.html">Enroll Now</a></p>
+                    <p>
+                        <span data-i18n="login.no_account">Don't have an account?</span> 
+                        <a href="enrollment.html" data-i18n="login.enroll_now">Enroll Now</a>
+                    </p>
                 </div>
             </div>
             
-            <!-- Admin Login Form -->
-            <div id="adminLogin" class="login-form">
-                <form id="adminLoginForm">
-                    <div class="input-group">
-                        <i class="fas fa-user-shield input-icon"></i>
-                        <input type="email" id="adminEmail" placeholder="Admin Email" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <i class="fas fa-key input-icon"></i>
-                        <input type="password" id="adminPassword" placeholder="Admin Password" required>
-                    </div>
-                    
-                    <button type="submit" class="btn-login">
-                        <i class="fas fa-shield-alt"></i> Login as Admin
-                    </button>
-                </form>
-            </div>
-            
+            <!-- Demo Credentials -->
             <div class="demo-credentials">
-                <h4>Demo Credentials:</h4>
-                <p><strong>Member:</strong> member@example.com / password123</p>
-                <p><strong>Admin:</strong> admin@edusmart.com / admin123</p>
+                <h4 data-i18n="login.demo_credentials">Demo Credentials:</h4>
+                <p data-i18n="login.demo_member">Member: member@example.com / password123</p>
+                <p data-i18n="login.demo_admin">Admin: admin@edusmart.com / admin123</p>
             </div>
         </div>
     </section>
     
     <script src="js/auth.js"></script>
 </body>
+
 </html>
