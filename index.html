@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSmart Tuition - Premium Secondary School Tutoring</title>
+    <meta name="description" content="Expert online and offline tuition for secondary school students. All subjects covered. Boost grades with personalized learning.">
+    <meta name="keywords" content="tuition, secondary school, online tuition, offline tuition, tutoring, math, science, english, malay, mandarin, education">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="ms">Malay (Bahasa Malaysia)</option>
+            <option value="zh">Mandarin (中文)</option>
+        </select>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="logo-text">EduSmart</span>
+            </a>
+            
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active" data-i18n="nav.home">Home</a>
+                <a href="#subjects" class="nav-link" data-i18n="nav.subjects">Subjects</a>
+                <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
+                <a href="#testimonials" class="nav-link" data-i18n="nav.testimonials">Testimonials</a>
+                <a href="enrollment.html" class="nav-link" data-i18n="nav.enroll">Enroll Now</a>
+                <a href="login.html" class="nav-link btn-login" data-i18n="nav.login">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Video Background -->
+    <section class="hero-section">
+        <div class="video-container">
+            <video autoplay muted loop playsinline id="heroVideo">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-students-studying-in-a-library-39755-large.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="hero.title">Excel in Secondary School with Expert Tuition</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Personalized online and offline tutoring for all subjects. Join 2,000+ students who improved their grades by 30% on average.</p>
+            <div class="hero-buttons">
+                <a href="enrollment.html" class="btn btn-primary" data-i18n="hero.cta">Start Free Trial</a>
+                <a href="#subjects" class="btn btn-secondary" data-i18n="hero.subjects">View Subjects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subjects Section -->
+    <section id="subjects" class="subjects-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="subjects.title">Comprehensive Subject Coverage</h2>
+            <p class="section-subtitle" data-i18n="subjects.subtitle">We offer expert tutoring for all secondary school subjects from Form 1 to Form 5</p>
+            
+            <div class="subjects-grid">
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 data-i18n="subjects.math">Mathematics</h3>
+                    <p data-i18n="subjects.math_desc">Algebra, Geometry, Calculus, Statistics</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 data-i18n="subjects.science">Science</h3>
+                    <p data-i18n="subjects.science_desc">Physics, Chemistry, Biology, General Science</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 data-i18n="subjects.english">English</h3>
+                    <p data-i18n="subjects.english_desc">Grammar, Literature, Composition, Comprehension</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 data-i18n="subjects.malay">Bahasa Malaysia</h3>
+                    <p data-i18n="subjects.malay_desc">Grammar, Karangan, Kefahaman, Sastera</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h3 data-i18n="subjects.mandarin">Mandarin</h3>
+                    <p data-i18n="subjects.mandarin_desc">Writing, Reading, Speaking, Comprehension</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 data-i18n="subjects.history">History & Geography</h3>
+                    <p data-i18n="subjects.history_desc">Malaysian History, World History, Physical Geography</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title" data-i18n="about.title">Why Choose EduSmart Tuition?</h2>
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-user-graduate feature-icon"></i>
+                            <div>
+                                <h3 data-i18n="about.feature1_title">Expert Tutors</h3>
+                                <p data-i18n="about.feature1_desc">All our tutors are certified teachers with 5+ years of experience</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-laptop-house feature-icon"></i>
+                            <div>
+                                <h3 data-i18n="about.feature2_title">Flexible Learning</h3>
+                                <p data-i18n="about.feature2_desc">Choose between online live classes or in-person tuition at our centers</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                            <div>
+                                <h3 data-i18n="about.feature3_title">Proven Results</h3>
+                                <p data-i18n="about.feature3_desc">94% of our students improve their grades within 3 months</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-calendar-alt feature-icon"></i>
+                            <div>
+                                <h3 data-i18n="about.feature4_title">Flexible Scheduling</h3>
+                                <p data-i18n="about.feature4_desc">Classes available on weekdays, weekends, and during school holidays</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Students learning together">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="testimonials.title">What Parents & Students Say</h2>
+            
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-i18n="testimonial1.text">"My daughter's math grade improved from C to A in just 4 months. The tutors are patient and explain concepts clearly."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4 data-i18n="testimonial1.name">Amina Hassan</h4>
+                        <p data-i18n="testimonial1.role">Parent of Form 3 Student</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-i18n="testimonial2.text">"The online classes are so convenient. I can learn from home and the interactive platform makes it engaging."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4 data-i18n="testimonial2.name">Wei Chen</h4>
+                        <p data-i18n="testimonial2.role">Form 5 Student</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-i18n="testimonial3.text">"EduSmart helped my son gain confidence in Science. He's now scoring As and actually enjoys learning."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4 data-i18n="testimonial3.name">Raj Kumar</h4>
+                        <p data-i18n="testimonial3.role">Parent of Form 4 Student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-i18n="cta.title">Ready to Boost Your Grades?</h2>
+                <p data-i18n="cta.subtitle">Join our free trial week with no commitment. Experience our teaching methods first-hand.</p>
+                <a href="enrollment.html" class="btn btn-primary btn-large" data-i18n="cta.button">Start Free Trial Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduSmart Tuition</span>
+                    </a>
+                    <p data-i18n="footer.description">Premium online and offline tuition for secondary school students across Malaysia.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-i18n="footer.links">Quick Links</h3>
+                    <a href="index.html" data-i18n="nav.home">Home</a>
+                    <a href="#subjects" data-i18n="nav.subjects">Subjects</a>
+                    <a href="#about" data-i18n="nav.about">About Us</a>
+                    <a href="enrollment.html" data-i18n="nav.enroll">Enrollment</a>
+                    <a href="login.html" data-i18n="nav.login">Login</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-i18n="footer.contact">Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer.address">Kuala Lumpur, Malaysia</span></p>
+                    <p><i class="fas fa-phone"></i> <span>+603-1234 5678</span></p>
+                    <p><i class="fas fa-envelope"></i> <span>info@edusmart.com</span></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> EduSmart Tuition. <span data-i18n="footer.rights">All rights reserved.</span></p>
+                <p><a href="#" data-i18n="footer.privacy">Privacy Policy</a> | <a href="#" data-i18n="footer.terms">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/language.js"></script>
+</body>
+</html>
