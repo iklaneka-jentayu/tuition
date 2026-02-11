@@ -1,42 +1,203 @@
-<!-- Update member dashboard with data-i18n attributes -->
-<div class="welcome-card">
-    <h1><span data-i18n="member.welcome">Welcome back,</span> <span id="welcomeName">Student</span>!</h1>
-    <p><span data-i18n="member.next_class">Your next class:</span> Mathematics (Online) - Tomorrow at 4:00 PM</p>
-</div>
-
-<div class="dashboard-grid">
-    <!-- Current Classes -->
-    <div class="dashboard-card">
-        <h3><i class="fas fa-book-open"></i> <span data-i18n="member.my_classes">My Classes</span></h3>
-        <div id="myClasses">
-            <div class="class-item">
-                <div>
-                    <strong data-i18n="subjects.math">Mathematics</strong>
-                    <p style="color: var(--gray-color);" data-i18n="enroll.form4">Form 4 - Online</p>
-                </div>
-                <span style="color: var(--success-color);" data-i18n="member.active">Active</span>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Payment Information -->
-    <div class="dashboard-card">
-        <h3><i class="fas fa-credit-card"></i> <span data-i18n="member.payment_status">Payment Status</span></h3>
-        <div style="margin-bottom: 20px;">
-            <p style="color: var(--gray-color);" data-i18n="member.monthly_fee">Monthly Fee</p>
-            <h2 style="color: var(--dark-color);">RM 290</h2>
-            <p style="color: var(--gray-color);" data-i18n="member.due_date">Due Date: 5th of each month</p>
-        </div>
-        <button class="btn-make-payment" onclick="makePayment()" data-i18n="member.make_payment">
-            <i class="fas fa-lock"></i> Make Payment with ToyibPay
-        </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard - EduSmart Tuition</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dashboard-section {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+            background: #f1f5f9;
+        }
         
-        <div class="payment-history">
-            <h4 data-i18n="member.recent_payments">Recent Payments</h4>
-            <div class="payment-item">
-                <span>January 2024</span>
-                <span style="color: var(--success-color);" data-i18n="member.paid">Paid</span>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .welcome-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .dashboard-card h3 {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .class-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .class-item:last-child {
+            border-bottom: none;
+        }
+        
+        .payment-history {
+            margin-top: 20px;
+        }
+        
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .btn-make-payment {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: var(--transition);
+        }
+        
+        .btn-make-payment:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="logo-text">EduSmart</span>
+            </a>
+            <div class="nav-menu">
+                <span class="nav-link">Welcome, <span id="memberName">Member</span></span>
+                <a href="enrollment.html" class="nav-link">Enroll New Subject</a>
+                <a href="login.html" class="nav-link btn-login" onclick="logout()">Logout</a>
             </div>
         </div>
-    </div>
-</div>
+    </nav>
+    
+    <section class="dashboard-section">
+        <div class="dashboard-container">
+		<!-- Update member dashboard with data-i18n attributes -->
+			<div class="welcome-card">
+				<h1><span data-i18n="member.welcome">Welcome back,</span> <span id="welcomeName">Student</span>!</h1>
+				<p><span data-i18n="member.next_class">Your next class:</span> Mathematics (Online) - Tomorrow at 4:00 PM</p>
+			</div>
+
+			<div class="dashboard-grid">
+				<!-- Current Classes -->
+				<div class="dashboard-card">
+					<h3><i class="fas fa-book-open"></i> <span data-i18n="member.my_classes">My Classes</span></h3>
+					<div id="myClasses">
+						<div class="class-item">
+							<div>
+								<strong data-i18n="subjects.math">Mathematics</strong>
+								<p style="color: var(--gray-color);" data-i18n="enroll.form4">Form 4 - Online</p>
+							</div>
+							<span style="color: var(--success-color);" data-i18n="member.active">Active</span>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Payment Information -->
+				<div class="dashboard-card">
+					<h3><i class="fas fa-credit-card"></i> <span data-i18n="member.payment_status">Payment Status</span></h3>
+					<div style="margin-bottom: 20px;">
+						<p style="color: var(--gray-color);" data-i18n="member.monthly_fee">Monthly Fee</p>
+						<h2 style="color: var(--dark-color);">RM 290</h2>
+						<p style="color: var(--gray-color);" data-i18n="member.due_date">Due Date: 5th of each month</p>
+					</div>
+					<button class="btn-make-payment" onclick="makePayment()" data-i18n="member.make_payment">
+						<i class="fas fa-lock"></i> Make Payment with ToyibPay
+					</button>
+					
+					<div class="payment-history">
+						<h4 data-i18n="member.recent_payments">Recent Payments</h4>
+						<div class="payment-item">
+							<span>January 2024</span>
+							<span style="color: var(--success-color);" data-i18n="member.paid">Paid</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+                <!-- Schedule -->
+                <div class="dashboard-card">
+                    <h3><i class="fas fa-calendar"></i> Upcoming Schedule</h3>
+                    <div class="class-item">
+                        <div>
+                            <strong>Mathematics</strong>
+                            <p style="color: var(--gray-color);">Tomorrow, 4:00 PM</p>
+                        </div>
+                        <span class="badge">Online</span>
+                    </div>
+                    <div class="class-item">
+                        <div>
+                            <strong>Science</strong>
+                            <p style="color: var(--gray-color);">Wednesday, 5:00 PM</p>
+                        </div>
+                        <span class="badge">Offline</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+        
+        function makePayment() {
+            // Initiate ToyibPay payment
+            alert('Redirecting to ToyibPay payment gateway...');
+            window.location.href = 'https://toyibpay.com/pay/demo123';
+        }
+        
+        // Load member data
+        document.addEventListener('DOMContentLoaded', function() {
+            const memberName = sessionStorage.getItem('userEmail') || 'Student';
+            document.getElementById('memberName').textContent = memberName.split('@')[0];
+            document.getElementById('welcomeName').textContent = memberName.split('@')[0];
+        });
+    </script>
+</body>
+</html>
