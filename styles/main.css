@@ -42,7 +42,7 @@ section {
 .language-selector {
     position: relative;
     top: 20px;
-    left: 200px;
+    right: 20px;
     z-index: 1001;
     background: white;
     border-radius: 5px;
@@ -530,4 +530,5 @@ section {
     color: white;
 
 }
+
 
