@@ -40,9 +40,9 @@ section {
 
 /* Language Selector */
 .language-selector {
-    position: fixed;
+    position: relative;
     top: 20px;
-    right: 20px;
+    left: 20px;
     z-index: 1001;
     background: white;
     border-radius: 5px;
@@ -528,4 +528,5 @@ section {
 
 .footer-bottom a:hover {
     color: white;
+
 }
