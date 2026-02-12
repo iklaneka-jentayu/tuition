@@ -100,14 +100,14 @@ body {
     gap: 15px;
 }
 
-/* Language Selector */
+/* Language Selector
 .language-selector {
     padding: 5px 8px;
     border-radius: 5px;
     border: none;
     cursor: pointer;
 }
-
+ */
 /* Hamburger Menu */
 .menu-toggle {
     display: none;
@@ -654,6 +654,7 @@ body {
     color: white;
 
 }
+
 
 
 
