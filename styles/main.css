@@ -38,6 +38,21 @@ section {
     padding: 80px 0;
 }
 
+.back-btn {
+  padding: 10px 18px;
+  background-color: #222;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  background-color: #444;
+}
+
 /* Reset */
 * {
     margin: 0;
@@ -557,6 +572,7 @@ body {
     color: white;
 
 }
+
 
 
 
