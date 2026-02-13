@@ -39,6 +39,8 @@ section {
 }
 
 .back-btn {
+  position: fixed;
+  left: 0px
   padding: 10px 18px;
   background-color: #222;
   color: #fff;
@@ -48,6 +50,9 @@ section {
   font-size: 14px;
   transition: 0.3s;
 }
+
+;
+
 
 .back-btn:hover {
   background-color: #444;
@@ -572,6 +577,7 @@ body {
     color: white;
 
 }
+
 
 
 
