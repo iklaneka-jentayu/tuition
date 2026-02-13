@@ -1,6 +1,7 @@
 // Main JavaScript for Tuition Platform
 
 function goBack() {
+    alert('back!');
     window.history.back();
 }
 
@@ -118,4 +119,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
 
