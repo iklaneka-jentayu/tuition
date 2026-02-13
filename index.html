@@ -127,61 +127,358 @@
         </div>
     </section>
 
- <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2 data-lang="pricing.title">Affordable Tuition Plans</h2>
-            <p class="section-description" data-lang="pricing.description">Choose the perfect learning package for your academic needs and budget</p>
+
+<!-- ===== PRICING SECTION ===== -->
+<section id="pricing" class="pricing-section">
+    <div class="container">
+        <h2 class="section-title" data-i18n="pricing.title">Affordable Tuition Packages</h2>
+        <p class="section-subtitle" data-i18n="pricing.subtitle">Choose the perfect package that suits your learning needs and budget</p>
+        
+        <!-- Level Tabs -->
+        <div class="pricing-tabs">
+            <button class="pricing-tab active" onclick="switchPricingTab('primary')" data-i18n="pricing.tab.primary">Primary School (Year 3-6)</button>
+            <button class="pricing-tab" onclick="switchPricingTab('lower-secondary')" data-i18n="pricing.tab.lower">Lower Secondary (Form 1-3)</button>
+            <button class="pricing-tab" onclick="switchPricingTab('upper-secondary')" data-i18n="pricing.tab.upper">Upper Secondary (Form 4-5)</button>
+        </div>
+        
+        <!-- Primary School Packages (Year 3-6) -->
+        <div id="primary-pricing" class="pricing-grid active">
+            <div class="pricing-card" data-aos="fade-up">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.primary.single">Single Subject</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">100</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.subject">1 Subject</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
             
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3 data-lang="pricing.plans.basic.name">Basic</h3>
-                        <div class="price">RM 99<span data-lang="pricing.permonth">/month</span></div>
+            <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="100">
+                <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.primary.two">2 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">140</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
                     </div>
-                    <ul class="features-list">
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.basic.feature1">4 Group Classes Monthly</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.basic.feature2">1 Subject Choice</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.basic.feature3">Online Access Only</span></li>
-                        <li><i class="fas fa-times"></i> <span data-lang="pricing.plans.basic.feature4">No Personal Tutor</span></li>
-                        <li><i class="fas fa-times"></i> <span data-lang="pricing.plans.basic.feature5">Limited Assessments</span></li>
-                    </ul>
-                    <a href="#enroll" class="btn-pricing" data-lang="pricing.choose">Choose Plan</a>
                 </div>
-                
-                <div class="pricing-card popular">
-                    <div class="popular-badge" data-lang="pricing.popular">Most Popular</div>
-                    <div class="pricing-header">
-                        <h3 data-lang="pricing.plans.standard.name">Standard</h3>
-                        <div class="price">RM 199<span data-lang="pricing.permonth">/month</span></div>
-                    </div>
-                    <ul class="features-list">
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.standard.feature1">8 Group Classes Monthly</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.standard.feature2">3 Subject Choices</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.standard.feature3">Online & Offline Access</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.standard.feature4">Weekly Progress Report</span></li>
-                        <li><i class="fas fa-times"></i> <span data-lang="pricing.plans.standard.feature5">Limited 1-on-1 Sessions</span></li>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.two_subjects">2 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
                     </ul>
-                    <a href="#enroll" class="btn-pricing" data-lang="pricing.choose">Choose Plan</a>
                 </div>
-                
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3 data-lang="pricing.plans.premium.name">Premium</h3>
-                        <div class="price">RM 399<span data-lang="pricing.permonth">/month</span></div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.primary.three">3 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">180</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
                     </div>
-                    <ul class="features-list">
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.premium.feature1">Unlimited Classes</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.premium.feature2">All Subjects Access</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.premium.feature3">Dedicated Personal Tutor</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.premium.feature4">Daily Progress Tracking</span></li>
-                        <li><i class="fas fa-check"></i> <span data-lang="pricing.plans.premium.feature5">Exam Crash Courses</span></li>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.three_subjects">3 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
                     </ul>
-                    <a href="#enroll" class="btn-pricing" data-lang="pricing.choose">Choose Plan</a>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.primary.four">4 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">200</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.four_subjects">4 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
                 </div>
             </div>
         </div>
-    </section>    
+        
+        <!-- Lower Secondary Packages (Form 1-3) -->
+        <div id="lower-secondary-pricing" class="pricing-grid">
+            <div class="pricing-card" data-aos="fade-up">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.lower.single">Single Subject</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">100</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.subject">1 Subject</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.lower.two">2 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">160</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.two_subjects">2 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="200">
+                <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.lower.three">3 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">190</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.three_subjects">3 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.lower.four">4 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">200</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.four_subjects">4 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Upper Secondary Packages (Form 4-5) -->
+        <div id="upper-secondary-pricing" class="pricing-grid">
+            <div class="pricing-card" data-aos="fade-up">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_e">Package E</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">150</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.e_desc">Basic Package - 2 Subjects</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.two_subjects">2 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Basic Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_a">Package A</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">180</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.a_desc">Standard Package - 3 Subjects</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.three_subjects">3 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Standard Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="200">
+                <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_b">Package B</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">200</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.b_desc">Premium Package - 4 Subjects</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.four_subjects">4 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Premium Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Weekly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Detailed Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_c">Package C</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">250</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.c_desc">Advanced Package - 5 Subjects</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.five_subjects">5 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Advanced Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Weekly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Detailed Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.tutoring">1-on-1 Tutoring Sessions</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_d">Package D</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">300</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.d_desc">Premium Plus - All Subjects + 1-on-1</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.all_subjects">All Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Premium Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Daily Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Comprehensive Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">All Class Recordings</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.tutoring">Weekly 1-on-1 Tutoring</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.parent">Parent-Teacher Meetings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Package Comparison Note -->
+        <div class="pricing-note">
+            <i class="fas fa-info-circle"></i>
+            <p data-i18n="pricing.note">All packages include GST. Special discounts available for sibling enrollment and annual subscription.</p>
+        </div>
+    </div>
+</section>
+
+
+    
 
     <!-- About Section -->
     <section id="about" class="about-section">
@@ -329,6 +626,7 @@
 </body>
 
 </html>
+
 
 
 
