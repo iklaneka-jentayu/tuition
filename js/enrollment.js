@@ -139,4 +139,89 @@ document.addEventListener('DOMContentLoaded', function() {
         // Simulate logging
         console.log(`[${level}] ${location}: ${message} - ${user}`);
     }
+
+// Package pricing data
+const packagePricing = {
+    primary: {
+        '1': { price: 100, name: 'Single Subject' },
+        '2': { price: 140, name: '2 Subjects Package' },
+        '3': { price: 180, name: '3 Subjects Package' },
+        '4': { price: 200, name: '4 Subjects Package' }
+    },
+    lowerSecondary: {
+        '1': { price: 100, name: 'Single Subject' },
+        '2': { price: 160, name: '2 Subjects Package' },
+        '3': { price: 190, name: '3 Subjects Package' },
+        '4': { price: 200, name: '4 Subjects Package' }
+    },
+    upperSecondary: {
+        'A': { price: 180, name: 'Package A (3 Subjects)' },
+        'B': { price: 200, name: 'Package B (4 Subjects)' },
+        'C': { price: 250, name: 'Package C (5 Subjects)' },
+        'D': { price: 300, name: 'Package D (All Subjects + 1-on-1)' },
+        'E': { price: 150, name: 'Package E (2 Subjects)' }
+    }
+};
+
+// Function to get package price based on form and subject count
+function getPackagePrice(form, subjectCount) {
+    if (form >= 4) {
+        // Upper secondary - use package letters
+        if (subjectCount <= 2) return 150; // Package E
+        if (subjectCount === 3) return 180; // Package A
+        if (subjectCount === 4) return 200; // Package B
+        if (subjectCount === 5) return 250; // Package C
+        if (subjectCount >= 6) return 300; // Package D
+    } else if (form >= 1) {
+        // Lower secondary
+        if (subjectCount === 1) return 100;
+        if (subjectCount === 2) return 160;
+        if (subjectCount === 3) return 190;
+        if (subjectCount >= 4) return 200;
+    }
+    return 0;
+}
+
+// Update total calculation in enrollment form
+function calculateTotal() {
+    const form = document.getElementById('form').value;
+    const subjects = document.querySelectorAll('input[name="subjects"]:checked');
+    const subjectCount = subjects.length;
+    
+    let total = 0;
+    
+    if (form >= 4) {
+        // Upper secondary - package based pricing
+        total = getPackagePrice(parseInt(form), subjectCount);
+        
+        // Show package name
+        const packageInfo = document.getElementById('packageInfo');
+        if (packageInfo) {
+            if (subjectCount <= 2) {
+                packageInfo.textContent = 'Package E - Basic Package (2 Subjects)';
+            } else if (subjectCount === 3) {
+                packageInfo.textContent = 'Package A - Standard Package (3 Subjects)';
+            } else if (subjectCount === 4) {
+                packageInfo.textContent = 'Package B - Premium Package (4 Subjects)';
+            } else if (subjectCount === 5) {
+                packageInfo.textContent = 'Package C - Advanced Package (5 Subjects)';
+            } else if (subjectCount >= 6) {
+                packageInfo.textContent = 'Package D - Premium Plus Package';
+            }
+        }
+    } else {
+        // Lower secondary and primary - per subject pricing
+        const pricePerSubject = form >= 1 ? 100 : 100; // Base price
+        total = subjectCount * pricePerSubject;
+        
+        // Apply package discount
+        if (subjectCount === 2) total = form >= 1 ? 160 : 140;
+        if (subjectCount === 3) total = form >= 1 ? 190 : 180;
+        if (subjectCount >= 4) total = form >= 1 ? 200 : 200;
+    }
+    
+    document.getElementById('totalAmount').textContent = `RM ${total}`;
+    return total;
+}
+    
 });
