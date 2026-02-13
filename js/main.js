@@ -1,10 +1,5 @@
 // Main JavaScript for Tuition Platform
 
-function goBack() {
-    alert('back!');
-    window.history.back();
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -119,5 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
 
 
