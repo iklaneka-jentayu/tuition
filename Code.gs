@@ -495,3 +495,337 @@ function initiateToyibPayment(data) {
     amount: payload.amount
   };
 }
+
+// Add these functions to your Google Apps Script (Code.gs)
+
+// Calendar Event CRUD Operations
+function createCalendarEvent(data) {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    let sheet = ss.getSheetByName('CalendarEvents');
+    
+    if (!sheet) {
+      sheet = ss.insertSheet('CalendarEvents');
+      sheet.getRange('1:1').setValues([[
+        'event_id', 'title', 'subject', 'teacher', 'type', 
+        'start_datetime', 'end_datetime', 'location', 'students',
+        'max_students', 'description', 'materials', 'recurring',
+        'repeat_until', 'repeat_days', 'created_at', 'updated_at'
+      ]]);
+      sheet.getRange('1:1').setFontWeight('bold');
+    }
+    
+    const timestamp = new Date();
+    const eventId = `EVT-${timestamp.getTime()}`;
+    
+    sheet.appendRow([
+      eventId,
+      data.title,
+      data.subject,
+      data.teacher,
+      data.type,
+      data.start,
+      data.end,
+      JSON.stringify(data.location),
+      JSON.stringify(data.students || []),
+      data.max_students || 10,
+      data.description || '',
+      data.materials || '',
+      data.recurring || false,
+      data.repeat_until || '',
+      JSON.stringify(data.repeat_days || []),
+      timestamp,
+      timestamp
+    ]);
+    
+    logToSheet('info', `Calendar event created: ${eventId}`, 'createCalendarEvent');
+    
+    return { success: true, event_id: eventId };
+    
+  } catch (error) {
+    logToSheet('error', `Create calendar event error: ${error.toString()}`, 'createCalendarEvent');
+    return { success: false, error: error.toString() };
+  }
+}
+
+function getCalendarEvents() {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const sheet = ss.getSheetByName('CalendarEvents');
+    
+    if (!sheet) return { success: true, events: [] };
+    
+    const data = sheet.getDataRange().getValues();
+    const events = [];
+    
+    for (let i = 1; i < data.length; i++) {
+      events.push({
+        id: data[i][0],
+        title: data[i][1],
+        subject: data[i][2],
+        teacher: data[i][3],
+        type: data[i][4],
+        start: data[i][5],
+        end: data[i][6],
+        location: JSON.parse(data[i][7] || '{}'),
+        students: JSON.parse(data[i][8] || '[]'),
+        max_students: data[i][9],
+        description: data[i][10],
+        materials: data[i][11],
+        recurring: data[i][12],
+        repeat_until: data[i][13],
+        repeat_days: JSON.parse(data[i][14] || '[]'),
+        created_at: data[i][15],
+        updated_at: data[i][16]
+      });
+    }
+    
+    return { success: true, events: events };
+    
+  } catch (error) {
+    logToSheet('error', `Get calendar events error: ${error.toString()}`, 'getCalendarEvents');
+    return { success: false, error: error.toString() };
+  }
+}
+
+function updateCalendarEvent(data) {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const sheet = ss.getSheetByName('CalendarEvents');
+    
+    if (!sheet) return { success: false, message: 'Sheet not found' };
+    
+    const rows = sheet.getDataRange().getValues();
+    
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i][0] === data.event_id) {
+        const row = i + 1;
+        
+        if (data.title) sheet.getRange(row, 2).setValue(data.title);
+        if (data.subject) sheet.getRange(row, 3).setValue(data.subject);
+        if (data.teacher) sheet.getRange(row, 4).setValue(data.teacher);
+        if (data.type) sheet.getRange(row, 5).setValue(data.type);
+        if (data.start) sheet.getRange(row, 6).setValue(data.start);
+        if (data.end) sheet.getRange(row, 7).setValue(data.end);
+        if (data.location) sheet.getRange(row, 8).setValue(JSON.stringify(data.location));
+        if (data.students) sheet.getRange(row, 9).setValue(JSON.stringify(data.students));
+        if (data.max_students) sheet.getRange(row, 10).setValue(data.max_students);
+        if (data.description) sheet.getRange(row, 11).setValue(data.description);
+        if (data.materials) sheet.getRange(row, 12).setValue(data.materials);
+        
+        sheet.getRange(row, 17).setValue(new Date()); // updated_at
+        
+        logToSheet('info', `Calendar event updated: ${data.event_id}`, 'updateCalendarEvent');
+        
+        return { success: true, message: 'Event updated successfully' };
+      }
+    }
+    
+    return { success: false, message: 'Event not found' };
+    
+  } catch (error) {
+    logToSheet('error', `Update calendar event error: ${error.toString()}`, 'updateCalendarEvent');
+    return { success: false, error: error.toString() };
+  }
+}
+
+function deleteCalendarEvent(data) {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const sheet = ss.getSheetByName('CalendarEvents');
+    
+    if (!sheet) return { success: false, message: 'Sheet not found' };
+    
+    const rows = sheet.getDataRange().getValues();
+    
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i][0] === data.event_id) {
+        sheet.deleteRow(i + 1);
+        
+        logToSheet('info', `Calendar event deleted: ${data.event_id}`, 'deleteCalendarEvent');
+        
+        return { success: true, message: 'Event deleted successfully' };
+      }
+    }
+    
+    return { success: false, message: 'Event not found' };
+    
+  } catch (error) {
+    logToSheet('error', `Delete calendar event error: ${error.toString()}`, 'deleteCalendarEvent');
+    return { success: false, error: error.toString() };
+  }
+}
+
+// Get events by date range
+function getEventsByDateRange(startDate, endDate) {
+  try {
+    const result = getCalendarEvents();
+    
+    if (!result.success) return result;
+    
+    const filtered = result.events.filter(event => {
+      const eventStart = new Date(event.start);
+      const eventEnd = new Date(event.end);
+      const rangeStart = new Date(startDate);
+      const rangeEnd = new Date(endDate);
+      
+      return (eventStart >= rangeStart && eventStart <= rangeEnd) ||
+             (eventEnd >= rangeStart && eventEnd <= rangeEnd);
+    });
+    
+    return { success: true, events: filtered };
+    
+  } catch (error) {
+    logToSheet('error', `Get events by date range error: ${error.toString()}`, 'getEventsByDateRange');
+    return { success: false, error: error.toString() };
+  }
+}
+
+// Get events by teacher
+function getEventsByTeacher(teacherId) {
+  try {
+    const result = getCalendarEvents();
+    
+    if (!result.success) return result;
+    
+    const filtered = result.events.filter(event => event.teacher === teacherId);
+    
+    return { success: true, events: filtered };
+    
+  } catch (error) {
+    logToSheet('error', `Get events by teacher error: ${error.toString()}`, 'getEventsByTeacher');
+    return { success: false, error: error.toString() };
+  }
+}
+
+// Get events by student
+function getEventsByStudent(studentId) {
+  try {
+    const result = getCalendarEvents();
+    
+    if (!result.success) return result;
+    
+    const filtered = result.events.filter(event => 
+      event.students && event.students.includes(studentId)
+    );
+    
+    return { success: true, events: filtered };
+    
+  } catch (error) {
+    logToSheet('error', `Get events by student error: ${error.toString()}`, 'getEventsByStudent');
+    return { success: false, error: error.toString() };
+  }
+}
+
+// Check for scheduling conflicts
+function checkScheduleConflicts(data) {
+  try {
+    const result = getEventsByDateRange(data.start, data.end);
+    
+    if (!result.success) return result;
+    
+    const conflicts = result.events.filter(event => {
+      if (event.id === data.event_id) return false; // Skip self
+      
+      // Check for teacher conflict
+      if (event.teacher === data.teacher) return true;
+      
+      // Check for student conflicts (if students are assigned)
+      if (data.students && data.students.length > 0) {
+        const commonStudents = event.students.filter(s => data.students.includes(s));
+        if (commonStudents.length > 0) return true;
+      }
+      
+      return false;
+    });
+    
+    return { 
+      success: true, 
+      hasConflicts: conflicts.length > 0,
+      conflicts: conflicts 
+    };
+    
+  } catch (error) {
+    logToSheet('error', `Check schedule conflicts error: ${error.toString()}`, 'checkScheduleConflicts');
+    return { success: false, error: error.toString() };
+  }
+}
+
+// Initialize calendar sheet
+function initializeCalendarSheet() {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    
+    let sheet = ss.getSheetByName('CalendarEvents');
+    if (!sheet) {
+      sheet = ss.insertSheet('CalendarEvents');
+      sheet.getRange('1:1').setValues([[
+        'event_id', 'title', 'subject', 'teacher', 'type', 
+        'start_datetime', 'end_datetime', 'location', 'students',
+        'max_students', 'description', 'materials', 'recurring',
+        'repeat_until', 'repeat_days', 'created_at', 'updated_at'
+      ]]);
+      sheet.getRange('1:1').setFontWeight('bold');
+      sheet.setFrozenRows(1);
+      
+      // Add some sample data for testing
+      const sampleData = [
+        [
+          'EVT-SAMPLE1',
+          'Mathematics Form 4',
+          'mathematics',
+          'teacher1',
+          'online',
+          new Date(new Date().setHours(14,0,0,0)),
+          new Date(new Date().setHours(16,0,0,0)),
+          JSON.stringify({link: 'https://zoom.us/j/123456789'}),
+          JSON.stringify(['student1', 'student2']),
+          10,
+          'Chapter 5: Trigonometry',
+          'Textbook, Calculator',
+          false,
+          '',
+          '[]',
+          new Date(),
+          new Date()
+        ]
+      ];
+      
+      if (sampleData.length > 0) {
+        sheet.getRange(2, 1, sampleData.length, sampleData[0].length).setValues(sampleData);
+      }
+    }
+    
+    // Create teachers sheet if not exists
+    let teachersSheet = ss.getSheetByName('Teachers');
+    if (!teachersSheet) {
+      teachersSheet = ss.insertSheet('Teachers');
+      teachersSheet.getRange('1:1').setValues([[
+        'teacher_id', 'name', 'email', 'phone', 'subjects', 'qualification', 'status'
+      ]]);
+      teachersSheet.getRange('1:1').setFontWeight('bold');
+      
+      // Add sample teachers
+      const teachers = [
+        ['teacher1', 'Dr. Sarah Johnson', 'sarah@edusmart.com', '0123456789', 'Mathematics,Physics', 'PhD Mathematics', 'active'],
+        ['teacher2', 'Mr. Ahmad Faiz', 'ahmad@edusmart.com', '0123456790', 'Science,Biology', 'MSc Biology', 'active'],
+        ['teacher3', 'Ms. Lim Xiao Mei', 'lim@edusmart.com', '0123456791', 'English,Malay', 'BA English', 'active']
+      ];
+      teachersSheet.getRange(2, 1, teachers.length, teachers[0].length).setValues(teachers);
+    }
+    
+    logToSheet('info', 'Calendar sheets initialized', 'initializeCalendarSheet');
+    
+    return ContentService.createTextOutput(JSON.stringify({ 
+      success: true, 
+      message: 'Calendar sheets initialized successfully' 
+    })).setMimeType(ContentService.MimeType.JSON);
+    
+  } catch (error) {
+    logToSheet('error', `Initialize calendar sheets error: ${error.toString()}`, 'initializeCalendarSheet');
+    return ContentService.createTextOutput(JSON.stringify({ 
+      success: false, 
+      error: error.toString() 
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
