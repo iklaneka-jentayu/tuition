@@ -719,7 +719,6 @@ async function getStudents() {
     return [
         { id: 'student1', name: 'Ahmad Bin Abdullah' },
         { id: 'student2', name: 'Lim Wei Jie' },
-        { id: 'student3', name:
         { id: 'student3', name: 'Siti Nurhaliza' },
         { id: 'student4', name: 'Rajesh Kumar' },
         { id: 'student5', name: 'Tan Mei Ling' },
@@ -1078,4 +1077,5 @@ window.exportCalendar = exportCalendar;
 window.importCalendar = importCalendar;
 
 // Log calendar initialization
+
 logToSheet('info', 'Calendar module initialized', 'Calendar');		
