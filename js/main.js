@@ -1,5 +1,9 @@
 // Main JavaScript for Tuition Platform
 
+function goBack() {
+    window.history.back();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -49,10 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const yearElement = document.getElementById('currentYear');
     if (yearElement) {
         yearElement.textContent = currentYear;
-    }
-
-    function goBack() {
-        window.history.back();
     }
     
     // Navbar scroll effect
@@ -118,3 +118,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
