@@ -140,6 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`[${level}] ${location}: ${message} - ${user}`);
     }
 
+
+    
+});
+
 // Package pricing data
 const packagePricing = {
     primary: {
@@ -223,5 +227,4 @@ function calculateTotal() {
     document.getElementById('totalAmount').textContent = `RM ${total}`;
     return total;
 }
-    
-});
+
