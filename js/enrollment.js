@@ -1,230 +1,429 @@
-// Enrollment functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const subjects = document.querySelectorAll('input[name="subjects"]');
-    const totalAmountSpan = document.getElementById('totalAmount');
-    const enrollmentForm = document.getElementById('enrollmentForm');
-    
-    // Subject fees
-    const subjectFees = {
-        'Mathematics': 150,
-        'Science': 150,
-        'English': 140,
-        'Malay': 140,
-        'Mandarin': 140,
-        'History': 130
-    };
-    
-    // Calculate total
-    function calculateTotal() {
-        let total = 0;
-        subjects.forEach(subject => {
-            if (subject.checked) {
-                total += subjectFees[subject.value];
-            }
-        });
-        totalAmountSpan.textContent = `RM ${total}`;
-        return total;
-    }
-    
-    // Add event listeners to checkboxes
-    subjects.forEach(subject => {
-        subject.addEventListener('change', calculateTotal);
+// Complete Enrollment JavaScript
+
+$(document).ready(function() {
+    // Initialize Select2 for multiple subject selection
+    $('#subjects').select2({
+        placeholder: 'Select subjects',
+        allowClear: true,
+        width: '100%'
     });
     
-    // Handle form submission
-    enrollmentForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
+    // Set minimum date for DOB (18 years ago)
+    const today = new Date();
+    const minDate = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate());
+    const maxDate = new Date(today.getFullYear() - 25, today.getMonth(), today.getDate());
+    document.getElementById('studentDob').max = minDate.toISOString().split('T')[0];
+    document.getElementById('studentDob').min = maxDate.toISOString().split('T')[0];
+    
+    // File upload handling
+    document.getElementById('reportCards').addEventListener('change', function(e) {
+        const fileInfo = document.getElementById('fileInfo');
+        const files = e.target.files;
         
-        // Get selected subjects
-        const selectedSubjects = [];
-        subjects.forEach(subject => {
-            if (subject.checked) {
-                selectedSubjects.push(subject.value);
+        if (files.length > 0) {
+            let fileList = '<strong>Selected files:</strong><br>';
+            for (let i = 0; i < files.length; i++) {
+                fileList += `${files[i].name} (${(files[i].size / 1024).toFixed(2)} KB)<br>`;
             }
-        });
-        
-        if (selectedSubjects.length === 0) {
-            alert('Please select at least one subject');
-            return;
-        }
-        
-        const formData = {
-            full_name: document.getElementById('fullName').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            school: document.getElementById('school').value,
-            form: document.getElementById('form').value,
-            tuition_type: document.getElementById('tuitionType').value,
-            subjects: selectedSubjects.join(', '),
-            amount: calculateTotal()
-        };
-        
-        // Show loading state
-        const submitBtn = document.querySelector('.btn-payment');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        submitBtn.disabled = true;
-        
-        try {
-            // Create member first
-            const memberResponse = await createMember(formData);
-            
-            if (memberResponse.success) {
-                // Initiate ToyibPay payment
-                const paymentData = {
-                    amount: formData.amount,
-                    customer_name: formData.full_name,
-                    customer_email: formData.email,
-                    customer_phone: formData.phone,
-                    member_id: memberResponse.member_id,
-                    description: `Tuition Fee - ${selectedSubjects.join(', ')}`
-                };
-                
-                const paymentResponse = await initiateToyibPayment(paymentData);
-                
-                if (paymentResponse.success) {
-                    // Log enrollment
-                    await logToSheet('info', 
-                        `Enrollment successful: ${memberResponse.member_id}`, 
-                        'enrollment', 
-                        formData.email
-                    );
-                    
-                    // Redirect to payment page
-                    window.location.href = paymentResponse.payment_url;
-                } else {
-                    throw new Error('Payment initiation failed');
-                }
-            }
-        } catch (error) {
-            console.error('Enrollment error:', error);
-            alert('There was an error processing your enrollment. Please try again.');
-            
-            // Reset button
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
+            fileInfo.innerHTML = fileList;
+            fileInfo.style.display = 'block';
+        } else {
+            fileInfo.style.display = 'none';
         }
     });
     
-    // API Functions
-    async function createMember(data) {
-        // Simulate API call - Replace with actual Google Apps Script URL
-        const scriptUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
-        
-        // For demo, return mock response
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve({
-                    success: true,
-                    member_id: `MEM-${Date.now()}`
-                });
-            }, 1000);
-        });
-    }
-    
-    async function initiateToyibPayment(data) {
-        // Simulate ToyibPay integration
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve({
-                    success: true,
-                    payment_url: 'https://toyibpay.com/pay/demo123',
-                    order_id: `ORDER-${Date.now()}`
-                });
-            }, 1500);
-        });
-    }
-    
-    async function logToSheet(level, message, location, user) {
-        // Simulate logging
-        console.log(`[${level}] ${location}: ${message} - ${user}`);
-    }
-
-
-    
+    // Initialize packages based on level
+    updatePackages();
 });
 
-// Package pricing data
-const packagePricing = {
+// Package definitions
+const packages = {
     primary: {
-        '1': { price: 100, name: 'Single Subject' },
-        '2': { price: 140, name: '2 Subjects Package' },
-        '3': { price: 180, name: '3 Subjects Package' },
-        '4': { price: 200, name: '4 Subjects Package' }
+        '1': { price: 100, name: 'Single Subject', subjects: 1, features: ['basic'] },
+        '2': { price: 140, name: '2 Subjects Package', subjects: 2, features: ['basic', 'report'] },
+        '3': { price: 180, name: '3 Subjects Package', subjects: 3, features: ['basic', 'report', 'recordings'] },
+        '4': { price: 200, name: '4 Subjects Package', subjects: 4, features: ['basic', 'report', 'recordings', 'assessment'] }
     },
     lowerSecondary: {
-        '1': { price: 100, name: 'Single Subject' },
-        '2': { price: 160, name: '2 Subjects Package' },
-        '3': { price: 190, name: '3 Subjects Package' },
-        '4': { price: 200, name: '4 Subjects Package' }
+        '1': { price: 100, name: 'Single Subject', subjects: 1, features: ['basic'] },
+        '2': { price: 160, name: '2 Subjects Package', subjects: 2, features: ['basic', 'report'] },
+        '3': { price: 190, name: '3 Subjects Package', subjects: 3, features: ['basic', 'report', 'recordings'] },
+        '4': { price: 200, name: '4 Subjects Package', subjects: 4, features: ['basic', 'report', 'recordings', 'assessment'] }
     },
     upperSecondary: {
-        'A': { price: 180, name: 'Package A (3 Subjects)' },
-        'B': { price: 200, name: 'Package B (4 Subjects)' },
-        'C': { price: 250, name: 'Package C (5 Subjects)' },
-        'D': { price: 300, name: 'Package D (All Subjects + 1-on-1)' },
-        'E': { price: 150, name: 'Package E (2 Subjects)' }
+        'E': { price: 150, name: 'Package E', subjects: 2, features: ['basic'] },
+        'A': { price: 180, name: 'Package A', subjects: 3, features: ['basic', 'report'] },
+        'B': { price: 200, name: 'Package B', subjects: 4, features: ['basic', 'report', 'recordings'] },
+        'C': { price: 250, name: 'Package C', subjects: 5, features: ['basic', 'report', 'recordings', 'assessment'] },
+        'D': { price: 300, name: 'Package D', subjects: 6, features: ['basic', 'report', 'recordings', 'assessment', 'tutoring'] }
     }
 };
 
-// Function to get package price based on form and subject count
-function getPackagePrice(form, subjectCount) {
-    if (form >= 4) {
-        // Upper secondary - use package letters
-        if (subjectCount <= 2) return 150; // Package E
-        if (subjectCount === 3) return 180; // Package A
-        if (subjectCount === 4) return 200; // Package B
-        if (subjectCount === 5) return 250; // Package C
-        if (subjectCount >= 6) return 300; // Package D
-    } else if (form >= 1) {
-        // Lower secondary
-        if (subjectCount === 1) return 100;
-        if (subjectCount === 2) return 160;
-        if (subjectCount === 3) return 190;
-        if (subjectCount >= 4) return 200;
+// Form navigation
+let currentSection = 1;
+const totalSections = 4;
+
+function nextSection(section) {
+    if (validateSection(section)) {
+        document.getElementById(`section${section}`).classList.remove('active');
+        document.getElementById(`section${section + 1}`).classList.add('active');
+        
+        // Update progress bar
+        document.querySelector(`.progress-step[data-step="${section}"]`).classList.add('completed');
+        document.querySelector(`.progress-step[data-step="${section}"]`).classList.remove('active');
+        document.querySelector(`.progress-step[data-step="${section + 1}"]`).classList.add('active');
+        
+        currentSection = section + 1;
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    return 0;
 }
 
-// Update total calculation in enrollment form
-function calculateTotal() {
-    const form = document.getElementById('form').value;
-    const subjects = document.querySelectorAll('input[name="subjects"]:checked');
-    const subjectCount = subjects.length;
+function prevSection(section) {
+    document.getElementById(`section${section}`).classList.remove('active');
+    document.getElementById(`section${section - 1}`).classList.add('active');
     
-    let total = 0;
+    // Update progress bar
+    document.querySelector(`.progress-step[data-step="${section}"]`).classList.remove('active', 'completed');
+    document.querySelector(`.progress-step[data-step="${section - 1}"]`).classList.add('active');
     
-    if (form >= 4) {
-        // Upper secondary - package based pricing
-        total = getPackagePrice(parseInt(form), subjectCount);
+    currentSection = section - 1;
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateSection(section) {
+    let isValid = true;
+    const sectionElement = document.getElementById(`section${section}`);
+    const requiredFields = sectionElement.querySelectorAll('[required]');
+    
+    requiredFields.forEach(field => {
+        if (!field.value) {
+            field.classList.add('error');
+            isValid = false;
+        } else {
+            field.classList.remove('error');
+        }
         
-        // Show package name
-        const packageInfo = document.getElementById('packageInfo');
-        if (packageInfo) {
-            if (subjectCount <= 2) {
-                packageInfo.textContent = 'Package E - Basic Package (2 Subjects)';
-            } else if (subjectCount === 3) {
-                packageInfo.textContent = 'Package A - Standard Package (3 Subjects)';
-            } else if (subjectCount === 4) {
-                packageInfo.textContent = 'Package B - Premium Package (4 Subjects)';
-            } else if (subjectCount === 5) {
-                packageInfo.textContent = 'Package C - Advanced Package (5 Subjects)';
-            } else if (subjectCount >= 6) {
-                packageInfo.textContent = 'Package D - Premium Plus Package';
+        // Email validation
+        if (field.type === 'email' && field.value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(field.value)) {
+                field.classList.add('error');
+                isValid = false;
             }
         }
-    } else {
-        // Lower secondary and primary - per subject pricing
-        const pricePerSubject = form >= 1 ? 100 : 100; // Base price
-        total = subjectCount * pricePerSubject;
         
-        // Apply package discount
-        if (subjectCount === 2) total = form >= 1 ? 160 : 140;
-        if (subjectCount === 3) total = form >= 1 ? 190 : 180;
-        if (subjectCount >= 4) total = form >= 1 ? 200 : 200;
+        // Phone validation
+        if (field.id === 'studentPhone' && field.value) {
+            const phoneRegex = /^[0-9]{3}-[0-9]{7,8}$/;
+            if (!phoneRegex.test(field.value)) {
+                field.classList.add('error');
+                isValid = false;
+            }
+        }
+    });
+    
+    if (!isValid) {
+        alert(__(`enroll.error.required_fields`));
     }
     
-    document.getElementById('totalAmount').textContent = `RM ${total}`;
+    return isValid;
+}
+
+// Update packages based on selected level
+function updatePackages() {
+    const level = document.getElementById('currentLevel').value;
+    const packageContainer = document.getElementById('packageContainer');
+    
+    if (!level) {
+        packageContainer.innerHTML = '<p>Please select current level first</p>';
+        return;
+    }
+    
+    let packageType;
+    if (['year3', 'year4', 'year5', 'year6'].includes(level)) {
+        packageType = 'primary';
+    } else if (['form1', 'form2', 'form3'].includes(level)) {
+        packageType = 'lowerSecondary';
+    } else {
+        packageType = 'upperSecondary';
+    }
+    
+    displayPackages(packageType);
+}
+
+function displayPackages(packageType) {
+    const packageContainer = document.getElementById('packageContainer');
+    const packagesData = packages[packageType];
+    
+    let html = '';
+    for (const [key, pkg] of Object.entries(packagesData)) {
+        html += `
+            <div class="package-card" onclick="selectPackage('${packageType}', '${key}')">
+                <div class="package-name">${pkg.name}</div>
+                <div class="package-price">RM ${pkg.price}</div>
+                <div class="package-subjects">${pkg.subjects} subjects</div>
+            </div>
+        `;
+    }
+    
+    packageContainer.innerHTML = html;
+}
+
+let selectedPackage = null;
+
+function selectPackage(type, packageKey) {
+    selectedPackage = packages[type][packageKey];
+    
+    // Highlight selected package
+    document.querySelectorAll('.package-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    
+    // Update subject selection based on package
+    const subjectSelect = $('#subjects');
+    subjectSelect.val(null).trigger('change');
+    
+    // Limit subject selection to package subjects
+    if (subjectSelect.data('select2')) {
+        subjectSelect.data('select2').destroy();
+    }
+    
+    subjectSelect.select2({
+        placeholder: `Select up to ${selectedPackage.subjects} subjects`,
+        maximumSelectionLength: selectedPackage.subjects,
+        allowClear: true,
+        width: '100%'
+    });
+    
+    calculateTotal();
+}
+
+// Calculate total amount
+function calculateTotal() {
+    const registrationFee = 50;
+    const materialFee = 30;
+    const selectedSubjects = $('#subjects').val() || [];
+    const subjectCount = selectedSubjects.length;
+    
+    let packagePrice = 0;
+    let packageName = '-';
+    
+    if (selectedPackage) {
+        packagePrice = selectedPackage.price;
+        packageName = selectedPackage.name;
+        
+        // Validate subject count matches package
+        if (subjectCount > selectedPackage.subjects) {
+            alert(`You can only select up to ${selectedPackage.subjects} subjects for this package`);
+            $('#subjects').val(selectedSubjects.slice(0, selectedPackage.subjects)).trigger('change');
+        }
+    } else {
+        // Calculate based on individual subjects if no package selected
+        const level = document.getElementById('currentLevel').value;
+        if (level) {
+            const subjectPrice = getSubjectPrice(level);
+            packagePrice = subjectCount * subjectPrice;
+            packageName = 'Custom Selection';
+        }
+    }
+    
+    const total = packagePrice + registrationFee + materialFee;
+    
+    // Update summary
+    document.getElementById('summaryPackage').textContent = packageName;
+    document.getElementById('summarySubjects').textContent = subjectCount;
+    document.getElementById('summaryTotal').textContent = `RM ${total}`;
+    
     return total;
 }
 
+function getSubjectPrice(level) {
+    if (['form4', 'form5'].includes(level)) {
+        return 100; // Upper secondary base price
+    } else if (['form1', 'form2', 'form3'].includes(level)) {
+        return 90; // Lower secondary base price
+    } else {
+        return 80; // Primary base price
+    }
+}
+
+// Payment method selection
+function selectPaymentMethod(method) {
+    document.querySelectorAll('.payment-method').forEach(m => {
+        m.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    document.getElementById('paymentMethod').value = method;
+}
+
+// Promo code application
+function applyPromoCode() {
+    const promoCode = document.getElementById('promoCode').value.toUpperCase();
+    
+    // Demo promo codes
+    const promos = {
+        'WELCOME10': 10,
+        'STUDENT20': 20,
+        'FAMILY15': 15
+    };
+    
+    if (promos[promoCode]) {
+        const discount = promos[promoCode];
+        const currentTotal = parseFloat(document.getElementById('summaryTotal').textContent.replace('RM ', ''));
+        const newTotal = currentTotal - (currentTotal * discount / 100);
+        
+        alert(`Promo code applied! You get ${discount}% discount`);
+        document.getElementById('summaryTotal').textContent = `RM ${newTotal.toFixed(2)}`;
+        
+        logToSheet('info', `Promo code ${promoCode} applied with ${discount}% discount`, 'Enrollment');
+    } else {
+        alert('Invalid promo code');
+    }
+}
+
+// Form submission
+document.getElementById('enrollmentForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (!validateSection(currentSection)) {
+        return;
+    }
+    
+    if (!document.getElementById('agreeTerms').checked) {
+        alert(__(`enroll.error.terms_required`));
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = document.querySelector('.btn-submit');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    submitBtn.disabled = true;
+    
+    // Collect form data
+    const formData = new FormData(this);
+    const enrollmentData = {
+        student: {
+            fullName: formData.get('studentFullName'),
+            ic: formData.get('studentIc'),
+            dob: formData.get('studentDob'),
+            gender: formData.get('gender'),
+            nationality: formData.get('nationality'),
+            race: formData.get('race'),
+            email: formData.get('studentEmail'),
+            phone: formData.get('studentPhone'),
+            address: formData.get('address'),
+            city: formData.get('city'),
+            state: formData.get('state'),
+            postcode: formData.get('postcode')
+        },
+        parent: {
+            father: {
+                name: formData.get('fatherName'),
+                ic: formData.get('fatherIc'),
+                occupation: formData.get('fatherOccupation'),
+                phone: formData.get('fatherPhone'),
+                email: formData.get('fatherEmail')
+            },
+            mother: {
+                name: formData.get('motherName'),
+                ic: formData.get('motherIc'),
+                occupation: formData.get('motherOccupation'),
+                phone: formData.get('motherPhone'),
+                email: formData.get('motherEmail')
+            },
+            emergency: {
+                name: formData.get('emergencyName'),
+                relation: formData.get('emergencyRelation'),
+                phone: formData.get('emergencyPhone')
+            }
+        },
+        academic: {
+            school: {
+                name: formData.get('schoolName'),
+                type: formData.get('schoolType')
+            },
+            level: formData.get('currentLevel'),
+            stream: formData.get('stream'),
+            subjects: $('#subjects').val(),
+            package: selectedPackage ? selectedPackage.name : 'Custom',
+            previousAchievement: formData.get('previousAchievement'),
+            targetGrade: formData.get('targetGrade'),
+            learningNeeds: formData.get('learningNeeds')
+        },
+        payment: {
+            billing: {
+                name: formData.get('billingName'),
+                email: formData.get('billingEmail'),
+                phone: formData.get('billingPhone'),
+                company: formData.get('companyName'),
+                taxId: formData.get('taxId')
+            },
+            method: formData.get('paymentMethod'),
+            promoCode: formData.get('promoCode'),
+            total: document.getElementById('summaryTotal').textContent.replace('RM ', ''),
+            receiveUpdates: formData.get('receiveUpdates') === 'on'
+        },
+        timestamp: new Date().toISOString()
+    };
+    
+    try {
+        // Send to backend
+        const response = await submitEnrollment(enrollmentData);
+        
+        if (response.success) {
+            // Log successful enrollment
+            logToSheet('info', `New enrollment: ${enrollmentData.student.fullName}`, 'Enrollment', enrollmentData.student.email);
+            
+            // Redirect to payment
+            if (enrollmentData.payment.method === 'toyibpay') {
+                window.location.href = `https://toyibpay.com/pay/${response.paymentId}`;
+            } else {
+                alert('Enrollment successful! Please complete payment.');
+                window.location.href = 'member-dashboard.html';
+            }
+        } else {
+            throw new Error(response.message || 'Enrollment failed');
+        }
+        
+    } catch (error) {
+        console.error('Enrollment error:', error);
+        alert(__(`enroll.error.general`));
+        
+        // Log error
+        logToSheet('error', `Enrollment failed: ${error.message}`, 'Enrollment', enrollmentData.student.email);
+        
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+});
+
+// Mock API call (replace with actual backend)
+async function submitEnrollment(data) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+                success: true,
+                paymentId: `PAY-${Date.now()}`,
+                message: 'Enrollment successful'
+            });
+        }, 2000);
+    });
+}
+
+// Helper function for translations
+function __(key) {
+    // This would use the language.js translation function
+    return key;
+}
+
+// Log to sheet function
+function logToSheet(level, message, location, user) {
+    console.log(`[${level}] ${location}: ${message} - ${user}`);
+}
