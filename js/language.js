@@ -335,7 +335,57 @@ const translations = {
         "common.today": "Today",
         "common.this_week": "This Week",
         "common.this_month": "This Month",
-        "common.this_year": "This Year"
+        "common.this_year": "This Year",
+        // English translations
+        "pricing.title": "Affordable Tuition Packages",
+        "pricing.subtitle": "Choose the perfect package that suits your learning needs and budget",
+        "pricing.tab.primary": "Primary School (Year 3-6)",
+        "pricing.tab.lower": "Lower Secondary (Form 1-3)",
+        "pricing.tab.upper": "Upper Secondary (Form 4-5)",
+        "pricing.per_month": "/month",
+        "pricing.popular": "Most Popular",
+        "pricing.enroll": "Enroll Now",
+        "pricing.note": "All packages include GST. Special discounts available for sibling enrollment and annual subscription.",
+        
+        // Primary School Packages
+        "pricing.primary.single": "Single Subject",
+        "pricing.primary.two": "2 Subjects Package",
+        "pricing.primary.three": "3 Subjects Package",
+        "pricing.primary.four": "4 Subjects Package",
+        
+        // Lower Secondary Packages
+        "pricing.lower.single": "Single Subject",
+        "pricing.lower.two": "2 Subjects Package",
+        "pricing.lower.three": "3 Subjects Package",
+        "pricing.lower.four": "4 Subjects Package",
+        
+        // Upper Secondary Packages
+        "pricing.upper.package_a": "Package A",
+        "pricing.upper.package_b": "Package B",
+        "pricing.upper.package_c": "Package C",
+        "pricing.upper.package_d": "Package D",
+        "pricing.upper.package_e": "Package E",
+        "pricing.upper.a_desc": "Standard Package - 3 Subjects",
+        "pricing.upper.b_desc": "Premium Package - 4 Subjects",
+        "pricing.upper.c_desc": "Advanced Package - 5 Subjects",
+        "pricing.upper.d_desc": "Premium Plus - All Subjects + 1-on-1",
+        "pricing.upper.e_desc": "Basic Package - 2 Subjects",
+        
+        // Features
+        "pricing.features.subject": "1 Subject",
+        "pricing.features.two_subjects": "2 Subjects",
+        "pricing.features.three_subjects": "3 Subjects",
+        "pricing.features.four_subjects": "4 Subjects",
+        "pricing.features.five_subjects": "5 Subjects",
+        "pricing.features.all_subjects": "All Subjects",
+        "pricing.features.online": "Online Classes",
+        "pricing.features.materials": "Study Materials",
+        "pricing.features.assessment": "Monthly Assessments",
+        "pricing.features.report": "Progress Report",
+        "pricing.features.recording": "Class Recordings",
+        "pricing.features.tutoring": "1-on-1 Tutoring Sessions",
+        "pricing.features.parent": "Parent-Teacher Meetings",
+
     },
     
     ms: {
@@ -673,7 +723,39 @@ const translations = {
         "common.today": "Hari Ini",
         "common.this_week": "Minggu Ini",
         "common.this_month": "Bulan Ini",
-        "common.this_year": "Tahun Ini"
+        "common.this_year": "Tahun Ini",
+        // Malay translations (Add to ms section)
+        "pricing.title": "Pakej Tuisyen Berpatutan",
+        "pricing.subtitle": "Pilih pakej yang sesuai dengan keperluan pembelajaran dan bajet anda",
+        "pricing.tab.primary": "Sekolah Rendah (Tahun 3-6)",
+        "pricing.tab.lower": "Menengah Rendah (Tingkatan 1-3)",
+        "pricing.tab.upper": "Menengah Atas (Tingkatan 4-5)",
+        "pricing.per_month": "/bulan",
+        "pricing.popular": "Paling Popular",
+        "pricing.enroll": "Daftar Sekarang",
+        "pricing.note": "Semua pakej termasuk GST. Diskaun khas untuk pendaftaran adik-beradik dan langganan tahunan.",
+        
+        "pricing.primary.single": "Subjek Tunggal",
+        "pricing.primary.two": "Pakej 2 Subjek",
+        "pricing.primary.three": "Pakej 3 Subjek",
+        "pricing.primary.four": "Pakej 4 Subjek",
+        
+        "pricing.lower.single": "Subjek Tunggal",
+        "pricing.lower.two": "Pakej 2 Subjek",
+        "pricing.lower.three": "Pakej 3 Subjek",
+        "pricing.lower.four": "Pakej 4 Subjek",
+        
+        "pricing.upper.package_a": "Pakej A",
+        "pricing.upper.package_b": "Pakej B",
+        "pricing.upper.package_c": "Pakej C",
+        "pricing.upper.package_d": "Pakej D",
+        "pricing.upper.package_e": "Pakej E",
+        "pricing.upper.a_desc": "Pakej Standard - 3 Subjek",
+        "pricing.upper.b_desc": "Pakej Premium - 4 Subjek",
+        "pricing.upper.c_desc": "Pakej Lanjutan - 5 Subjek",
+        "pricing.upper.d_desc": "Premium Plus - Semua Subjek + 1-on-1",
+        "pricing.upper.e_desc": "Pakej Asas - 2 Subjek",
+
     },
     
     zh: {
@@ -1011,7 +1093,38 @@ const translations = {
         "common.today": "今天",
         "common.this_week": "本周",
         "common.this_month": "本月",
-        "common.this_year": "今年"
+        "common.this_year": "今年",
+        // Chinese translations (Add to zh section)
+        "pricing.title": "实惠的辅导配套",
+        "pricing.subtitle": "选择最适合您学习需求和预算的配套",
+        "pricing.tab.primary": "小学 (三至六年级)",
+        "pricing.tab.lower": "初中 (中一至中三)",
+        "pricing.tab.upper": "高中 (中四至中五)",
+        "pricing.per_month": "/月",
+        "pricing.popular": "最受欢迎",
+        "pricing.enroll": "立即报名",
+        "pricing.note": "所有配套已包含消费税。兄弟姐妹同时报名或年度订阅可享受特别折扣。",
+        
+        "pricing.primary.single": "单科",
+        "pricing.primary.two": "2科配套",
+        "pricing.primary.three": "3科配套",
+        "pricing.primary.four": "4科配套",
+        
+        "pricing.lower.single": "单科",
+        "pricing.lower.two": "2科配套",
+        "pricing.lower.three": "3科配套",
+        "pricing.lower.four": "4科配套",
+        
+        "pricing.upper.package_a": "配套 A",
+        "pricing.upper.package_b": "配套 B",
+        "pricing.upper.package_c": "配套 C",
+        "pricing.upper.package_d": "配套 D",
+        "pricing.upper.package_e": "配套 E",
+        "pricing.upper.a_desc": "标准配套 - 3科",
+        "pricing.upper.b_desc": "高级配套 - 4科",
+        "pricing.upper.c_desc": "进阶配套 - 5科",
+        "pricing.upper.d_desc": "至尊配套 - 所有科目 + 一对一",
+        "pricing.upper.e_desc": "基础配套 - 2科",
     }
 };
 
@@ -1129,3 +1242,4 @@ function logToSheet(level, message, location, user = 'System') {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { translations, changeLanguage, __, logToSheet };
 }
+
