@@ -314,23 +314,33 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="nav-container">
+
+		<div class="nav-container">
+
             <a href="index.html" class="logo">
                 <i class="fas fa-graduation-cap"></i>
-                <span class="logo-text">EduSmart Admin</span>
+                <span class="logo-text">EduSmart</span>
             </a>
-			<!-- Add this language selector to the navigation bar of every page -->
-			<div class="language-selector">
-			    <select id="languageSelect" aria-label="Select language">
-			        <option value="en">English</option>
-			        <option value="ms">Bahasa Malaysia</option>
-			        <option value="zh">中文</option>
-			    </select>
-			</div>
+            
+             <!-- Language Selector  -->
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="ms">Malay (Bahasa Malaysia)</option>
+                    <option value="zh">Mandarin (中文)</option>
+                </select>
+            </div>       
+           
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+			
             <div class="nav-menu">
                 <span class="nav-link">Welcome, Admin</span>
                 <a href="login.html" class="nav-link btn-login" onclick="logout()">Logout</a>
             </div>
+
         </div>
     </nav>
     
@@ -565,4 +575,5 @@
     <script src="js/admin.js"></script>
 </body>
 </html>
+
 
