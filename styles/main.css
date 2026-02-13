@@ -63,6 +63,85 @@ section {
 body {
     font-family: 'Segoe UI', sans-serif;
 }
+/* Pricing Section */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.pricing-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+    position: relative;
+    transition: var(--transition);
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+}
+
+.pricing-card.popular {
+    border: 2px solid var(--primary-color);
+}
+
+.popular-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.price span {
+    font-size: 1rem;
+    color: var(--gray-color);
+}
+
+.features-list {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.features-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.features-list i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.features-list .fa-check {
+    color: var(--success-color);
+}
+
+.features-list .fa-times {
+    color: var(--danger-color);
+}
 
 /* Language Selector */
 
@@ -602,6 +681,7 @@ body {
     color: white;
 
 }
+
 
 
 
