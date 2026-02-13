@@ -49,13 +49,11 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
-
-
 /* Language Selector */
 .language-selector {
     position: relative;
-    top: 20px;
-    right: 20px;
+   /* top: 20px;
+    right: 20px;*/
     z-index: 1001;
     background: white;
     border-radius: 5px;
@@ -543,6 +541,7 @@ body {
     color: white;
 
 }
+
 
 
 
