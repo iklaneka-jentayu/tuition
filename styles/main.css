@@ -51,8 +51,8 @@ body {
 
 /* Language Selector */
 .language-selector {
-    position: relative;
-   /* top: 20px;
+    /* position: relative;*/
+    /* top: 20px;
     right: 20px;*/
     z-index: 1001;
     background: white;
@@ -541,6 +541,7 @@ body {
     color: white;
 
 }
+
 
 
 
