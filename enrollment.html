@@ -170,9 +170,9 @@
 	<!-- Add this CSS for the language selector -->
 	<style>
 	.language-selector {
-	    position: fixed;
+	   /* position: fixed;
 	    top: 20px;
-	    right: 20px;
+	    right: 20px;*/
 	    z-index: 1001;
 	    background: white;
 	    border-radius: 30px;
@@ -214,6 +214,16 @@
 </head>
 <body>
     <nav class="navbar">
+		
+		<!-- Add this language selector to the navigation bar of every page -->
+		<div class="language-selector">
+			<select id="languageSelect" aria-label="Select language">
+				<option value="en">English</option>
+				<option value="ms">Bahasa Malaysia</option>
+				<option value="zh">中文</option>
+			</select>
+		</div>
+		
         <div class="nav-container">
             <a href="index.html" class="logo">
                 <i class="fas fa-graduation-cap"></i>
@@ -222,14 +232,7 @@
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
-			<!-- Add this language selector to the navigation bar of every page -->
-			<div class="language-selector">
-			    <select id="languageSelect" aria-label="Select language">
-			        <option value="en">English</option>
-			        <option value="ms">Bahasa Malaysia</option>
-			        <option value="zh">中文</option>
-			    </select>
-			</div>
+
             <div class="nav-menu">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="enrollment.html" class="nav-link active">Enroll Now</a>
@@ -346,6 +349,7 @@
     <script src="js/enrollment.js"></script>
 </body>
 </html>
+
 
 
 
