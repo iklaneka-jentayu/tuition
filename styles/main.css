@@ -40,7 +40,7 @@ section {
 
 .back-btn {
     position: absolute;
-    top: 20px;
+    top: 100px;
     left: 20px;
     z-index: 1001;
     background: white;
@@ -572,6 +572,7 @@ body {
     color: white;
 
 }
+
 
 
 
