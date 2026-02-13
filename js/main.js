@@ -50,6 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (yearElement) {
         yearElement.textContent = currentYear;
     }
+
+    function goBack() {
+        window.history.back();
+    }
     
     // Navbar scroll effect
     window.addEventListener('scroll', function() {
@@ -112,4 +116,5 @@ document.addEventListener('DOMContentLoaded', function() {
             heroVideo.setAttribute('muted', '');
         }
     }
+
 });
