@@ -22,6 +22,27 @@
     --admin-hover-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
 }
 
+/* Language Selector */
+.language-selector {
+    /* position: relative;*/
+    /* top: 20px;
+    right: 20px;*/
+    z-index: 1001;
+    background: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+    padding: 5px;
+}
+
+.language-selector select {
+    border: none;
+    background: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    padding: 5px;
+    outline: none;
+}
+
 /* ===== ADMIN LAYOUT ===== */
 .admin-wrapper {
     display: flex;
@@ -1353,3 +1374,4 @@
         color: #a0aec0;
     }
 }
+
