@@ -119,7 +119,50 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+// Pricing tab switching functionality
+function switchPricingTab(level) {
+    // Update tab buttons
+    document.querySelectorAll('.pricing-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Hide all pricing grids
+    document.querySelectorAll('.pricing-grid').forEach(grid => {
+        grid.classList.remove('active');
+    });
+    
+    // Show selected pricing grid
+    document.getElementById(`${level}-pricing`).classList.add('active');
+    
+    // Log the action
+    logToSheet('info', `Switched to ${level} pricing tab`, 'Pricing Section');
+}
+
+// Initialize pricing section
+document.addEventListener('DOMContentLoaded', function() {
+    // Add animation on scroll for pricing cards
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    pricingCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.5s ease';
+        observer.observe(card);
+    });
 });
+    
+});
+
 
 
 
