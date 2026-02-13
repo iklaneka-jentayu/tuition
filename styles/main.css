@@ -83,12 +83,14 @@ body {
     font-size: 14px;
     padding: 5px;
     outline: none;
+    cursor: pointer;
+    color: var(--dark-color);
 }
-    
+
 .language-selector select:hover {
     color: var(--primary-color);
 }
-    
+
 @media (max-width: 768px) {
     .language-selector {
         top: 10px;
@@ -572,6 +574,7 @@ body {
     color: white;
 
 }
+
 
 
 
