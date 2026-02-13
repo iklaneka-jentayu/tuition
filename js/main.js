@@ -1,4 +1,8 @@
 // Main JavaScript for Tuition Platform
+function goBack() {
+    alert('back!');
+    window.history.back();
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
@@ -92,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize
         updateTestimonialDisplay();
         
+
+        
         // Update on resize
         window.addEventListener('resize', updateTestimonialDisplay);
         
@@ -114,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
 
 
 
