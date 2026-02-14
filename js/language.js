@@ -136,7 +136,17 @@ const translations = {
 		"calendar.thursday": "Thursday",
 		"calendar.friday": "Friday",
 		"calendar.saturday": "Saturday",
-		"calendar.sunday": "Sunday"
+		"calendar.sunday": "Sunday",
+		"chatbot.title": "EduSmart AI Assistant",
+		"chatbot.subtitle": "Online 24/7 to help you",
+		"chatbot.welcome": "Hello! I'm your EduSmart AI assistant. How can I help you today?",
+		"chatbot.placeholder": "Type your message...",
+		"chatbot.typing": "AI is typing...",
+		"chatbot.powered": "Powered by AI",
+		"chatbot.quick.packages": "Packages",
+		"chatbot.quick.enroll": "Enrollment",
+		"chatbot.quick.payment": "Payment",
+		"chatbot.quick.schedule": "Schedule"
     },
     ms: {
         // Navigation
@@ -314,4 +324,5 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Apply initial language
     changeLanguage(currentLanguage);
+
 });
