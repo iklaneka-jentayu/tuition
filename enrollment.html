@@ -510,14 +510,26 @@
 
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-container">
+       <div class="nav-container">
+            
             <a href="index.html" class="logo">
                 <i class="fas fa-graduation-cap"></i>
-                <span class="logo-text" data-i18n="nav.home">EduSmart</span>
+                <span class="logo-text">EduSmart</span>
             </a>
-            <button class="mobile-menu-btn">
+            
+             <!-- Language Selector  -->
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="ms">Malay (Bahasa Malaysia)</option>
+                    <option value="zh">Mandarin (中文)</option>
+                </select>
+            </div>       
+           
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
                 <i class="fas fa-bars"></i>
             </button>
+            
             <div class="nav-menu">
                 <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
                 <a href="index.html#pricing" class="nav-link" data-i18n="nav.pricing">Pricing</a>
@@ -1035,3 +1047,4 @@
     <script src="js/enrollment.js"></script>
 </body>
 </html>
+
