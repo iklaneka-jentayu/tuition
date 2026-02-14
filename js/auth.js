@@ -64,7 +64,10 @@ async function handleLogin(email, password, role) {
         submitBtn.disabled = true;
         
         // Simulate API call - Replace with actual Google Apps Script
+
+        
         const response = await verifyCredentials(email, password, role);
+     
         
         if (response.success) {
             // Store session
@@ -101,6 +104,8 @@ async function handleLogin(email, password, role) {
 
 async function verifyCredentials(email, password, role) {
     // Simulate API call - Replace with actual Google Apps Script
+
+    
     return new Promise((resolve) => {
         setTimeout(() => {
             // Demo credentials
@@ -118,3 +123,4 @@ async function verifyCredentials(email, password, role) {
 function logToSheet(level, message, location, user) {
     console.log(`[${level}] ${location}: ${message} - ${user}`);
 }
+
