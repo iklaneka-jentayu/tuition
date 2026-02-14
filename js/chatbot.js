@@ -37,16 +37,59 @@ class EduSmartChatbot {
             ...this.userInfo
         };
     }
+
+    // Add feedback function
+    async function sendFeedback(rating, feedback) {
+        try {
+            await api.sendFeedback({
+                sessionId: chatbot.getSessionId(),
+                rating: rating,
+                feedback: feedback,
+                userId: chatbot.userInfo.userId,
+                context: chatbot.context
+            });
+            
+            showNotification('success', 'Thank you for your feedback!');
+            
+        } catch (error) {
+            console.error('Error sending feedback:', error);
+        }
+    }
+
+    // Add escalation function
+    async function escalateToHuman() {
+        try {
+            await api.escalateToHuman({
+                sessionId: chatbot.getSessionId(),
+                userId: chatbot.userInfo.userId,
+                message: chatbot.messages.slice(-1)[0]?.text || 'No message',
+                context: chatbot.context,
+                history: chatbot.messages.slice(-10)
+            });
+            
+            addMessage(
+                "I've notified a human support representative. They will contact you shortly via email or phone.", 
+                'bot'
+            );
+            
+        } catch (error) {
+            console.error('Error escalating:', error);
+            addMessage("Sorry, I couldn't connect you to support right now. Please try again later.", 'bot');
+        }
+    }
     
     // Send message to AI
     async sendToAI(message) {
-        if (!this.useAI) {
-            return this.getRuleBasedResponse(message);
-        }
-        
         try {
-            // Option 1: Google Dialogflow
-            return await this.sendToDialogflow(message);
+            const response = await api.sendChatMessage({
+                message: message,
+                context: this.context,
+                sessionId: this.getSessionId(),
+                language: this.userInfo.language
+            });
+            
+            return response;
+            
         } catch (error) {
             console.error('AI service error, falling back to rule-based:', error);
             return this.getRuleBasedResponse(message);
@@ -576,5 +619,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.chatbot-notification').style.display = 'flex';
     }, 5000);
 });
+
 
 
