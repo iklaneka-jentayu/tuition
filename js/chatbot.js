@@ -6,12 +6,13 @@
 
 class EduSmartChatbot {
     constructor() {
+	
         this.messages = [];
         this.context = {};
         this.userInfo = null;
         this.isTyping = false;
         this.apiEndpoint = 'https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec'; // Replace with your API
-        this.apiKey = 'YOUR_API_KEY'; // Replace with your API key
+        this.apiKey = 'razin123'; // Replace with your API key
         this.useAI = true; // Toggle between rule-based and AI responses
         //console.log('constructor-chatbot');
         // Initialize
@@ -446,7 +447,10 @@ class EduSmartChatbot {
             }
         }
     }
-}
+}//end class
+
+
+
 
 // Initialize chatbot
 const chatbot = new EduSmartChatbot();
@@ -623,6 +627,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.chatbot-notification').style.display = 'flex';
     }, 5000);
 });
+
 
 
 
