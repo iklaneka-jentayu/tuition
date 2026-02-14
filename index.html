@@ -52,6 +52,92 @@
 
     <!-- Hero Section with Video Background -->
     <section class="hero-section">
+
+        <!-- AI Chatbot -->
+        <div class="chatbot-container">
+            <div class="chatbot-toggle" onclick="toggleChatbot()">
+                <i class="fas fa-robot"></i>
+                <span class="chatbot-notification">1</span>
+            </div>
+            
+            <div class="chatbot-window">
+                <div class="chatbot-header">
+                    <div class="chatbot-header-info">
+                        <i class="fas fa-robot"></i>
+                        <div>
+                            <h3 data-i18n="chatbot.title">EduSmart AI Assistant</h3>
+                            <p data-i18n="chatbot.subtitle">Online 24/7 to help you</p>
+                        </div>
+                    </div>
+                    <div class="chatbot-header-actions">
+                        <button onclick="minimizeChatbot()" class="chatbot-btn">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button onclick="closeChatbot()" class="chatbot-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chatbot-messages" id="chatbotMessages">
+                    <div class="message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p data-i18n="chatbot.welcome">Hello! I'm your EduSmart AI assistant. How can I help you today?</p>
+                            <span class="message-time">Just now</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chatbot-typing" id="chatbotTyping" style="display: none;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span data-i18n="chatbot.typing">AI is typing...</span>
+                </div>
+                
+                <div class="chatbot-input">
+                    <div class="quick-replies" id="quickReplies">
+                        <button class="quick-reply" onclick="sendQuickReply('tuition packages')">
+                            <i class="fas fa-tag"></i> <span data-i18n="chatbot.quick.packages">Packages</span>
+                        </button>
+                        <button class="quick-reply" onclick="sendQuickReply('enrollment process')">
+                            <i class="fas fa-pen"></i> <span data-i18n="chatbot.quick.enroll">Enrollment</span>
+                        </button>
+                        <button class="quick-reply" onclick="sendQuickReply('payment methods')">
+                            <i class="fas fa-credit-card"></i> <span data-i18n="chatbot.quick.payment">Payment</span>
+                        </button>
+                        <button class="quick-reply" onclick="sendQuickReply('schedule')">
+                            <i class="fas fa-calendar"></i> <span data-i18n="chatbot.quick.schedule">Schedule</span>
+                        </button>
+                    </div>
+                    
+                    <div class="input-area">
+                        <textarea 
+                            id="chatbotInput" 
+                            placeholder="Type your message..." 
+                            rows="1"
+                            onkeydown="handleInputKeydown(event)"
+                            data-i18n-placeholder="chatbot.placeholder"
+                        ></textarea>
+                        <button onclick="sendMessage()" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="chatbot-footer">
+                        <span data-i18n="chatbot.powered">Powered by AI</span>
+                        <button onclick="clearChat()" class="clear-chat-btn">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
         <div class="video-container">
             <video autoplay muted loop playsinline id="heroVideo">
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-students-studying-in-a-library-39755-large.mp4" type="video/mp4">
@@ -627,6 +713,7 @@
 </body>
 
 </html>
+
 
 
 
