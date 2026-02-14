@@ -10,7 +10,7 @@ class EduSmartChatbot {
         this.context = {};
         this.userInfo = null;
         this.isTyping = false;
-        this.apiEndpoint = 'YOUR_API_ENDPOINT'; // Replace with your API
+        this.apiEndpoint = 'https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec'; // Replace with your API
         this.apiKey = 'YOUR_API_KEY'; // Replace with your API key
         this.useAI = true; // Toggle between rule-based and AI responses
         
@@ -576,3 +576,4 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.chatbot-notification').style.display = 'flex';
     }, 5000);
 });
+
