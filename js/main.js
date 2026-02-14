@@ -4,7 +4,6 @@ function goBack() {
     window.history.back();
 };
 
-
 // Add at the beginning of main.js
 async function loadInitialData() {
     try {
@@ -195,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 });
+
 
 
 
