@@ -13,11 +13,14 @@ class EduSmartChatbot {
         this.apiEndpoint = 'https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec'; // Replace with your API
         this.apiKey = 'YOUR_API_KEY'; // Replace with your API key
         this.useAI = true; // Toggle between rule-based and AI responses
-        
+        console.log('constructor-chatbot');
         // Initialize
-        //this.loadMessages();
+        this.loadMessages();
+        console.log('constructor-chatbot1');
         this.setupEventListeners();
-        //this.initializeUserContext();
+        console.log('constructor-chatbot2');
+        this.initializeUserContext();
+        console.log('constructor-chatbot3');
     }
     
     // Initialize user context from session/local storage
@@ -450,6 +453,7 @@ const chatbot = new EduSmartChatbot();
 
 // Global functions for UI
 function toggleChatbot() {
+    console.log('toggleChatbot..');
     const window = document.querySelector('.chatbot-window');
     window.classList.toggle('active');
     
@@ -619,6 +623,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.chatbot-notification').style.display = 'flex';
     }, 5000);
 });
+
 
 
 
