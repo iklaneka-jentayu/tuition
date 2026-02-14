@@ -5,6 +5,36 @@ function goBack() {
 };
 
 
+// Add at the beginning of main.js
+async function loadInitialData() {
+    try {
+        // Load subjects
+        const subjects = await api.getSubjects();
+        if (subjects.success) {
+            window.subjects = subjects.subjects;
+        }
+
+        // Load pricing
+        const pricing = await api.getPricing();
+        if (pricing.success) {
+            window.pricing = pricing.pricing;
+        }
+
+        // Load teachers
+        const teachers = await api.getTeachers();
+        if (teachers.success) {
+            window.teachers = teachers.teachers;
+        }
+
+        logToSheet('info', 'Initial data loaded', 'main.js');
+    } catch (error) {
+        console.error('Failed to load initial data:', error);
+    }
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', loadInitialData);
+
 // Pricing tab switching functionality
 function switchPricingTab(level) {
     // Update tab buttons
@@ -165,6 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 });
+
 
 
 
