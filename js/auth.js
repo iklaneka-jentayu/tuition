@@ -103,24 +103,22 @@ async function handleLogin(email, password, role) {
 }
 
 async function verifyCredentials(email, password, role) {
-    // Simulate API call - Replace with actual Google Apps Script
-
-    
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            // Demo credentials
-            if (role === 'admin' && email === 'admin@edusmart.com' && password === 'admin123') {
-                resolve({ success: true, member_id: 'ADMIN-001' });
-            } else if (role === 'member' && email === 'member@example.com' && password === 'password123') {
-                resolve({ success: true, member_id: 'MEM-123' });
-            } else {
-                resolve({ success: false });
-            }
-        }, 1000);
-    });
+    try {
+        const result = await api.verifyLogin({
+            email: email,
+            password: password
+        });
+        
+        return result;
+        
+    } catch (error) {
+        console.error('Login error:', error);
+        return { success: false };
+    }
 }
 
 function logToSheet(level, message, location, user) {
     console.log(`[${level}] ${location}: ${message} - ${user}`);
 }
+
 
