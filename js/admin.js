@@ -1,6 +1,6 @@
 // Admin Dashboard Functionality
 
-const API_BASE_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec';
 let currentMembers = [];
 let currentPayments = [];
 let currentLogs = [];
@@ -377,3 +377,4 @@ document.getElementById('memberForm')?.addEventListener('submit', async function
     }
 
 });
+
