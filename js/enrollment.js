@@ -404,17 +404,39 @@ document.getElementById('enrollmentForm').addEventListener('submit', async funct
     }
 });
 
-// Mock API call (replace with actual backend)
+// Replace the mock submitEnrollment function
 async function submitEnrollment(data) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({
-                success: true,
-                paymentId: `PAY-${Date.now()}`,
-                message: 'Enrollment successful'
-            });
-        }, 2000);
-    });
+    try {
+        const result = await api.submitEnrollment(data);
+        
+        if (result.success) {
+            // Process payment if needed
+            if (data.payment.method === 'toyibpay') {
+                const paymentResult = await api.processToyibPay({
+                    member_id: result.member_id,
+                    amount: data.payment.total,
+                    customer_name: data.student.fullName,
+                    customer_email: data.student.email,
+                    customer_phone: data.student.phone,
+                    description: 'Tuition Fee Enrollment',
+                    package_name: data.academic.package
+                });
+                
+                return {
+                    ...result,
+                    payment_url: paymentResult.payment_url
+                };
+            }
+            
+            return result;
+        }
+        
+        throw new Error(result.message || 'Enrollment failed');
+        
+    } catch (error) {
+        console.error('Enrollment error:', error);
+        throw error;
+    }
 }
 
 // Helper function for translations
@@ -427,3 +449,4 @@ function __(key) {
 function logToSheet(level, message, location, user) {
     console.log(`[${level}] ${location}: ${message} - ${user}`);
 }
+
