@@ -166,58 +166,33 @@ async function loadLogs() {
 
 // CRUD Operations
 async function getAllMembers() {
-    // Simulate API call - Replace with actual Google Apps Script
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve([
-                {
-                    member_id: 'MEM-1234567890',
-                    full_name: 'John Doe',
-                    email: 'john@example.com',
-                    phone: '0123456789',
-                    subjects: 'Mathematics, Science',
-                    tuition_type: 'online',
-                    status: 'active'
-                }
-            ]);
-        }, 500);
-    });
+    try {
+        const result = await api.getAllMembers();
+        return result.members || [];
+    } catch (error) {
+        console.error('Error loading members:', error);
+        return [];
+    }
 }
 
 async function getAllPayments() {
-    // Simulate API call
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve([
-                {
-                    payment_id: 'PAY-1234567890',
-                    member_id: 'MEM-1234567890',
-                    amount: '300',
-                    payment_date: new Date(),
-                    transaction_id: 'TOY-12345',
-                    payment_method: 'ToyibPay',
-                    status: 'completed'
-                }
-            ]);
-        }, 500);
-    });
+    try {
+        const result = await api.getMemberPayments({}); // Get all payments
+        return result.payments || [];
+    } catch (error) {
+        console.error('Error loading payments:', error);
+        return [];
+    }
 }
 
 async function getSystemLogs() {
-    // Simulate API call
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve([
-                {
-                    timestamp: new Date(),
-                    level: 'info',
-                    message: 'System initialized',
-                    location: 'system',
-                    user: 'admin'
-                }
-            ]);
-        }, 500);
-    });
+    try {
+        // Implement logs retrieval
+        return [];
+    } catch (error) {
+        console.error('Error loading logs:', error);
+        return [];
+    }
 }
 
 function showAddMemberModal() {
@@ -329,13 +304,6 @@ function saveSettings() {
     logToSheet('info', 'Admin settings updated', 'saveSettings', 'admin');
 }
 
-function initializeSheets() {
-    if (confirm('Initialize Google Sheets structure? This will create necessary sheets if they don\'t exist.')) {
-        // Call Google Apps Script to initialize sheets
-        logToSheet('info', 'Sheets initialized', 'initializeSheets', 'admin');
-        alert('Sheets initialized successfully');
-    }
-}
 
 function syncData() {
     loadDashboardData();
@@ -349,6 +317,42 @@ function refreshLogs() {
 function logToSheet(level, message, location, user) {
     // Implement actual logging to Google Sheets
     console.log(`[${level}] ${location}: ${message} - ${user}`);
+}
+
+async function createMember(data) {
+    try {
+        return await api.createMember(data);
+    } catch (error) {
+        console.error('Error creating member:', error);
+        throw error;
+    }
+}
+
+async function updateMember(data) {
+    try {
+        return await api.updateMember(data);
+    } catch (error) {
+        console.error('Error updating member:', error);
+        throw error;
+    }
+}
+
+async function deleteMember(memberId) {
+    try {
+        return await api.deleteMember({ member_id: memberId });
+    } catch (error) {
+        console.error('Error deleting member:', error);
+        throw error;
+    }
+}
+
+async function initializeSheets() {
+    try {
+        return await api.initializeSheets();
+    } catch (error) {
+        console.error('Error initializing sheets:', error);
+        throw error;
+    }
 }
 
 // Member form submission
@@ -377,4 +381,5 @@ document.getElementById('memberForm')?.addEventListener('submit', async function
     }
 
 });
+
 
