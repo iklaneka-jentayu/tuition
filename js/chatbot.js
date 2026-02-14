@@ -15,9 +15,9 @@ class EduSmartChatbot {
         this.useAI = true; // Toggle between rule-based and AI responses
         
         // Initialize
-        this.loadMessages();
+        //this.loadMessages();
         this.setupEventListeners();
-        this.initializeUserContext();
+        //this.initializeUserContext();
     }
     
     // Initialize user context from session/local storage
@@ -619,6 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.chatbot-notification').style.display = 'flex';
     }, 5000);
 });
+
 
 
 
