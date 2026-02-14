@@ -56,7 +56,7 @@ class EduSmartChatbot {
     // Option 1: Google Dialogflow Integration
     async sendToDialogflow(message) {
         // Using Dialogflow CX or ES
-        const response = await fetch('https://dialogflow.googleapis.com/v2/projects/YOUR_PROJECT_ID/agent/sessions/123:detectIntent', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${this.apiKey}`,
@@ -86,7 +86,7 @@ class EduSmartChatbot {
     
     // Option 2: OpenAI GPT Integration
     async sendToOpenAI(message) {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${this.apiKey}`,
@@ -576,4 +576,5 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.chatbot-notification').style.display = 'flex';
     }, 5000);
 });
+
 
