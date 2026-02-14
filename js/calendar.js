@@ -108,31 +108,35 @@ async function loadInitialData() {
 // Load Events for Calendar
 async function loadEvents(fetchInfo, successCallback, failureCallback) {
     try {
-        const events = await getAllEvents();
+        const result = await api.getCalendarEvents({
+            start_date: fetchInfo.startStr,
+            end_date: fetchInfo.endStr
+        });
         
-        // Format events for FullCalendar
-        const formattedEvents = events.map(event => ({
-            id: event.id,
-            title: event.title,
-            start: event.start,
-            end: event.end,
-            extendedProps: {
-                subject: event.subject,
-                teacher: event.teacher,
-                type: event.type,
-                location: event.location,
-                students: event.students,
-                description: event.description,
-                materials: event.materials
-            },
-            backgroundColor: getSubjectColor(event.subject),
-            borderColor: getSubjectColor(event.subject)
-        }));
-        
-        successCallback(formattedEvents);
-        
+        if (result.success) {
+            const events = result.events.map(event => ({
+                id: event.id,
+                title: event.title,
+                start: event.start,
+                end: event.end,
+                extendedProps: {
+                    subject: event.subject,
+                    teacher: event.teacher_id,
+                    type: event.type,
+                    location: event.location,
+                    students: event.students,
+                    description: event.description,
+                    materials: event.materials
+                },
+                backgroundColor: getSubjectColor(event.subject),
+                borderColor: getSubjectColor(event.subject)
+            }));
+            
+            successCallback(events);
+        } else {
+            failureCallback(result.error);
+        }
     } catch (error) {
-        console.error('Error loading events:', error);
         failureCallback(error);
     }
 }
@@ -191,19 +195,29 @@ async function getEventById(id) {
 }
 
 async function createEvent(eventData) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const newEvent = {
-                id: `event_${Date.now()}`,
-                ...eventData,
-                createdAt: new Date().toISOString()
-            };
-            currentEvents.push(newEvent);
-            logToSheet('info', `Event created: ${newEvent.title}`, 'Calendar');
-            resolve(newEvent);
-        }, 500);
-    });
+    try {
+        // Check for conflicts first
+        const conflicts = await api.checkScheduleConflicts({
+            start: eventData.start,
+            end: eventData.end,
+            teacher_id: eventData.teacher,
+            students: eventData.students,
+            event_id: eventData.id
+        });
+        
+        if (conflicts.hasConflicts) {
+            throw new Error('Schedule conflict detected');
+        }
+        
+        const result = await api.createCalendarEvent(eventData);
+        return result;
+        
+    } catch (error) {
+        console.error('Error creating event:', error);
+        throw error;
+    }
 }
+
 
 async function updateEvent(id, eventData) {
     return new Promise((resolve) => {
@@ -704,28 +718,24 @@ async function updateEventDuration(event) {
     }
 }
 
-// Mock Data Functions
 async function getTeachers() {
-    return [
-        { id: 'teacher1', name: 'Dr. Sarah Johnson' },
-        { id: 'teacher2', name: 'Mr. Ahmad Faiz' },
-        { id: 'teacher3', name: 'Ms. Lim Xiao Mei' },
-        { id: 'teacher4', name: 'Mr. Rajesh Kumar' },
-        { id: 'teacher5', name: 'Mrs. Nur Aisyah' }
-    ];
+    try {
+        const result = await api.getTeachers();
+        return result.teachers || [];
+    } catch (error) {
+        console.error('Error loading teachers:', error);
+        return [];
+    }
 }
 
 async function getStudents() {
-    return [
-        { id: 'student1', name: 'Ahmad Bin Abdullah' },
-        { id: 'student2', name: 'Lim Wei Jie' },
-        { id: 'student3', name: 'Siti Nurhaliza' },
-        { id: 'student4', name: 'Rajesh Kumar' },
-        { id: 'student5', name: 'Tan Mei Ling' },
-        { id: 'student6', name: 'Muhammad Ali' },
-        { id: 'student7', name: 'Sarah Chen' },
-        { id: 'student8', name: 'David Wong' }
-    ];
+    try {
+        const result = await api.getStudents();
+        return result.students || [];
+    } catch (error) {
+        console.error('Error loading students:', error);
+        return [];
+    }
 }
 
 // Populate Teacher Filter
@@ -1079,3 +1089,4 @@ window.importCalendar = importCalendar;
 // Log calendar initialization
 
 logToSheet('info', 'Calendar module initialized', 'Calendar');		
+
