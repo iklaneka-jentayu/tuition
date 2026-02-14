@@ -7,7 +7,6 @@
 // ============================================
 // CONFIGURATION
 // ============================================
-
 const SPREADSHEET_ID = '1Ab4GdO3rKNkewXmiNeBkjaA9LwHbotQz055XRmWOak0'; // Replace with your Google Sheet ID
 const SHEET_NAMES = {
     MEMBERS: 'Members',
@@ -22,14 +21,14 @@ const SHEET_NAMES = {
     CHAT_FEEDBACK: 'ChatbotFeedback',
     PRICING: 'Pricing',
     ATTENDANCE: 'Attendance',
-    LOG_SHEET: 'Logsheet'
+    LOG_SHEET: 'DebugLogs'
 };
 
 function log(level, message, payload) {
 
   SpreadsheetApp
     .getActive()
-    .getSheetByName('Logsheet')
+    .getSheetByName(SHEET_NAMES.LOG_SHEET)
     .appendRow([
       new Date(),
       level,
@@ -107,7 +106,8 @@ function doPost(e) {
         const params = JSON.parse(e.postData.contents);
         const action = params.action;
         const data = params.data;
-        
+
+        log("INFO", "doPost called", e);
         logToSheet('info', `doPost called with action: ${action}`, 'doPost', data?.user || 'System');
         
         let result;
@@ -1946,3 +1946,4 @@ function createJsonResponse(data) {
         .createTextOutput(JSON.stringify(data))
         .setMimeType(ContentService.MimeType.JSON);
 }
+
