@@ -404,7 +404,6 @@ document.getElementById('enrollmentForm').addEventListener('submit', async funct
     }
 });
 
-// Replace the mock submitEnrollment function
 async function submitEnrollment(data) {
     try {
         const result = await api.submitEnrollment(data);
@@ -449,4 +448,5 @@ function __(key) {
 function logToSheet(level, message, location, user) {
     console.log(`[${level}] ${location}: ${message} - ${user}`);
 }
+
 
