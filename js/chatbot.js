@@ -6,18 +6,22 @@
 
 class EduSmartChatbot {
     constructor() {
+	
         this.messages = [];
         this.context = {};
         this.userInfo = null;
         this.isTyping = false;
-        this.apiEndpoint = 'YOUR_API_ENDPOINT'; // Replace with your API
-        this.apiKey = 'YOUR_API_KEY'; // Replace with your API key
+        this.apiEndpoint = 'https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec'; // Replace with your API
+        this.apiKey = 'razin123'; // Replace with your API key
         this.useAI = true; // Toggle between rule-based and AI responses
-        
+        //console.log('constructor-chatbot');
         // Initialize
         this.loadMessages();
+        //console.log('constructor-chatbot1');
         this.setupEventListeners();
+        //console.log('constructor-chatbot2');
         this.initializeUserContext();
+        //console.log('constructor-chatbot3');
     }
     
     // Initialize user context from session/local storage
@@ -37,16 +41,59 @@ class EduSmartChatbot {
             ...this.userInfo
         };
     }
+
+    // Add feedback function
+    async function sendFeedback(rating, feedback) {
+        try {
+            await api.sendFeedback({
+                sessionId: chatbot.getSessionId(),
+                rating: rating,
+                feedback: feedback,
+                userId: chatbot.userInfo.userId,
+                context: chatbot.context
+            });
+            
+            showNotification('success', 'Thank you for your feedback!');
+            
+        } catch (error) {
+            console.error('Error sending feedback:', error);
+        }
+    }
+
+    // Add escalation function
+    async function escalateToHuman() {
+        try {
+            await api.escalateToHuman({
+                sessionId: chatbot.getSessionId(),
+                userId: chatbot.userInfo.userId,
+                message: chatbot.messages.slice(-1)[0]?.text || 'No message',
+                context: chatbot.context,
+                history: chatbot.messages.slice(-10)
+            });
+            
+            addMessage(
+                "I've notified a human support representative. They will contact you shortly via email or phone.", 
+                'bot'
+            );
+            
+        } catch (error) {
+            console.error('Error escalating:', error);
+            addMessage("Sorry, I couldn't connect you to support right now. Please try again later.", 'bot');
+        }
+    }
     
     // Send message to AI
     async sendToAI(message) {
-        if (!this.useAI) {
-            return this.getRuleBasedResponse(message);
-        }
-        
         try {
-            // Option 1: Google Dialogflow
-            return await this.sendToDialogflow(message);
+            const response = await api.sendChatMessage({
+                message: message,
+                context: this.context,
+                sessionId: this.getSessionId(),
+                language: this.userInfo.language
+            });
+            
+            return response;
+            
         } catch (error) {
             console.error('AI service error, falling back to rule-based:', error);
             return this.getRuleBasedResponse(message);
@@ -56,7 +103,7 @@ class EduSmartChatbot {
     // Option 1: Google Dialogflow Integration
     async sendToDialogflow(message) {
         // Using Dialogflow CX or ES
-        const response = await fetch('https://dialogflow.googleapis.com/v2/projects/YOUR_PROJECT_ID/agent/sessions/123:detectIntent', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${this.apiKey}`,
@@ -86,7 +133,7 @@ class EduSmartChatbot {
     
     // Option 2: OpenAI GPT Integration
     async sendToOpenAI(message) {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${this.apiKey}`,
@@ -400,13 +447,17 @@ class EduSmartChatbot {
             }
         }
     }
-}
+}//end class
+
+
+
 
 // Initialize chatbot
 const chatbot = new EduSmartChatbot();
 
 // Global functions for UI
 function toggleChatbot() {
+    console.log('toggleChatbot..');
     const window = document.querySelector('.chatbot-window');
     window.classList.toggle('active');
     
@@ -576,3 +627,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.chatbot-notification').style.display = 'flex';
     }, 5000);
 });
+
+
+
+
+
+
+
