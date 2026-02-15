@@ -528,12 +528,348 @@
             </form>
         </div>
     </div>
+
+<!-- WhatsApp Management Section -->
+<div class="admin-panel" id="whatsappPanel">
+    <div class="panel-header">
+        <h2>WhatsApp Business Management</h2>
+        <div class="panel-actions">
+            <button class="btn-admin btn-admin-primary" onclick="syncWhatsAppTemplates()">
+                <i class="fas fa-sync"></i> Sync Templates
+            </button>
+            <button class="btn-admin btn-admin-success" onclick="showBulkMessageModal()">
+                <i class="fas fa-bullhorn"></i> Send Bulk Message
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="admin-stats-grid">
+        <div class="admin-stat-card">
+            <div class="admin-stat-icon success">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="admin-stat-info">
+                <h3>Total Conversations</h3>
+                <p id="totalWhatsAppChats">0</p>
+                <small>Last 30 days</small>
+            </div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="admin-stat-icon primary">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="admin-stat-info">
+                <h3>AI Responses</h3>
+                <p id="totalAIResponses">0</p>
+                <small>Automated replies</small>
+            </div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="admin-stat-icon warning">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="admin-stat-info">
+                <h3>Pending</h3>
+                <p id="pendingMessages">0</p>
+                <small>Awaiting response</small>
+            </div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="admin-stat-icon info">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="admin-stat-info">
+                <h3>Delivery Rate</h3>
+                <p id="deliveryRate">98%</p>
+                <small>Last 7 days</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates Tab -->
+    <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchWhatsAppTab('templates')">
+            <i class="fas fa-template"></i> Message Templates
+        </button>
+        <button class="admin-tab" onclick="switchWhatsAppTab('conversations')">
+            <i class="fas fa-comments"></i> Conversations
+        </button>
+        <button class="admin-tab" onclick="switchWhatsAppTab('campaigns')">
+            <i class="fas fa-chart-line"></i> Campaigns
+        </button>
+        <button class="admin-tab" onclick="switchWhatsAppTab('settings')">
+            <i class="fas fa-cog"></i> Settings
+        </button>
+    </div>
+
+    <!-- Templates Panel -->
+    <div id="templatesPanel" class="admin-subpanel active">
+        <div class="table-header">
+            <h3>Message Templates</h3>
+            <button class="btn-admin btn-admin-primary" onclick="createTemplate()">
+                <i class="fas fa-plus"></i> New Template
+            </button>
+        </div>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Template Name</th>
+                        <th>Language</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="templateList">
+                    <!-- Dynamic content -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Conversations Panel -->
+    <div id="conversationsPanel" class="admin-subpanel">
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label>Search</label>
+                <input type="text" id="conversationSearch" placeholder="Phone number or name">
+            </div>
+            <div class="filter-group">
+                <label>Status</label>
+                <select id="conversationFilter">
+                    <option value="all">All</option>
+                    <option value="active">Active</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+        </div>
+        <div class="conversation-list" id="conversationList">
+            <!-- Dynamic content -->
+        </div>
+    </div>
+
+    <!-- Campaigns Panel -->
+    <div id="campaignsPanel" class="admin-subpanel">
+        <div class="table-header">
+            <h3>Campaign History</h3>
+            <button class="btn-admin btn-admin-success" onclick="newCampaign()">
+                <i class="fas fa-plus"></i> New Campaign
+            </button>
+        </div>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Campaign Name</th>
+                        <th>Template</th>
+                        <th>Recipients</th>
+                        <th>Sent</th>
+                        <th>Delivered</th>
+                        <th>Read</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="campaignList">
+                    <!-- Dynamic content -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div id="settingsPanel" class="admin-subpanel">
+        <div class="settings-form">
+            <h3>WhatsApp API Configuration</h3>
+            <div class="form-group">
+                <label>Access Token</label>
+                <input type="password" id="waAccessToken" class="form-control" value="••••••••">
+            </div>
+            <div class="form-group">
+                <label>Phone Number ID</label>
+                <input type="text" id="waPhoneId" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Business Account ID</label>
+                <input type="text" id="waBusinessId" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>App Secret</label>
+                <input type="password" id="waAppSecret" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Verify Token</label>
+                <input type="text" id="waVerifyToken" class="form-control">
+            </div>
+            <button class="btn-admin btn-admin-primary" onclick="saveWhatsAppSettings()">
+                Save Settings
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Bulk Message Modal -->
+<div id="bulkMessageModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Send Bulk WhatsApp Message</h2>
+            <span class="close-modal" onclick="closeBulkMessageModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="bulkMessageForm">
+                <div class="form-group">
+                    <label>Select Recipients</label>
+                    <select id="recipientGroup" class="form-control">
+                        <option value="all_members">All Members</option>
+                        <option value="active_members">Active Members</option>
+                        <option value="pending_payment">Pending Payment</option>
+                        <option value="form4">Form 4 Students</option>
+                        <option value="form5">Form 5 Students</option>
+                        <option value="custom">Custom List (CSV)</option>
+                    </select>
+                </div>
+                
+                <div id="customRecipientUpload" style="display: none;">
+                    <div class="form-group">
+                        <label>Upload CSV File</label>
+                        <input type="file" accept=".csv" onchange="handleFileUpload()">
+                        <small>CSV should have 'phone' and 'name' columns</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Message Type</label>
+                    <select id="messageType" onchange="toggleMessageType()">
+                        <option value="text">Text Message</option>
+                        <option value="template">Template Message</option>
+                        <option value="interactive">Interactive (Buttons)</option>
+                    </select>
+                </div>
+                
+                <div id="textMessageSection">
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="bulkMessage" rows="5" class="form-control"></textarea>
+                        <small>Use {{name}} for personalization</small>
+                    </div>
+                </div>
+                
+                <div id="templateSection" style="display: none;">
+                    <div class="form-group">
+                        <label>Select Template</label>
+                        <select id="templateSelect" class="form-control">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Schedule</label>
+                    <select id="scheduleType">
+                        <option value="now">Send Now</option>
+                        <option value="later">Schedule Later</option>
+                    </select>
+                </div>
+                
+                <div id="scheduleDateTime" style="display: none;">
+                    <input type="datetime-local" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Delay between messages (ms)</label>
+                    <input type="number" id="messageDelay" value="2000" class="form-control">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeBulkMessageModal()">Cancel</button>
+            <button class="btn-primary" onclick="sendBulkMessage()">Send Messages</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// WhatsApp admin functions
+async function syncWhatsAppTemplates() {
+    try {
+        const response = await fetch('/api/whatsapp/sync-templates', { method: 'POST' });
+        const data = await response.json();
+        showNotification('success', 'Templates synced successfully');
+        loadTemplates();
+    } catch (error) {
+        showNotification('error', 'Failed to sync templates');
+    }
+}
+
+function showBulkMessageModal() {
+    document.getElementById('bulkMessageModal').classList.add('active');
+    loadRecipientGroups();
+    loadTemplatesForSelect();
+}
+
+function closeBulkMessageModal() {
+    document.getElementById('bulkMessageModal').classList.remove('active');
+}
+
+function toggleMessageType() {
+    const type = document.getElementById('messageType').value;
+    document.getElementById('textMessageSection').style.display = type === 'text' ? 'block' : 'none';
+    document.getElementById('templateSection').style.display = type === 'template' ? 'block' : 'none';
+}
+
+async function sendBulkMessage() {
+    const form = document.getElementById('bulkMessageForm');
+    const formData = new FormData(form);
+    
+    try {
+        const response = await fetch('/api/whatsapp/bulk', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(formData))
+        });
+        
+        const result = await response.json();
+        showNotification('success', `Messages sent: ${result.sent}/${result.total}`);
+        closeBulkMessageModal();
+        loadCampaigns();
+    } catch (error) {
+        showNotification('error', 'Failed to send messages');
+    }
+}
+
+async function loadTemplates() {
+    // Load template list
+}
+
+async function loadConversations() {
+    // Load conversation list
+}
+
+async function loadCampaigns() {
+    // Load campaign history
+}
+
+function switchWhatsAppTab(tab) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    document.querySelectorAll('.admin-subpanel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`${tab}Panel`).classList.add('active');
+}
+</script>
+
+	
 	<script src="js/api-client.js"></script>
     <script src="js/language.js"></script>
     <script src="js/admin.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>
+
 
 
 
