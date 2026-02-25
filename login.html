@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduSmart Tuition</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .login-header .logo {
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .login-header h1 {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: var(--gray-color);
+        }
+        
+        .login-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .login-tab {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .login-tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: -2px;
+        }
+        
+        .login-form {
+            display: none;
+        }
+        
+        .login-form.active {
+            display: block;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.1);
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+        
+        .btn-login:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .demo-credentials {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .demo-credentials h4 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .demo-credentials p {
+            color: var(--gray-color);
+            margin-bottom: 5px;
+        }
+
+        .containerx {
+          display: flex;
+          justify-content: space-between;
+          background: none;
+        }
+        
+    </style>
+   
+</head>
+<body>
+    <div>
+
+
+<div class="containerx">
+  <div>   
+      <button onclick="goBack()" class="back-btn">
+          ← Back
+        </button>
+  </div>
+  <div>        
+      <div class="language-selector">
+            <select id="languageSelect" aria-label="Select language">
+                <option value="en">English</option>
+                <option value="ms">Bahasa Malaysia</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+  </div>
+
+</div>
+
+    
+    <section class="login-section">
+        <div class="login-container">
+            <!-- Update login page with data-i18n attributes -->
+            <div class="login-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span data-i18n="nav.home">EduSmart Tuition</span>
+                </a>
+                <h1 data-i18n="login.title">Welcome Back!</h1>
+                <p data-i18n="login.subtitle">Login to access your dashboard</p>
+            </div>
+            
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchLoginTab('member')" 
+                        data-i18n="login.member_login">Member Login</button>
+                <button class="login-tab" onclick="switchLoginTab('admin')" 
+                        data-i18n="login.admin_login">Admin Login</button>
+            </div>
+            
+            <!-- Member Login Form -->
+            <div id="memberLogin" class="login-form active">
+                <form id="memberLoginForm">
+                    <div class="input-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="memberEmail" data-i18n-placeholder="login.email" 
+                               placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="memberPassword" data-i18n-placeholder="login.password" 
+                               placeholder="Password" required>
+                    </div>
+                    
+                    <div class="remember-forgot">
+                        <label>
+                            <input type="checkbox"> <span data-i18n="login.remember">Remember me</span>
+                        </label>
+                        <a href="#" style="color: var(--primary-color); text-decoration: none;" 
+                           data-i18n="login.forgot">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-login" data-i18n="login.member_button">
+                        <i class="fas fa-sign-in-alt"></i> Login as Member
+                    </button>
+                </form>
+                
+                <div class="register-link">
+                    <p>
+                        <span data-i18n="login.no_account">Don't have an account?</span> 
+                        <a href="enrollment.html" data-i18n="login.enroll_now">Enroll Now</a>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Demo Credentials -->
+            <div class="demo-credentials">
+                <h4 data-i18n="login.demo_credentials">Demo Credentials:</h4>
+                <p data-i18n="login.demo_member">Member: member@example.com / password123</p>
+                <p data-i18n="login.demo_admin">Admin: admin@edusmart.com / admin123</p>
+            </div>
+        </div>
+    </section>
+    <script src="js/api-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

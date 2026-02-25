@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSmart Tuition - Premium Secondary School Tutoring</title>
+    <meta name="description" content="Expert online and offline tuition for secondary school students. All subjects covered. Boost grades with personalized learning.">
+    <meta name="keywords" content="tuition, secondary school, online tuition, offline tuition, tutoring, math, science, english, malay, mandarin, education">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+     <link rel="stylesheet" href="styles/chatbot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        
+        <div class="nav-container">
+            
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="logo-text">EduSmart</span>
+            </a>
+            
+             <!-- Language Selector  -->
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="ms">Malay (Bahasa Malaysia)</option>
+                    <option value="zh">Mandarin (中文)</option>
+                </select>
+            </div>       
+           
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active" data-i18n="nav.home">Home</a>
+                <a href="#subjects" class="nav-link" data-i18n="nav.subjects">Subjects</a>
+                <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
+                <a href="#testimonials" class="nav-link" data-i18n="nav.testimonials">Testimonials</a>
+                <a href="enrollment.html" class="nav-link" data-i18n="nav.enroll">Enroll Now</a>
+                <a href="calendar.html" class="nav-link" data-i18n="nav.schedule">Schedule</a>
+                <a href="login.html" class="nav-link btn-login" data-i18n="nav.login">Login</a>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Hero Section with Video Background -->
+    <section class="hero-section">
+
+        <!-- AI Chatbot -->
+        <div class="chatbot-container">
+            <div class="chatbot-toggle" onclick="toggleChatbot()">
+                <i class="fas fa-robot"></i>
+                <span class="chatbot-notification">1</span>
+            </div>
+            
+            <div class="chatbot-window">
+                <div class="chatbot-header">
+                    <div class="chatbot-header-info">
+                        <i class="fas fa-robot"></i>
+                        <div>
+                            <h3 data-i18n="chatbot.title">EduSmart AI Assistant</h3>
+                            <p data-i18n="chatbot.subtitle">Online 24/7 to help you</p>
+                        </div>
+                    </div>
+                    <div class="chatbot-header-actions">
+                        <button onclick="minimizeChatbot()" class="chatbot-btn">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button onclick="closeChatbot()" class="chatbot-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chatbot-messages" id="chatbotMessages">
+                    <div class="message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p data-i18n="chatbot.welcome">Hello! I'm your EduSmart AI assistant. How can I help you today?</p>
+                            <span class="message-time">Just now</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chatbot-typing" id="chatbotTyping" style="display: none;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span data-i18n="chatbot.typing">AI is typing...</span>
+                </div>
+                
+                <div class="chatbot-input">
+                    <div class="quick-replies" id="quickReplies">
+                        <button class="quick-reply" onclick="sendQuickReply('tuition packages')">
+                            <i class="fas fa-tag"></i> <span data-i18n="chatbot.quick.packages">Packages</span>
+                        </button>
+                        <button class="quick-reply" onclick="sendQuickReply('enrollment process')">
+                            <i class="fas fa-pen"></i> <span data-i18n="chatbot.quick.enroll">Enrollment</span>
+                        </button>
+                        <button class="quick-reply" onclick="sendQuickReply('payment methods')">
+                            <i class="fas fa-credit-card"></i> <span data-i18n="chatbot.quick.payment">Payment</span>
+                        </button>
+                        <button class="quick-reply" onclick="sendQuickReply('schedule')">
+                            <i class="fas fa-calendar"></i> <span data-i18n="chatbot.quick.schedule">Schedule</span>
+                        </button>
+                    </div>
+                    
+                    <div class="input-area">
+                        <textarea 
+                            id="chatbotInput" 
+                            placeholder="Type your message..." 
+                            rows="1"
+                            onkeydown="handleInputKeydown(event)"
+                            data-i18n-placeholder="chatbot.placeholder"
+                        ></textarea>
+                        <button onclick="sendMessage()" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="chatbot-footer">
+                        <span data-i18n="chatbot.powered">Powered by AI</span>
+                        <button onclick="clearChat()" class="clear-chat-btn">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="video-container">
+            <video autoplay muted loop playsinline id="heroVideo">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-students-studying-in-a-library-39755-large.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="hero.title">Excel in Secondary School with Expert Tuition</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Personalized online and offline tutoring for all subjects. Join 2,000+ students who improved their grades by 30% on average.</p>
+            <div class="hero-buttons">
+                <a href="enrollment.html" class="btn btn-primary" data-i18n="hero.cta">Start Free Trial</a>
+                <a href="#subjects" class="btn btn-secondary" data-i18n="hero.subjects">View Subjects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subjects Section -->
+    <section id="subjects" class="subjects-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="subjects.title">Comprehensive Subject Coverage</h2>
+            <p class="section-subtitle" data-i18n="subjects.subtitle">We offer expert tutoring for all secondary school subjects from Form 1 to Form 5</p>
+            
+            <div class="subjects-grid">
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 data-i18n="subjects.math">Mathematics</h3>
+                    <p data-i18n="subjects.math_desc">Algebra, Geometry, Calculus, Statistics</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 data-i18n="subjects.science">Science</h3>
+                    <p data-i18n="subjects.science_desc">Physics, Chemistry, Biology, General Science</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 data-i18n="subjects.english">English</h3>
+                    <p data-i18n="subjects.english_desc">Grammar, Literature, Composition, Comprehension</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 data-i18n="subjects.malay">Bahasa Malaysia</h3>
+                    <p data-i18n="subjects.malay_desc">Grammar, Karangan, Kefahaman, Sastera</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h3 data-i18n="subjects.mandarin">Mandarin</h3>
+                    <p data-i18n="subjects.mandarin_desc">Writing, Reading, Speaking, Comprehension</p>
+                </div>
+                
+                <div class="subject-card">
+                    <div class="subject-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 data-i18n="subjects.history">History & Geography</h3>
+                    <p data-i18n="subjects.history_desc">Malaysian History, World History, Physical Geography</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<!-- ===== PRICING SECTION ===== -->
+<section id="pricing" class="pricing-section">
+    <div class="container">
+        <h2 class="section-title" data-i18n="pricing.title">Affordable Tuition Packages</h2>
+        <p class="section-subtitle" data-i18n="pricing.subtitle">Choose the perfect package that suits your learning needs and budget</p>
+        
+        <!-- Level Tabs -->
+        <div class="pricing-tabs">
+            <button class="pricing-tab active" onclick="switchPricingTab('primary')" data-i18n="pricing.tab.primary">Primary School (Year 3-6)</button>
+            <button class="pricing-tab" onclick="switchPricingTab('lower-secondary')" data-i18n="pricing.tab.lower">Lower Secondary (Form 1-3)</button>
+            <button class="pricing-tab" onclick="switchPricingTab('upper-secondary')" data-i18n="pricing.tab.upper">Upper Secondary (Form 4-5)</button>
+        </div>
+        
+        <!-- Primary School Packages (Year 3-6) -->
+        <div id="primary-pricing" class="pricing-grid active">
+            <div class="pricing-card" data-aos="fade-up">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.primary.single">Single Subject</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">100</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.subject">1 Subject</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="100">
+                <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.primary.two">2 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">140</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.two_subjects">2 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.primary.three">3 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">180</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.three_subjects">3 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.primary.four">4 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">200</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.four_subjects">4 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Lower Secondary Packages (Form 1-3) -->
+        <div id="lower-secondary-pricing" class="pricing-grid">
+            <div class="pricing-card" data-aos="fade-up">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.lower.single">Single Subject</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">100</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.subject">1 Subject</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.lower.two">2 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">160</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.two_subjects">2 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="200">
+                <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.lower.three">3 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">190</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.three_subjects">3 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.lower.four">4 Subjects Package</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">200</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.four_subjects">4 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Upper Secondary Packages (Form 4-5) -->
+        <div id="upper-secondary-pricing" class="pricing-grid">
+            <div class="pricing-card" data-aos="fade-up">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_e">Package E</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">150</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.e_desc">Basic Package - 2 Subjects</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.two_subjects">2 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Basic Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-times"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_a">Package A</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">180</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.a_desc">Standard Package - 3 Subjects</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.three_subjects">3 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Standard Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Monthly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Progress Report</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="200">
+                <div class="popular-badge" data-i18n="pricing.popular">Most Popular</div>
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_b">Package B</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">200</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.b_desc">Premium Package - 4 Subjects</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.four_subjects">4 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Premium Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Weekly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Detailed Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_c">Package C</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">250</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.c_desc">Advanced Package - 5 Subjects</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.five_subjects">5 Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Advanced Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Weekly Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Detailed Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">Class Recordings</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.tutoring">1-on-1 Tutoring Sessions</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="pricing-header">
+                    <h3 data-i18n="pricing.upper.package_d">Package D</h3>
+                    <div class="price">
+                        <span class="currency">RM</span>
+                        <span class="amount">300</span>
+                        <span class="period" data-i18n="pricing.per_month">/month</span>
+                    </div>
+                    <p class="package-subtitle" data-i18n="pricing.upper.d_desc">Premium Plus - All Subjects + 1-on-1</p>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.all_subjects">All Subjects</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.online">Online Classes</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.materials">Premium Study Materials</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.assessment">Daily Assessments</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.report">Comprehensive Progress Report</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.recording">All Class Recordings</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.tutoring">Weekly 1-on-1 Tutoring</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.features.parent">Parent-Teacher Meetings</span></li>
+                    </ul>
+                </div>
+                <div class="pricing-footer">
+                    <a href="enrollment.html" class="btn-pricing" data-i18n="pricing.enroll">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Package Comparison Note -->
+        <div class="pricing-note">
+            <i class="fas fa-info-circle"></i>
+            <p data-i18n="pricing.note">All packages include GST. Special discounts available for sibling enrollment and annual subscription.</p>
+        </div>
+    </div>
+</section>
+
+
+    
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title" data-i18n="about.title">Why Choose EduSmart Tuition?</h2>
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-user-graduate feature-icon"></i>
+                            <div>
+                                <h3 data-i18n="about.feature1_title">Expert Tutors</h3>
+                                <p data-i18n="about.feature1_desc">All our tutors are certified teachers with 5+ years of experience</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-laptop-house feature-icon"></i>
+                            <div>
+                                <h3 data-i18n="about.feature2_title">Flexible Learning</h3>
+                                <p data-i18n="about.feature2_desc">Choose between online live classes or in-person tuition at our centers</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                            <div>
+                                <h3 data-i18n="about.feature3_title">Proven Results</h3>
+                                <p data-i18n="about.feature3_desc">94% of our students improve their grades within 3 months</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-calendar-alt feature-icon"></i>
+                            <div>
+                                <h3 data-i18n="about.feature4_title">Flexible Scheduling</h3>
+                                <p data-i18n="about.feature4_desc">Classes available on weekdays, weekends, and during school holidays</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="assets/images/classroom.jpeg" alt="Students learning together">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="testimonials.title">What Parents & Students Say</h2>
+            
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-i18n="testimonial1.text">"My daughter's math grade improved from C to A in just 4 months. The tutors are patient and explain concepts clearly."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4 data-i18n="testimonial1.name">Amina Hassan</h4>
+                        <p data-i18n="testimonial1.role">Parent of Form 3 Student</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-i18n="testimonial2.text">"The online classes are so convenient. I can learn from home and the interactive platform makes it engaging."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4 data-i18n="testimonial2.name">Wei Chen</h4>
+                        <p data-i18n="testimonial2.role">Form 5 Student</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-i18n="testimonial3.text">"EduSmart helped my son gain confidence in Science. He's now scoring As and actually enjoys learning."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4 data-i18n="testimonial3.name">Raj Kumar</h4>
+                        <p data-i18n="testimonial3.role">Parent of Form 4 Student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-i18n="cta.title">Ready to Boost Your Grades?</h2>
+                <p data-i18n="cta.subtitle">Join our free trial week with no commitment. Experience our teaching methods first-hand.</p>
+                <a href="enrollment.html" class="btn btn-primary btn-large" data-i18n="cta.button">Start Free Trial Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduSmart Tuition</span>
+                    </a>
+                    <p data-i18n="footer.description">Premium online and offline tuition for secondary school students across Malaysia.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-i18n="footer.links">Quick Links</h3>
+                    <a href="index.html" data-i18n="nav.home">Home</a>
+                    <a href="#subjects" data-i18n="nav.subjects">Subjects</a>
+                    <a href="#about" data-i18n="nav.about">About Us</a>
+                    <a href="enrollment.html" data-i18n="nav.enroll">Enrollment</a>
+                    <a href="login.html" data-i18n="nav.login">Login</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-i18n="footer.contact">Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer.address">Kuala Lumpur, Malaysia</span></p>
+                    <p><i class="fas fa-phone"></i> <span>+603-1234 5678</span></p>
+                    <p><i class="fas fa-envelope"></i> <span>info@edusmart.com</span></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> EduSmart Tuition. <span data-i18n="footer.rights">All rights reserved.</span></p>
+                <p><a href="#" data-i18n="footer.privacy">Privacy Policy</a> | <a href="#" data-i18n="footer.terms">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/language.js"></script>
+    
+    <script src="js/chatbot.js"></script>
+    
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

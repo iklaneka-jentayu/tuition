@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment - EduSmart Tuition</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        /* Additional Enrollment Form Styles */
+        .enrollment-section {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc, #e6f0fa);
+        }
+        
+        .enrollment-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .enrollment-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .enrollment-header h1 {
+            color: var(--dark-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .enrollment-header p {
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+        
+        /* Progress Bar */
+        .enrollment-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .enrollment-progress::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--admin-border);
+            z-index: 1;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 0 10px;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 35px;
+            height: 35px;
+            background: var(--admin-border);
+            color: var(--admin-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active .step-number {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .progress-step.completed .step-number {
+            background: var(--admin-success);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--admin-gray);
+            font-weight: 500;
+        }
+        
+        .progress-step.active .step-label {
+            color: var(--primary-color);
+        }
+        
+        /* Form Sections */
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .form-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+        
+        .required::after {
+            content: '*';
+            color: var(--admin-danger);
+            margin-left: 4px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--admin-border);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.1);
+        }
+        
+        .form-control.error {
+            border-color: var(--admin-danger);
+        }
+        
+        .form-text {
+            font-size: 0.8rem;
+            color: var(--admin-gray);
+            margin-top: 5px;
+        }
+        
+        .form-error {
+            font-size: 0.8rem;
+            color: var(--admin-danger);
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-control.error + .form-error {
+            display: block;
+        }
+        
+        /* Select2 Customization */
+        .select2-container--default .select2-selection--multiple {
+            border: 2px solid var(--admin-border);
+            border-radius: 8px;
+            padding: 5px;
+            min-height: 45px;
+        }
+        
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.1);
+        }
+        
+        /* Radio & Checkbox Groups */
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 10px 0;
+        }
+        
+        .radio-item, .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .radio-item input[type="radio"],
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        /* Package Cards */
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .package-card {
+            border: 2px solid var(--admin-border);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .package-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.1);
+        }
+        
+        .package-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(74, 107, 255, 0.05);
+        }
+        
+        .package-name {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .package-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .package-subjects {
+            font-size: 0.85rem;
+            color: var(--admin-gray);
+            margin-top: 5px;
+        }
+        
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed var(--admin-border);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-color);
+            background: rgba(74, 107, 255, 0.05);
+        }
+        
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .file-upload p {
+            color: var(--admin-gray);
+            margin-bottom: 5px;
+        }
+        
+        .file-upload small {
+            color: var(--admin-gray);
+            font-size: 0.8rem;
+        }
+        
+        .file-info {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--admin-light);
+            border-radius: 5px;
+            color: var(--dark-color);
+        }
+        
+        /* Payment Section */
+        .payment-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: var(--admin-light);
+            border-radius: 10px;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .payment-method {
+            border: 2px solid var(--admin-border);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background: rgba(74, 107, 255, 0.05);
+        }
+        
+        .payment-method img {
+            width: 60px;
+            height: 40px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        
+        .payment-method h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .payment-method p {
+            font-size: 0.8rem;
+            color: var(--admin-gray);
+        }
+        
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--admin-border);
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--admin-border);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 2px solid var(--admin-border);
+        }
+        
+        /* Navigation Buttons */
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--admin-border);
+        }
+        
+        .btn-nav {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-prev {
+            background: var(--admin-light);
+            color: var(--admin-gray);
+        }
+        
+        .btn-prev:hover {
+            background: var(--admin-border);
+        }
+        
+        .btn-next {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-next:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.3);
+        }
+        
+        .btn-submit {
+            background: var(--admin-success);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background: #0ca678;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .enrollment-container {
+                padding: 20px;
+            }
+            
+            .form-grid,
+            .form-grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .enrollment-progress {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .enrollment-progress::before {
+                display: none;
+            }
+            
+            .progress-step {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                text-align: left;
+            }
+            
+            .step-number {
+                margin: 0;
+            }
+            
+            .package-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn-nav {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="ms">Bahasa Malaysia</option>
+            <option value="zh">中文</option>
+        </select>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+       <div class="nav-container">
+            
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="logo-text">EduSmart</span>
+            </a>
+            
+             <!-- Language Selector  -->
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="ms">Malay (Bahasa Malaysia)</option>
+                    <option value="zh">Mandarin (中文)</option>
+                </select>
+            </div>       
+           
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                <a href="index.html#pricing" class="nav-link" data-i18n="nav.pricing">Pricing</a>
+                <a href="enrollment.html" class="nav-link active" data-i18n="nav.enroll">Enroll Now</a>
+                <a href="login.html" class="nav-link btn-login" data-i18n="nav.login">Login</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Enrollment Section -->
+    <section class="enrollment-section">
+        <div class="enrollment-container">
+            <div class="enrollment-header">
+                <h1 data-i18n="enroll.title">Enroll Now</h1>
+                <p data-i18n="enroll.subtitle">Start your journey to academic excellence today</p>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="enrollment-progress">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label" data-i18n="enroll.progress.student">Student Info</div>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label" data-i18n="enroll.progress.parent">Parent Info</div>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label" data-i18n="enroll.progress.academic">Academic Details</div>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label" data-i18n="enroll.progress.payment">Payment</div>
+                </div>
+            </div>
+            
+            <!-- Enrollment Form -->
+            <form id="enrollmentForm" enctype="multipart/form-data">
+                <!-- Section 1: Student Information -->
+                <div id="section1" class="form-section active">
+                    <h2 class="section-title" data-i18n="enroll.section.student">Student Information</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.full_name">Full Name (as in IC)</label>
+                            <input type="text" id="studentFullName" name="studentFullName" class="form-control" 
+                                   data-i18n-placeholder="enroll.student.full_name_placeholder" required>
+                            <div class="form-error" data-i18n="enroll.error.required">This field is required</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.ic">IC Number</label>
+                            <input type="text" id="studentIc" name="studentIc" class="form-control" 
+                                   placeholder="000101-01-1234" pattern="[0-9]{6}-[0-9]{2}-[0-9]{4}" required>
+                            <div class="form-text" data-i18n="enroll.student.ic_format">Format: 000101-01-1234</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.dob">Date of Birth</label>
+                            <input type="date" id="studentDob" name="studentDob" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.gender">Gender</label>
+                            <div class="radio-group">
+                                <label class="radio-item">
+                                    <input type="radio" name="gender" value="male" required>
+                                    <span data-i18n="enroll.student.male">Male</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="gender" value="female" required>
+                                    <span data-i18n="enroll.student.female">Female</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.nationality">Nationality</label>
+                            <select id="nationality" name="nationality" class="form-control" required>
+                                <option value="" data-i18n="enroll.select">Select</option>
+                                <option value="malaysian" data-i18n="enroll.nationality.malaysian">Malaysian</option>
+                                <option value="others" data-i18n="enroll.nationality.others">Others</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.student.race">Race/Ethnicity</label>
+                            <input type="text" id="race" name="race" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.email">Email Address</label>
+                            <input type="email" id="studentEmail" name="studentEmail" class="form-control" 
+                                   data-i18n-placeholder="enroll.student.email_placeholder" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.phone">Phone Number</label>
+                            <input type="tel" id="studentPhone" name="studentPhone" class="form-control" 
+                                   placeholder="012-3456789" pattern="[0-9]{3}-[0-9]{7,8}" required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="required" data-i18n="enroll.student.address">Home Address</label>
+                            <textarea id="address" name="address" rows="3" class="form-control" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.city">City</label>
+                            <input type="text" id="city" name="city" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.state">State</label>
+                            <select id="state" name="state" class="form-control" required>
+                                <option value="" data-i18n="enroll.select">Select</option>
+                                <option value="johor">Johor</option>
+                                <option value="kedah">Kedah</option>
+                                <option value="kelantan">Kelantan</option>
+                                <option value="melaka">Melaka</option>
+                                <option value="nsembilan">Negeri Sembilan</option>
+                                <option value="pahang">Pahang</option>
+                                <option value="penang">Penang</option>
+                                <option value="perak">Perak</option>
+                                <option value="perlis">Perlis</option>
+                                <option value="sabah">Sabah</option>
+                                <option value="sarawak">Sarawak</option>
+                                <option value="selangor">Selangor</option>
+                                <option value="terengganu">Terengganu</option>
+                                <option value="kl">Kuala Lumpur</option>
+                                <option value="labuan">Labuan</option>
+                                <option value="putrajaya">Putrajaya</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.student.postcode">Postcode</label>
+                            <input type="text" id="postcode" name="postcode" class="form-control" pattern="[0-9]{5}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <div></div>
+                        <button type="button" class="btn-nav btn-next" onclick="nextSection(1)">
+                            <span data-i18n="enroll.next">Next</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Section 2: Parent/Guardian Information -->
+                <div id="section2" class="form-section">
+                    <h2 class="section-title" data-i18n="enroll.section.parent">Parent/Guardian Information</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.parent.father_name">Father's Full Name</label>
+                            <input type="text" id="fatherName" name="fatherName" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.parent.father_ic">Father's IC Number</label>
+                            <input type="text" id="fatherIc" name="fatherIc" class="form-control" placeholder="000101-01-1234">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.parent.father_occupation">Father's Occupation</label>
+                            <input type="text" id="fatherOccupation" name="fatherOccupation" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.parent.father_phone">Father's Phone Number</label>
+                            <input type="tel" id="fatherPhone" name="fatherPhone" class="form-control" placeholder="012-3456789">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.parent.father_email">Father's Email</label>
+                            <input type="email" id="fatherEmail" name="fatherEmail" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.parent.mother_name">Mother's Full Name</label>
+                            <input type="text" id="motherName" name="motherName" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.parent.mother_ic">Mother's IC Number</label>
+                            <input type="text" id="motherIc" name="motherIc" class="form-control" placeholder="000101-01-1234">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.parent.mother_occupation">Mother's Occupation</label>
+                            <input type="text" id="motherOccupation" name="motherOccupation" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.parent.mother_phone">Mother's Phone Number</label>
+                            <input type="tel" id="motherPhone" name="motherPhone" class="form-control" placeholder="012-3456789">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.parent.mother_email">Mother's Email</label>
+                            <input type="email" id="motherEmail" name="motherEmail" class="form-control">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="required" data-i18n="enroll.parent.emergency_name">Emergency Contact Name</label>
+                            <input type="text" id="emergencyName" name="emergencyName" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.parent.emergency_relation">Relationship</label>
+                            <input type="text" id="emergencyRelation" name="emergencyRelation" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.parent.emergency_phone">Emergency Contact Phone</label>
+                            <input type="tel" id="emergencyPhone" name="emergencyPhone" class="form-control" placeholder="012-3456789" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn-nav btn-prev" onclick="prevSection(2)">
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="enroll.previous">Previous</span>
+                        </button>
+                        <button type="button" class="btn-nav btn-next" onclick="nextSection(2)">
+                            <span data-i18n="enroll.next">Next</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Section 3: Academic Details -->
+                <div id="section3" class="form-section">
+                    <h2 class="section-title" data-i18n="enroll.section.academic">Academic Details</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.academic.school_name">School Name</label>
+                            <input type="text" id="schoolName" name="schoolName" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.academic.school_type">School Type</label>
+                            <select id="schoolType" name="schoolType" class="form-control" required>
+                                <option value="" data-i18n="enroll.select">Select</option>
+                                <option value="government" data-i18n="enroll.school.government">Government School</option>
+                                <option value="private" data-i18n="enroll.school.private">Private School</option>
+                                <option value="international" data-i18n="enroll.school.international">International School</option>
+                                <option value="religious" data-i18n="enroll.school.religious">Religious School</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.academic.current_level">Current Level</label>
+                            <select id="currentLevel" name="currentLevel" class="form-control" required onchange="updatePackages()">
+                                <option value="" data-i18n="enroll.select">Select</option>
+                                <option value="year3">Year 3</option>
+                                <option value="year4">Year 4</option>
+                                <option value="year5">Year 5</option>
+                                <option value="year6">Year 6</option>
+                                <option value="form1">Form 1</option>
+                                <option value="form2">Form 2</option>
+                                <option value="form3">Form 3</option>
+                                <option value="form4">Form 4</option>
+                                <option value="form5">Form 5</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.academic.stream">Stream (For Form 4-5)</label>
+                            <select id="stream" name="stream" class="form-control">
+                                <option value="" data-i18n="enroll.select">Select</option>
+                                <option value="science">Science</option>
+                                <option value="arts">Arts</option>
+                                <option value="accounting">Accounting</option>
+                                <option value="technical">Technical/Vocational</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="required" data-i18n="enroll.academic.subjects">Subjects to Enroll</label>
+                            <select id="subjects" name="subjects" class="form-control" multiple style="width: 100%;" onchange="calculateTotal()">
+                                <option value="mathematics">Mathematics</option>
+                                <option value="additional_mathematics">Additional Mathematics</option>
+                                <option value="science">Science</option>
+                                <option value="physics">Physics</option>
+                                <option value="chemistry">Chemistry</option>
+                                <option value="biology">Biology</option>
+                                <option value="english">English</option>
+                                <option value="malay">Bahasa Malaysia</option>
+                                <option value="mandarin">Mandarin</option>
+                                <option value="tamil">Tamil</option>
+                                <option value="history">History</option>
+                                <option value="geography">Geography</option>
+                                <option value="accounting">Accounting</option>
+                                <option value="economics">Economics</option>
+                                <option value="business">Business Studies</option>
+                            </select>
+                            <div class="form-text" data-i18n="enroll.academic.multiple_subjects">Hold Ctrl/Cmd to select multiple subjects</div>
+                        </div>
+                        
+                        <!-- Package Selection -->
+                        <div class="form-group full-width">
+                            <label data-i18n="enroll.academic.recommended_package">Recommended Package</label>
+                            <div id="packageContainer" class="package-grid">
+                                <!-- Packages will be dynamically loaded here -->
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.academic.previous_achievement">Previous Achievement</label>
+                            <input type="text" id="previousAchievement" name="previousAchievement" class="form-control" 
+                                   placeholder="e.g., 5A 3B in PT3">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.academic.target_grade">Target Grade</label>
+                            <input type="text" id="targetGrade" name="targetGrade" class="form-control" 
+                                   placeholder="e.g., A for SPM">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label data-i18n="enroll.academic.learning_needs">Special Learning Needs / Comments</label>
+                            <textarea id="learningNeeds" name="learningNeeds" rows="3" class="form-control"></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label data-i18n="enroll.academic.documents">Upload Report Cards (Optional)</label>
+                            <div class="file-upload" onclick="document.getElementById('reportCards').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p data-i18n="enroll.upload.click">Click to upload or drag and drop</p>
+                                <small data-i18n="enroll.upload.format">PDF, JPG, PNG (Max 5MB)</small>
+                                <input type="file" id="reportCards" name="reportCards" multiple accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
+                            </div>
+                            <div id="fileInfo" class="file-info"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn-nav btn-prev" onclick="prevSection(3)">
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="enroll.previous">Previous</span>
+                        </button>
+                        <button type="button" class="btn-nav btn-next" onclick="nextSection(3)">
+                            <span data-i18n="enroll.next">Next</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Section 4: Payment -->
+                <div id="section4" class="form-section">
+                    <h2 class="section-title" data-i18n="enroll.section.payment">Payment Details</h2>
+                    
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <h3 data-i18n="enroll.summary.title">Order Summary</h3>
+                        <div id="summaryDetails">
+                            <div class="summary-item">
+                                <span data-i18n="enroll.summary.package">Selected Package:</span>
+                                <span id="summaryPackage">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span data-i18n="enroll.summary.subjects">Number of Subjects:</span>
+                                <span id="summarySubjects">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span data-i18n="enroll.summary.registration">Registration Fee:</span>
+                                <span>RM 50</span>
+                            </div>
+                            <div class="summary-item">
+                                <span data-i18n="enroll.summary.material">Study Material Fee:</span>
+                                <span>RM 30</span>
+                            </div>
+                            <div class="summary-total">
+                                <span data-i18n="enroll.summary.total">Total Amount:</span>
+                                <span id="summaryTotal">RM 0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Billing Information -->
+                    <h3 data-i18n="enroll.billing.title" style="margin: 20px 0 15px;">Billing Information</h3>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.billing.name">Billing Name</label>
+                            <input type="text" id="billingName" name="billingName" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.billing.email">Billing Email</label>
+                            <input type="email" id="billingEmail" name="billingEmail" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required" data-i18n="enroll.billing.phone">Billing Phone</label>
+                            <input type="tel" id="billingPhone" name="billingPhone" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.billing.company">Company Name (Optional)</label>
+                            <input type="text" id="companyName" name="companyName" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="enroll.billing.tax_id">Tax ID / GST Registration (Optional)</label>
+                            <input type="text" id="taxId" name="taxId" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Methods -->
+                    <h3 data-i18n="enroll.payment.methods" style="margin: 25px 0 15px;">Payment Methods</h3>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method" onclick="selectPaymentMethod('toyibpay')">
+                            <img src="https://toyibpay.com/assets/logo.png" alt="ToyibPay">
+                            <h4 data-i18n="enroll.payment.toyibpay">ToyibPay</h4>
+                            <p data-i18n="enroll.payment.online">Online Banking / Card</p>
+                        </div>
+                        
+                        <div class="payment-method" onclick="selectPaymentMethod('fpx')">
+                            <img src="https://www.fpx.com.my/assets/images/logo-fpx.png" alt="FPX">
+                            <h4 data-i18n="enroll.payment.fpx">FPX</h4>
+                            <p data-i18n="enroll.payment.fpx_desc">Direct Bank Transfer</p>
+                        </div>
+                        
+                        <div class="payment-method" onclick="selectPaymentMethod('card')">
+                            <img src="https://www.mastercard.com/content/dam/mccom/global/logos/logo-mastercard-mobile.svg" alt="Credit Card">
+                            <h4 data-i18n="enroll.payment.card">Credit/Debit Card</h4>
+                            <p data-i18n="enroll.payment.card_desc">Visa, Mastercard</p>
+                        </div>
+                        
+                        <div class="payment-method" onclick="selectPaymentMethod('installment')">
+                            <img src="https://www.affinbank.com.my/images/logo.png" alt="Installment">
+                            <h4 data-i18n="enroll.payment.installment">0% Installment</h4>
+                            <p data-i18n="enroll.payment.installment_desc">3, 6, 12 months</p>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="toyibpay">
+                    
+                    <!-- Promo Code -->
+                    <div class="form-group" style="margin: 20px 0;">
+                        <label data-i18n="enroll.payment.promo">Promo Code</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="promoCode" name="promoCode" class="form-control" placeholder="Enter promo code">
+                            <button type="button" class="btn-nav" onclick="applyPromoCode()" style="padding: 12px 20px;">
+                                <span data-i18n="enroll.payment.apply">Apply</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="checkbox-group" style="margin: 20px 0;">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <span data-i18n="enroll.terms.agree">I agree to the Terms and Conditions and Privacy Policy</span>
+                        </label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="receiveUpdates" name="receiveUpdates">
+                            <span data-i18n="enroll.terms.updates">I would like to receive updates and promotions</span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn-nav btn-prev" onclick="prevSection(4)">
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="enroll.previous">Previous</span>
+                        </button>
+                        <button type="submit" class="btn-nav btn-next btn-submit">
+                            <i class="fas fa-lock"></i> <span data-i18n="enroll.payment.pay_now">Pay Now</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span data-i18n="nav.home">EduSmart Tuition</span>
+                    </a>
+                    <p data-i18n="footer.description">Premium online and offline tuition for secondary school students across Malaysia.</p>
+                </div>
+                <div class="footer-column">
+                    <h3 data-i18n="footer.links">Quick Links</h3>
+                    <a href="index.html" data-i18n="nav.home">Home</a>
+                    <a href="index.html#pricing" data-i18n="nav.pricing">Pricing</a>
+                    <a href="enrollment.html" data-i18n="nav.enroll">Enrollment</a>
+                    <a href="login.html" data-i18n="nav.login">Login</a>
+                </div>
+                <div class="footer-column">
+                    <h3 data-i18n="footer.contact">Contact Us</h3>
+                    <p><i class="fas fa-phone"></i> +603-1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@edusmart.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> EduSmart Tuition. <span data-i18n="footer.rights">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="js/api-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/enrollment.js"></script>
+</body>
+</html>
+
+

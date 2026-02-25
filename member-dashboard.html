@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EduSmart Tuition</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Admin Dashboard Styles */
+        .admin-section {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+            background: #f1f5f9;
+        }
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .admin-header h1 {
+            font-size: 2.2rem;
+            color: var(--dark-color);
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(74, 107, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .stat-info h3 {
+            font-size: 1.1rem;
+            color: var(--gray-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-info p {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        
+        .admin-tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 5px;
+        }
+        
+        .admin-tab:hover {
+            background: rgba(74, 107, 255, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .admin-tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .admin-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-box input {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 5px;
+            width: 300px;
+        }
+        
+        .btn-add {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th {
+            text-align: left;
+            padding: 12px;
+            background: #f8fafc;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .data-table tr:hover {
+            background: #f8fafc;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .btn-edit {
+            background: var(--warning-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .btn-delete {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .btn-view {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray-color);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .search-box input {
+                width: 200px;
+            }
+            
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .panel-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .search-box input {
+                flex: 1;
+            }
+        }
+    </style>
+
+
+</head>
+<body>
+    <nav class="navbar">
+
+		<div class="nav-container">
+
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="logo-text">EduSmart</span>
+            </a>
+            
+             <!-- Language Selector  -->
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="ms">Malay (Bahasa Malaysia)</option>
+                    <option value="zh">Mandarin (中文)</option>
+                </select>
+            </div>       
+           
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+			
+            <div class="nav-menu
+				<a href="calendar.html" class="nav-link" data-i18n="nav.schedule">Schedule</a>
+                <span class="nav-link">Welcome, Admin</span>
+                <a href="login.html" class="nav-link btn-login" onclick="logout()">Logout</a>
+            </div>
+
+        </div>
+    </nav>
+    
+    <section class="admin-section">
+        <div class="admin-container">
+		<!-- Update admin dashboard header -->
+			<div class="admin-header">
+				<h1 data-i18n="admin.title">Admin Dashboard</h1>
+				<button class="btn-primary" onclick="syncData()">
+					<i class="fas fa-sync"></i> <span data-i18n="admin.sync">Sync Data</span>
+				</button>
+			</div>
+
+			<!-- Statistics Cards -->
+			<div class="admin-stats">
+				<div class="stat-card">
+					<div class="stat-icon">
+						<i class="fas fa-users"></i>
+					</div>
+					<div class="stat-info">
+						<h3 data-i18n="admin.total_members">Total Members</h3>
+						<p id="totalMembers">0</p>
+					</div>
+				</div>
+				<!-- More stat cards... -->
+			</div>
+
+			<!-- Admin Tabs -->
+			<div class="admin-tabs">
+				<button class="admin-tab active" onclick="switchTab('members')" 
+						data-i18n="admin.tab_members">Members</button>
+				<button class="admin-tab" onclick="switchTab('payments')" 
+						data-i18n="admin.tab_payments">Payments</button>
+				<button class="admin-tab" onclick="switchTab('logs')" 
+						data-i18n="admin.tab_logs">System Logs</button>
+				<button class="admin-tab" onclick="switchTab('settings')" 
+						data-i18n="admin.tab_settings">Settings</button>
+				<button class="admin-tab" onclick="switchTab('subjects')" 
+						data-i18n="admin.tab_subjects">Subjects</button>
+				<button class="admin-tab" onclick="switchTab('reports')" 
+						data-i18n="admin.tab_reports">Reports</button>
+			</div>
+
+			<!-- Members Panel with translations -->
+			<div id="membersPanel" class="admin-panel">
+				<div class="panel-header">
+					<h2 data-i18n="admin.members.title">Manage Members</h2>
+					<div class="search-box">
+						<input type="text" id="memberSearch" data-i18n-placeholder="admin.members.search">
+						<button class="btn-primary" onclick="searchMembers()">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+					<button class="btn-add" onclick="showAddMemberModal()">
+						<i class="fas fa-plus"></i> <span data-i18n="admin.members.add">Add Member</span>
+					</button>
+				</div>
+				
+				<table class="data-table">
+					<thead>
+						<tr>
+							<th data-i18n="admin.members.id">Member ID</th>
+							<th data-i18n="admin.members.name">Name</th>
+							<th data-i18n="admin.members.email">Email</th>
+							<th data-i18n="admin.members.phone">Phone</th>
+							<th data-i18n="admin.members.subjects">Subjects</th>
+							<th data-i18n="admin.members.type">Type</th>
+							<th data-i18n="admin.members.status">Status</th>
+							<th data-i18n="admin.members.actions">Actions</th>
+						</tr>
+					</thead>
+					<tbody id="membersTableBody"></tbody>
+				</table>
+			</div>
+            
+            <!-- Payments Panel -->
+            <div id="paymentsPanel" class="admin-panel" style="display: none;">
+                <div class="panel-header">
+                    <h2>Manage Payments</h2>
+                    <div class="search-box">
+                        <input type="text" id="paymentSearch" placeholder="Search payments...">
+                        <button class="btn-primary" onclick="searchPayments()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Payment ID</th>
+                            <th>Member ID</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Transaction ID</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTableBody">
+                        <tr>
+                            <td colspan="8" style="text-align: center;">Loading payments...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Logs Panel -->
+            <div id="logsPanel" class="admin-panel" style="display: none;">
+                <div class="panel-header">
+                    <h2>System Logs</h2>
+                    <button class="btn-primary" onclick="refreshLogs()">
+                        <i class="fas fa-redo"></i> Refresh
+                    </button>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Level</th>
+                            <th>Message</th>
+                            <th>Location</th>
+                            <th>User</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logsTableBody">
+                        <tr>
+                            <td colspan="5" style="text-align: center;">Loading logs...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Settings Panel -->
+            <div id="settingsPanel" class="admin-panel" style="display: none;">
+                <h2>System Settings</h2>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Google Sheets Configuration</h3>
+                    <div class="form-group">
+                        <label>Spreadsheet ID</label>
+                        <input type="text" id="spreadsheetId" class="form-control" value="YOUR_SPREADSHEET_ID">
+                    </div>
+                    
+                    <h3 style="margin-top: 30px;">ToyibPay Configuration</h3>
+                    <div class="form-group">
+                        <label>Merchant ID</label>
+                        <input type="text" id="merchantId" class="form-control" value="YOUR_MERCHANT_ID">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>API Key</label>
+                        <input type="password" id="apiKey" class="form-control" value="YOUR_API_KEY">
+                    </div>
+                    
+                    <button class="btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                    
+                    <button class="btn-secondary" onclick="initializeSheets()" style="margin-left: 10px;">
+                        <i class="fas fa-table"></i> Initialize Sheets
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Add/Edit Member Modal -->
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Member</h2>
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+            </div>
+            
+            <form id="memberForm">
+                <input type="hidden" id="memberId" name="member_id">
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="full_name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone *</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subjects">Subjects</label>
+                    <input type="text" id="subjects" name="subjects" class="form-control" placeholder="Comma separated">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tuitionType">Tuition Type</label>
+                    <select id="tuitionType" name="tuition_type" class="form-control">
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" class="form-control">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="suspended">Suspended</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="passwordField">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control">
+                    <small style="color: var(--gray-color);">Leave blank to keep current password when editing</small>
+                </div>
+                
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">
+                    Save Member
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
+
+
+
+
+

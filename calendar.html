@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuition Scheduler - EduSmart</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="styles/calendar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="logo-text">EduSmart</span>
+            </a>
+
+             <!-- Language Selector -->
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="ms">Bahasa Malaysia</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="calendar.html" class="nav-link active">Schedule</a>
+                <a href="enrollment.html" class="nav-link">Enroll</a>
+                <a href="login.html" class="nav-link btn-login">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Calendar Section -->
+    <section class="calendar-section">
+        <div class="calendar-container">
+            <!-- Header -->
+            <div class="calendar-header">
+                <div class="header-left">
+                    <h1 data-i18n="calendar.title">Tuition Schedule</h1>
+                    <p data-i18n="calendar.subtitle">Manage your classes and sessions</p>
+                </div>
+                <div class="header-right">
+                    <div class="view-toggle">
+                        <button class="view-btn active" onclick="changeView('dayGridMonth')">
+                            <i class="fas fa-calendar-alt"></i> <span data-i18n="calendar.month">Month</span>
+                        </button>
+                        <button class="view-btn" onclick="changeView('timeGridWeek')">
+                            <i class="fas fa-calendar-week"></i> <span data-i18n="calendar.week">Week</span>
+                        </button>
+                        <button class="view-btn" onclick="changeView('timeGridDay')">
+                            <i class="fas fa-calendar-day"></i> <span data-i18n="calendar.day">Day</span>
+                        </button>
+                    </div>
+                    <button class="btn-add-event" onclick="openEventModal()">
+                        <i class="fas fa-plus"></i> <span data-i18n="calendar.add_event">Add Class</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label data-i18n="calendar.filter.teacher">Teacher:</label>
+                    <select id="teacherFilter" class="filter-select" onchange="filterEvents()">
+                        <option value="all" data-i18n="calendar.filter.all">All Teachers</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label data-i18n="calendar.filter.subject">Subject:</label>
+                    <select id="subjectFilter" class="filter-select" onchange="filterEvents()">
+                        <option value="all" data-i18n="calendar.filter.all">All Subjects</option>
+                        <option value="mathematics">Mathematics</option>
+                        <option value="science">Science</option>
+                        <option value="english">English</option>
+                        <option value="malay">Bahasa Malaysia</option>
+                        <option value="mandarin">Mandarin</option>
+                        <option value="history">History</option>
+                        <option value="physics">Physics</option>
+                        <option value="chemistry">Chemistry</option>
+                        <option value="biology">Biology</option>
+                        <option value="accounting">Accounting</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label data-i18n="calendar.filter.class_type">Class Type:</label>
+                    <select id="typeFilter" class="filter-select" onchange="filterEvents()">
+                        <option value="all" data-i18n="calendar.filter.all">All Types</option>
+                        <option value="online" data-i18n="calendar.type.online">Online</option>
+                        <option value="offline" data-i18n="calendar.type.offline">Offline</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button class="btn-reset" onclick="resetFilters()">
+                        <i class="fas fa-undo"></i> <span data-i18n="calendar.filter.reset">Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calendar -->
+            <div id="calendar"></div>
+
+            <!-- Upcoming Classes Sidebar -->
+            <div class="upcoming-classes">
+                <h3 data-i18n="calendar.upcoming">Upcoming Classes</h3>
+                <div id="upcomingList" class="upcoming-list">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Modal (Add/Edit) -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2 id="modalTitle" data-i18n="calendar.modal.add">Add New Class</h2>
+                <span class="close-modal" onclick="closeEventModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm">
+                    <input type="hidden" id="eventId" name="id">
+                    
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h3 data-i18n="calendar.modal.basic">Basic Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="required" data-i18n="calendar.modal.title">Class Title</label>
+                                <input type="text" id="eventTitle" name="title" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required" data-i18n="calendar.modal.subject">Subject</label>
+                                <select id="eventSubject" name="subject" class="form-control" required>
+                                    <option value="" data-i18n="calendar.select">Select Subject</option>
+                                    <option value="mathematics">Mathematics</option>
+                                    <option value="additional_mathematics">Additional Mathematics</option>
+                                    <option value="science">Science</option>
+                                    <option value="physics">Physics</option>
+                                    <option value="chemistry">Chemistry</option>
+                                    <option value="biology">Biology</option>
+                                    <option value="english">English</option>
+                                    <option value="malay">Bahasa Malaysia</option>
+                                    <option value="mandarin">Mandarin</option>
+                                    <option value="history">History</option>
+                                    <option value="geography">Geography</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required" data-i18n="calendar.modal.teacher">Teacher</label>
+                                <select id="eventTeacher" name="teacher" class="form-control" required>
+                                    <option value="" data-i18n="calendar.select">Select Teacher</option>
+                                    <option value="teacher1">Dr. Sarah Johnson</option>
+                                    <option value="teacher2">Mr. Ahmad Faiz</option>
+                                    <option value="teacher3">Ms. Lim Xiao Mei</option>
+                                    <option value="teacher4">Mr. Rajesh Kumar</option>
+                                    <option value="teacher5">Mrs. Nur Aisyah</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required" data-i18n="calendar.modal.class_type">Class Type</label>
+                                <select id="eventType" name="type" class="form-control" required onchange="toggleLocationField()">
+                                    <option value="online">Online</option>
+                                    <option value="offline">Offline</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Date and Time -->
+                    <div class="form-section">
+                        <h3 data-i18n="calendar.modal.datetime">Date & Time</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="required" data-i18n="calendar.modal.start_date">Start Date</label>
+                                <input type="date" id="eventStartDate" name="start_date" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required" data-i18n="calendar.modal.end_date">End Date</label>
+                                <input type="date" id="eventEndDate" name="end_date" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required" data-i18n="calendar.modal.start_time">Start Time</label>
+                                <input type="time" id="eventStartTime" name="start_time" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required" data-i18n="calendar.modal.end_time">End Time</label>
+                                <input type="time" id="eventEndTime" name="end_time" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Repeat Options -->
+                        <div class="repeat-options">
+                            <label>
+                                <input type="checkbox" id="eventRepeat" onchange="toggleRepeatOptions()">
+                                <span data-i18n="calendar.modal.repeat">Repeat weekly</span>
+                            </label>
+                            
+                            <div id="repeatDetails" style="display: none; margin-top: 15px;">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label data-i18n="calendar.modal.repeat_until">Repeat Until</label>
+                                        <input type="date" id="eventRepeatUntil" class="form-control">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label data-i18n="calendar.modal.repeat_days">Repeat On</label>
+                                        <div class="checkbox-group">
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" name="repeat_days" value="1"> Mon
+                                            </label>
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" name="repeat_days" value="2"> Tue
+                                            </label>
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" name="repeat_days" value="3"> Wed
+                                            </label>
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" name="repeat_days" value="4"> Thu
+                                            </label>
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" name="repeat_days" value="5"> Fri
+                                            </label>
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" name="repeat_days" value="6"> Sat
+                                            </label>
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" name="repeat_days" value="0"> Sun
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Location Details -->
+                    <div class="form-section">
+                        <h3 data-i18n="calendar.modal.location">Location Details</h3>
+                        <div id="onlineLocation" style="display: block;">
+                            <div class="form-group">
+                                <label data-i18n="calendar.modal.meeting_link">Meeting Link</label>
+                                <input type="url" id="eventMeetingLink" name="meeting_link" class="form-control" 
+                                       placeholder="https://zoom.us/j/...">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="calendar.modal.meeting_id">Meeting ID</label>
+                                <input type="text" id="eventMeetingId" name="meeting_id" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="calendar.modal.password">Password</label>
+                                <input type="text" id="eventPassword" name="password" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div id="offlineLocation" style="display: none;">
+                            <div class="form-group">
+                                <label data-i18n="calendar.modal.venue">Venue</label>
+                                <input type="text" id="eventVenue" name="venue" class="form-control" 
+                                       placeholder="Room number, building name">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="calendar.modal.address">Address</label>
+                                <textarea id="eventAddress" name="address" rows="2" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Participants -->
+                    <div class="form-section">
+                        <h3 data-i18n="calendar.modal.participants">Participants</h3>
+                        <div class="form-group">
+                            <label data-i18n="calendar.modal.students">Select Students</label>
+                            <select id="eventStudents" name="students" class="form-control" multiple style="width: 100%;">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="calendar.modal.max_students">Maximum Students</label>
+                            <input type="number" id="eventMaxStudents" name="max_students" class="form-control" min="1" value="10">
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Info -->
+                    <div class="form-section">
+                        <h3 data-i18n="calendar.modal.additional">Additional Information</h3>
+                        <div class="form-group">
+                            <label data-i18n="calendar.modal.description">Description</label>
+                            <textarea id="eventDescription" name="description" rows="3" class="form-control"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="calendar.modal.materials">Materials Needed</label>
+                            <textarea id="eventMaterials" name="materials" rows="2" class="form-control"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="eventNotify" name="notify">
+                                <span data-i18n="calendar.modal.notify">Send notification to participants</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeEventModal()" data-i18n="calendar.cancel">Cancel</button>
+                <button type="button" class="btn-primary" onclick="saveEvent()" data-i18n="calendar.save">Save Class</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="calendar.details">Class Details</h2>
+                <span class="close-modal" onclick="closeDetailsModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="eventDetails">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeDetailsModal()" data-i18n="calendar.close">Close</button>
+                <button type="button" class="btn-edit" onclick="editFromDetails()" data-i18n="calendar.edit">Edit</button>
+                <button type="button" class="btn-delete" onclick="deleteFromDetails()" data-i18n="calendar.delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2 data-i18n="calendar.confirm_delete">Confirm Delete</h2>
+                <span class="close-modal" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="calendar.delete_message">Are you sure you want to delete this class?</p>
+                <p id="deleteEventInfo"></p>
+                
+                <div style="margin-top: 15px;">
+                    <label>
+                        <input type="checkbox" id="deleteAllOccurrences">
+                        <span data-i18n="calendar.delete_all">Delete all occurrences (for recurring classes)</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeDeleteModal()" data-i18n="calendar.cancel">Cancel</button>
+                <button type="button" class="btn-delete" onclick="confirmDelete()" data-i18n="calendar.delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduSmart Tuition</span>
+                    </a>
+                    <p data-i18n="footer.description">Premium online and offline tuition for secondary school students across Malaysia.</p>
+                </div>
+                <div class="footer-column">
+                    <h3 data-i18n="footer.links">Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="calendar.html">Schedule</a>
+                    <a href="enrollment.html">Enrollment</a>
+                    <a href="login.html">Login</a>
+                </div>
+                <div class="footer-column">
+                    <h3 data-i18n="footer.contact">Contact Us</h3>
+                    <p><i class="fas fa-phone"></i> +603-1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@edusmart.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> EduSmart Tuition. <span data-i18n="footer.rights">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="js/api-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/calendar.js"></script>
+</body>
+
+</html>
+
