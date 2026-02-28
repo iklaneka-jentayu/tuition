@@ -80,7 +80,7 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
 
         //const result = await response.json();
         const result = await response.text()
-        alert(result.message);
+        alert(result);
 
         document.getElementById("dataForm").reset();
         loadData();
