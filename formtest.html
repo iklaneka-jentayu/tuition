@@ -60,39 +60,6 @@
 <script>
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwzBX2gB-bEYh3yO9W2J5nBYaET-J78TKN1hGAHvC5cw6NnoWHdScQCyR9Q6svNA60_xw/exec";
 
-// POST data to code.gs
-/*
-document.getElementById("dataForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-
-    const data = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value
-    };
-
-    try {
-        const response = await fetch(WEB_APP_URL, {
-            method: "POST",
-			mode: "no-cors",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-        const result = await response.json();
-        alert(result.message);
-
-        document.getElementById("dataForm").reset();
-        loadData();
-
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Failed to submit data");
-    }
-});
-*/
-
 document.getElementById("dataForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
@@ -127,15 +94,8 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
 async function loadData() {
     try {
         //const response = await fetch(WEB_APP_URL,{mode:'no-cors'});
-		//alert(JSON.stringify(response));
 		const response = await fetch(WEB_APP_URL);
-		//console.log('response-',response);
-		
         const result = await response.json();
-		//const result = await response;
-		console.log('result-',result);
-        //alert(result);
-
         const tbody = document.querySelector("#dataTable tbody");
         tbody.innerHTML = "";
 
