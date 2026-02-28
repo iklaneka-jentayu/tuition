@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Google Apps Script Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+            width: 250px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        th {
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Submit Data</h2>
+
+<form id="dataForm">
+    <input type="text" id="name" placeholder="Enter Name" required><br>
+    <input type="email" id="email" placeholder="Enter Email" required><br>
+    <button type="submit">Submit</button>
+</form>
+
+<button onclick="loadData()">Load Data</button>
+
+<table id="dataTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwzBX2gB-bEYh3yO9W2J5nBYaET-J78TKN1hGAHvC5cw6NnoWHdScQCyR9Q6svNA60_xw/exec";
+
+// POST data to code.gs
+/*
+document.getElementById("dataForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value
+    };
+
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: "POST",
+			mode: "no-cors",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const result = await response.json();
+        alert(result.message);
+
+        document.getElementById("dataForm").reset();
+        loadData();
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to submit data");
+    }
+});
+*/
+
+document.getElementById("dataForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value
+    };
+
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: "POST",
+			mode: "no-cors",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const result = await response.json();
+        alert(result.message);
+
+        document.getElementById("dataForm").reset();
+        loadData();
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to submit data");
+    }
+});
+
+// GET data from code.gs
+async function loadData() {
+    try {
+        const response = await fetch(WEB_APP_URL,{mode:'no-cors'});
+		alert(JSON.stringify(response));
+		//const response = await fetch(WEB_APP_URL);
+		//console.log('response-',response);
+		
+        const result = await response.json();
+		//const result = await response;
+		//console.log('result-',result);
+        alert(result);
+
+        const tbody = document.querySelector("#dataTable tbody");
+        tbody.innerHTML = "";
+
+        result.data.forEach(row => {
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${row.name}</td>
+                <td>${row.email}</td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to load data");
+    }
+}
+
+
+</script>
+
+</body>
+</html>
