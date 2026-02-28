@@ -78,7 +78,18 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
             }
         });
 
-        const result = await response.json();
+
+        if (!response.ok) {
+            // Handle HTTP errors
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // Await the JSON parsing
+        const result = await response.json(); 
+        console.log("Success:", result);
+        //return responseData;
+
+        //const C = await response.json();
         //const result = await response.text()
         alert(result.message);
 
