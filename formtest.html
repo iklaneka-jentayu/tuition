@@ -78,8 +78,8 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
             }
         });
 
-        //const result = await response.json();
-        //alert(result.message);
+        const result = await response.json();
+        alert(result.message);
 
         document.getElementById("dataForm").reset();
         loadData();
