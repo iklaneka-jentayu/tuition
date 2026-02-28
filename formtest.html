@@ -126,15 +126,15 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
 // GET data from code.gs
 async function loadData() {
     try {
-        const response = await fetch(WEB_APP_URL,{mode:'no-cors'});
+        //const response = await fetch(WEB_APP_URL,{mode:'no-cors'});
 		//alert(JSON.stringify(response));
-		//const response = await fetch(WEB_APP_URL);
+		const response = await fetch(WEB_APP_URL);
 		//console.log('response-',response);
 		
         const result = await response.json();
 		//const result = await response;
 		console.log('result-',result);
-        alert(result);
+        //alert(result);
 
         const tbody = document.querySelector("#dataTable tbody");
         tbody.innerHTML = "";
