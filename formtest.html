@@ -157,8 +157,8 @@ function fetchData(data) {
 // GET data from code.gs
 async function loadData() {
     try {
-        //const response = await fetch(WEB_APP_URL,{mode:'no-cors'});
-		const response = await fetch(WEB_APP_URL);
+        const response = await fetch(WEB_APP_URL,{mode:'no-cors'});
+		//const response = await fetch(WEB_APP_URL);
         const result = await response.json();
         const tbody = document.querySelector("#dataTable tbody");
         tbody.innerHTML = "";
