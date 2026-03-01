@@ -113,7 +113,7 @@ function fetchData(data) {
   var options = {
     'method': 'post',
     'contentType': 'application/json',
-    // 'no-cors' is not needed for UrlFetchApp and should not be used.
+    'mode':'no-cors',
     'payload': JSON.stringify(data)
   };
 
