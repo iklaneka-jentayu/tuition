@@ -108,16 +108,10 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
             console.error("Error:", error);
         });
 
-
         // Await the JSON parsing
-        //const result = await response.json(); 
-        //console.log("Success:", result);
-        //return responseData;
-
-        //const C = await response.json();
-        //const result = await response.text()
-        //alert(result.message);
-
+        const result = await response.json(); 
+        console.log("Success:", result);
+    
         document.getElementById("dataForm").reset();
         loadData();
 
