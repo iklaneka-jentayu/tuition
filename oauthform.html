@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Auth Form</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+        table {
+        width: 100%;
+        background: white;
+        }
+
+        th {
+        background: #4285F4;
+        color: white;
+        }
+
+        tr:nth-child(even) {
+        background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Submit Form (Google Login Required)</h2>
+
+<div id="g_id_onload"
+     data-client_id="220971531524-tf7drli4bomnh24r5fh30kdf16bc4php.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse">
+</div>
+
+<div class="g_id_signin"></div>
+
+<br>
+
+<form id="myForm">
+  <input type="text" id="name" placeholder="Name" required><br><br>
+  <input type="text" id="phone" placeholder="Phone" required><br><br>
+  <textarea id="message" placeholder="Message"></textarea><br><br>
+  <button type="submit">Submit</button>
+</form>
+
+<h3>Submitted Data</h3>
+<button onclick="loadData()">Load Data</button>
+
+<table border="1" id="dataTable" style="margin-top:20px; border-collapse:collapse;">
+  <thead></thead>
+  <tbody></tbody>
+</table>
+
+
+<script>
+
+let userToken = "123raz";
+
+function handleCredentialResponse(response) {
+  userToken = response.credential;
+  alert("Logged in successfully!");
+}
+
+document.getElementById("myForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  if (!userToken) {
+    alert("Please login first!");
+    return;
+  }
+
+  const data = {
+    token: userToken,
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    message: document.getElementById("message").value
+  };
+
+  const res = await fetch("YOUR_WEB_APP_URL", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  if (result.success) {
+    alert("Data saved successfully!");
+    document.getElementById("myForm").reset();
+  } else {
+    alert("Error: " + result.error);
+  }
+});
+
+async function loadData() {
+  if (!userToken) {
+    alert("Login first!");
+    return;
+  }
+
+  const res = await fetch(
+    "https://script.google.com/macros/s/AKfycbzOH-ci4s4E5m_koze6z6BJtVzU7sNOtAW0ft1k4K-403TYc4UfenB9GPgjef4X5V3L/exec?token=" + userToken
+  );
+
+  const result = await res.json();
+
+  if (result.success) {
+    console.log(result.data);
+  } else {
+    alert(result.error);
+  }
+}
+
+</script>
+
+</body>
+</html>
