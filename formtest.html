@@ -69,7 +69,7 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
         email: document.getElementById("email").value
     };
 
-    try {
+    //try {
 
         //fetchData(data);
 
@@ -110,10 +110,10 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
         document.getElementById("dataForm").reset();
         loadData();
 
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Failed to submit data");
-    }
+    // } catch (error) {
+    //     console.error("Error:", error);
+    //     alert("Failed to submit data");
+    // }
 });
 
 function fetchData(data) {
