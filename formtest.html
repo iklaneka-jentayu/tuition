@@ -69,13 +69,13 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
         email: document.getElementById("email").value
     };
 
-    //try {
+    try {
 
         //fetchData(data);
 
         // const response = await fetch(WEB_APP_URL, {
         //     method: "POST",
-		// 	   mode: "no-cors",
+		// 	    mode: "no-cors",
         //     body: JSON.stringify(data),
         //     headers: {
         //         "Content-Type": "application/json"
@@ -89,6 +89,7 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
 
         fetch(WEB_APP_URL, {
             method: "POST",
+            mode: "no-cors",
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",
@@ -98,7 +99,7 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            //return response.json();
+            return response.json();
         })
         .then((data) => {
             console.log("Success: ", data);
@@ -110,10 +111,10 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
         document.getElementById("dataForm").reset();
         loadData();
 
-    // } catch (error) {
-    //     console.error("Error:", error);
-    //     alert("Failed to submit data");
-    // }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to submit data");
+    }
 });
 
 function fetchData(data) {
