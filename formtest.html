@@ -98,7 +98,7 @@ document.getElementById("dataForm").addEventListener("submit", async function(e)
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.json();
+            //return response.json();
         })
         .then((data) => {
             console.log("Success: ", data);
