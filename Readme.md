@@ -15,3 +15,5 @@ git push -u origin main
 https://script.google.com/macros/s/AKfycbw9m0WkShtm2FpaqWIiB5r75nynJsYgGFtt4U_VTV9a4G49KpL_WZBxOhSMgUx2SiVJ/exec
 
 https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#uploading_json_data
+
+https://console.cloud.google.com/enable-mfa?redirectTo=%2F
