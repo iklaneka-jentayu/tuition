@@ -124,12 +124,13 @@ async function loadData() {
   }
 
   //{'mode': 'no-cors'}
+  //const response = await fetch(WEB_APP_URL);
   const res = await fetch(
     "https://script.google.com/macros/s/AKfycbzOH-ci4s4E5m_koze6z6BJtVzU7sNOtAW0ft1k4K-403TYc4UfenB9GPgjef4X5V3L/exec?token=" + userToken
   );
 
   const result = await res.json();
-
+ 
   console.log('result-',result);
     //alert(result);
 
@@ -140,11 +141,11 @@ async function loadData() {
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
-            <td>${row.date}</td>
-            <td>${row.email}</td>
-            <td>${row.name}</td>
-            <td>${row.phone}</td>
-            <td>${row.Mmessage}</td>
+            <td>${row[0]}</td>
+            <td>${row[1]}</td>
+            <td>${row[2]}</td>
+            <td>${row[3]}</td>
+            <td>${row}</td>
         `;
 
         tbody.appendChild(tr);
