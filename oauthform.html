@@ -4,18 +4,34 @@
   <title>Google Auth Form</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
+       body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+            width: 250px;
+        }
+
         table {
-        width: 100%;
-        background: white;
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
         }
 
         th {
-        background: #4285F4;
-        color: white;
-        }
-
-        tr:nth-child(even) {
-        background: #f2f2f2;
+            background: #f4f4f4;
         }
     </style>
 </head>
@@ -42,10 +58,19 @@
 <h3>Submitted Data</h3>
 <button onclick="loadData()">Load Data</button>
 
-<table border="1" id="dataTable" style="margin-top:20px; border-collapse:collapse;">
-  <thead></thead>
-  <tbody></tbody>
+<table id="dataTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Message</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
 </table>
+
 
 
 <script>
@@ -92,17 +117,38 @@ document.getElementById("myForm").addEventListener("submit", async function(e) {
 });
 
 async function loadData() {
+
   if (!userToken) {
     alert("Login first!");
     return;
   }
 
+  //{'mode': 'no-cors'}
   const res = await fetch(
-    "https://script.google.com/macros/s/AKfycbzOH-ci4s4E5m_koze6z6BJtVzU7sNOtAW0ft1k4K-403TYc4UfenB9GPgjef4X5V3L/exec?token=" + userToken,
-    {'mode': 'no-cors'}
+    "https://script.google.com/macros/s/AKfycbzOH-ci4s4E5m_koze6z6BJtVzU7sNOtAW0ft1k4K-403TYc4UfenB9GPgjef4X5V3L/exec?token=" + userToken
   );
 
   const result = await res.json();
+
+  console.log('result-',result);
+    //alert(result);
+
+    const tbody = document.querySelector("#dataTable tbody");
+    tbody.innerHTML = "";
+
+    result.data.forEach(row => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${row.date}</td>
+            <td>${row.email}</td>
+            <td>${row.name}</td>
+            <td>${row.phone}</td>
+            <td>${row.Mmessage}</td>
+        `;
+
+        tbody.appendChild(tr);
+    });
 
   if (result.success) {
     console.log(result.data);
