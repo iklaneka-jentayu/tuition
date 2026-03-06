@@ -99,7 +99,7 @@ document.getElementById("myForm").addEventListener("submit", async function(e) {
 
   const res = await fetch("https://script.google.com/macros/s/AKfycbzOH-ci4s4E5m_koze6z6BJtVzU7sNOtAW0ft1k4K-403TYc4UfenB9GPgjef4X5V3L/exec", {
     method: "POST",
-    //mode: 'no-cors',
+    mode: 'no-cors',
     headers: {
       "Content-Type": "application/json"
     },
